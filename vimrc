@@ -17,6 +17,12 @@ set viminfo='100,<50,s10,h,%
 set wildmenu
 set wildmode=list:longest,full
 
+" search settings
+set hlsearch
+set incsearch
+" hit C-l to run :noh AND redraw screen (from "Pratical Vim")
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+
 " bindings
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
