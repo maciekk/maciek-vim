@@ -23,6 +23,16 @@ set incsearch
 " hit C-l to run :noh AND redraw screen (from "Pratical Vim")
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
+" soft breaks
+set textwidth=78
+set formatoptions=tcqn
+
+" uncomment for wrapping
+"set wrap
+"set wrapmargin=2
+"set showbreak=…
+"set linebreak
+
 " bindings
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
