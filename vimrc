@@ -22,6 +22,7 @@ Bundle "gmarik/vundle"
 " Bundles {{{1
 "
 Bundle "matchit.zip"
+Bundle "bufexplorer.zip"
 Bundle "scrooloose/nerdcommenter"
 Bundle "scrooloose/nerdtree"
 Bundle "vimwiki"
