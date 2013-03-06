@@ -6,7 +6,7 @@
 " Vundle setup {{{1
 set nocompatible               " be iMproved
 
-" Ultimately want filetype off for Vundle here, but this on-then-off hack is
+" Ultimately want "filetype off" for Vundle here, but this on-then-off hack is
 " to fix an annoying issue:
 "   http://tooky.co.uk/2010/04/08/there-was-a-problem-with-the-editor-vi-git-on-mac-os-x.html
 filetype on
@@ -24,7 +24,7 @@ Bundle "gmarik/vundle"
 
 " Bundles {{{1
 "
-" TODO: is this still needed? Isn't it included with Vim nowadays?
+" TODO: matchit already bundled with Vim; do we need most recent version?
 Bundle "matchit.zip"
 Bundle "bufexplorer.zip"
 Bundle "scrooloose/nerdcommenter"
@@ -45,6 +45,7 @@ Bundle "tpope/vim-surround"
 Bundle "thinca/vim-fontzoom"
 
 " to try
+"Bundle "xolox/vim-session"
 "Bundle "techlivezheng/vim-plugin-minibufexpl"
 "Bundle "snipMate"
 "Bundle "h1mesuke/unite-outline"
