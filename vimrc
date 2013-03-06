@@ -67,7 +67,7 @@ syntax enable
 set backspace=indent,eol,start
 set cmdheight=1
 set diffopt+=vertical
-set directory=~/tmp,/var/tmp/,/tmp
+set directory=~/tmp,/var/tmp/,/tmp,.
 set expandtab
 set foldlevelstart=3
 set hidden
