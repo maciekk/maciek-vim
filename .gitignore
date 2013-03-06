@@ -3,3 +3,6 @@ bundle
 
 # Do not track local / sensitive configuration settings.
 LOCAL
+
+# History file for netrw?  This should be a local cache.
+.netrwhist
