@@ -1,4 +1,7 @@
 " Maciej's Vim setup
+"
+" Version controlled here:
+"   https://code.google.com/p/maciek-vim/
 
 " Vundle setup {{{1
 set nocompatible               " be iMproved
@@ -21,6 +24,7 @@ Bundle "gmarik/vundle"
 
 " Bundles {{{1
 "
+" TODO: is this still needed? Isn't it included with Vim nowadays?
 Bundle "matchit.zip"
 Bundle "bufexplorer.zip"
 Bundle "scrooloose/nerdcommenter"
@@ -131,14 +135,15 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
+" vimwiki setup {{{1
+let g:vimwiki_list = [{'path': '~/Google Drive/vim/wiki/'}]
+let g:vimwiki_folding = 1
+
 " miscellaneous {{{1
 let g:ctrlp_cmd = 'CtrlPBuffer'
 
+" TODO: is this needed?
 runtime macros/matchit.vim
-
-" vimwiki setup
-let g:vimwiki_list = [{'path': '~/Google Drive/vim/wiki/'}]
-let g:vimwiki_folding = 1
 
 colorscheme molokai
 
