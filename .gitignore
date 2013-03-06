@@ -1,2 +1,5 @@
 # Ignore Vundle's bundle directory.
 bundle
+
+# Do not track local / sensitive configuration settings.
+LOCAL

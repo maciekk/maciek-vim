@@ -62,7 +62,9 @@ filetype plugin indent on     " required!
 " basics {{{1
 syntax enable
 
-" settings {{{1
+" settings
+set backspace=indent,eol,start
+set cmdheight=1
 set diffopt+=vertical
 set directory=~/tmp,/var/tmp/,/tmp,.
 set expandtab
@@ -79,6 +81,7 @@ set ruler
 set scrolloff=3
 set shiftwidth=4
 set showcmd
+set showmatch
 set showmode
 set viminfo='100,<50,s10,h,%
 set wildmenu
