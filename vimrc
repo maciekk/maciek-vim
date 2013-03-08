@@ -79,7 +79,7 @@ set matchpairs+=<:>
 set modeline
 set number
 set ruler
-set scrolloff=3
+set scrolloff=1
 set shiftwidth=4
 set showcmd
 set showmatch
