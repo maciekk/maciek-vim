@@ -12,7 +12,7 @@ set nocompatible               " be iMproved
 filetype on
 filetype off                   " required!
 
-if has ("win32")
+if has ('win32')
     set runtimepath+=$HOME/vimfiles/bundle/vundle/
 else
     set runtimepath+=$HOME/.vim/bundle/vundle/
@@ -20,50 +20,58 @@ endif
 call vundle#rc()
 
 " let Vundle manage Vundle
-Bundle "gmarik/vundle"
+Bundle 'gmarik/vundle'
 
-" Bundles {{{1
+" bundles {{{1
 "
-" TODO: matchit already bundled with Vim; do we need most recent version?
-Bundle "matchit.zip"
-Bundle "bufexplorer.zip"
-Bundle "scrooloose/nerdcommenter"
-Bundle "scrooloose/nerdtree"
-Bundle "vimwiki"
-Bundle "kien/ctrlp.vim"
-Bundle "kien/rainbow_parentheses.vim"
-Bundle "kien/tabman.vim"
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'bufexplorer.zip'
+Bundle 'kien/ctrlp.vim'
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'kien/tabman.vim'
+Bundle 'matchit.zip'
+Bundle 'mileszs/ack.vim'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/nerdtree'
+Bundle 'sjl/gundo.vim'
+Bundle 'utl.vim'
+Bundle 'vimwiki'
 
-" color themes
-Bundle "nanotech/jellybeans.vim"
-Bundle "tomasr/molokai"
-"Bundle "flazz/vim-colorschemes"
+" snippets
+Bundle 'SirVer/ultisnips'
+Bundle 'acustodioo/vim-snippets'
+
+" outline stuff; dump?
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/neocomplcache'
+Bundle 'h1mesuke/unite-outline'
 
 " learn more about these
-Bundle "tpope/vim-fugitive"
-Bundle "tpope/vim-surround"
-Bundle "thinca/vim-fontzoom"
+Bundle 'jnwhiteh/vim-golang'
+Bundle 'majutsushi/tagbar'
+Bundle 'thinca/vim-fontzoom'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-surround'
 
 " to try
-"Bundle "xolox/vim-session"
-"Bundle "techlivezheng/vim-plugin-minibufexpl"
-"Bundle "snipMate"
-"Bundle "h1mesuke/unite-outline"
-"Bundle "jnwhiteh/vim-golang"
-"Bundle "Lokaltog/vim-powerline"
+"Bundle 'xolox/vim-session'
+"Bundle 'techlivezheng/vim-plugin-minibufexpl'
+"Bundle 'taglist.vim'  " superseded by 'tagbar'?
 
 " Org mode in Vim
 "https://github.com/hsitz/VimOrganizer
-"Bundle "jceb/vim-orgmode"
+"Bundle 'jceb/vim-orgmode'
+
+" color themes
+Bundle 'nanotech/jellybeans.vim'
+Bundle 'tomasr/molokai'
+"Bundle 'flazz/vim-colorschemes'
 
 filetype plugin indent on     " required!
 " or
 " filetype plugin on          " to not use the indentation settings set by plugins
 
-" basics {{{1
-syntax enable
-
-" settings
+" settings {{{1
 set backspace=indent,eol,start
 set cmdheight=1
 set diffopt+=vertical
@@ -88,7 +96,10 @@ set viminfo='100,<50,s10,h,%
 set wildmenu
 set wildmode=list:longest,full
 
-" search settings {{{1
+" This is at least where the words are on OS X.
+set dictionary=/usr/share/dict/words
+
+" search settings {{{2
 set ignorecase
 set infercase
 set smartcase
@@ -98,7 +109,7 @@ set incsearch
 " hit C-l to run :noh AND redraw screen (from "Pratical Vim")
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
-" soft breaks {{{1
+" soft breaks {{{2
 set textwidth=78
 set formatoptions=tcqn
 
@@ -109,11 +120,23 @@ set nowrap
 "set showbreak=…
 "set linebreak
 
-" bindings {{{1
+" mappings {{{1
+command! W :w  " in case we didn't let go of Shift fast enough
+
+map ,bi :source $MYVIMRC<bar>:BundleInstall<CR>
+map ,bc :BundleClean<CR>
+map ,bu :BundleUpdate<CR>
+
+" collapse all folds except the one where cursor is
+map ,zz zMzv
+map ,zj zMjzv
+map ,zk zMkzv
+
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
-" Rainbow Parentheses {{{1
+" package setup {{{1
+" Rainbow Parentheses {{{2
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
     \ ['Darkblue',    'SeaGreen3'],
@@ -140,34 +163,36 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
-" vimwiki setup {{{1
+" Vimwiki {{{2
 " NOTE: set / override g:vimwiki_list in local.vim
 let g:vimwiki_list = [{'path': '~/Google Drive/vim/wiki/'}]
 let g:vimwiki_folding = 1
 
-" miscellaneous {{{1
+" Powerline {{{2
+let g:Powerline_symbols = 'compatible'
+
+" CtrlP {{{2
 let g:ctrlp_cmd = 'CtrlPBuffer'
 
-" TODO: is this needed?
-runtime macros/matchit.vim
-
-colorscheme molokai
-
-command! W :w  " in case we didn't let go of Shift fast enough
-
-" This is at least where the words are on OS X.
-set dictionary=/usr/share/dict/words
-
-" Apply any local settings. {{{1
+" local configs {{{1
 if has('win32') || has('win64') || has('win16')
-    let local_settings = $HOME . "vimfiles/LOCAL/local.vim"
+    let local_settings = $HOME . 'vimfiles/LOCAL/local.vim'
 else
-    let local_settings = $HOME . "/.vim/LOCAL/local.vim"
+    let local_settings = $HOME . '/.vim/LOCAL/local.vim'
 endif
 
 if filereadable(local_settings)
-    exec ":source " . local_settings
+    exec ':source ' . local_settings
 endif
+
+" cosmetics {{{1
+colorscheme molokai
+syntax enable
+
+" misc {{{1
+
+" TODO: is this needed?
+runtime macros/matchit.vim
 
 " }}}1
 " vim:fdm=marker:
