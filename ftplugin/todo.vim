@@ -25,3 +25,5 @@ endfunction
 
 map <buffer> <LocalLeader>t :call GoToToday()<CR>
 
+" Use '0' to go to first non-white char as well; easier to type.
+noremap <buffer> 0 ^
