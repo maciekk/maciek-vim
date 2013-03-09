@@ -123,9 +123,9 @@ set nowrap
 " mappings {{{1
 command! W :w  " in case we didn't let go of Shift fast enough
 
-map ,bi :source $MYVIMRC<bar>:BundleInstall<CR>
-map ,bc :BundleClean<CR>
-map ,bu :BundleUpdate<CR>
+map \bi :source $MYVIMRC<bar>:BundleInstall<CR>
+map \bc :BundleClean<CR>
+map \bu :BundleUpdate<CR>
 
 " collapse all folds except the one where cursor is
 map ,zz zMzv
