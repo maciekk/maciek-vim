@@ -10,6 +10,9 @@ map <buffer> <LocalLeader>d ^r_^
 map <buffer> <LocalLeader>c ^rx^
 map <buffer> <LocalLeader>x ^rx^
 
+" Mark entry as waiting / blocked.
+map <buffer> <LocalLeader>w ^rw^
+
 " Go to today's entry; if it is missing, create it.
 function! GoToToday()
     let day = substitute(strftime("%e"), " ", "", "g")
@@ -23,7 +26,7 @@ function! GoToToday()
     endif
 endfunction
 
-map <buffer> <LocalLeader>t :call GoToToday()<CR>
+map <silent> <buffer> <LocalLeader>t :call GoToToday()<CR>
 
 " Use '0' to go to first non-white char as well; easier to type.
 noremap <buffer> 0 ^

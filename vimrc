@@ -47,6 +47,9 @@ Bundle 'Shougo/neocomplcache'
 Bundle 'h1mesuke/unite-outline'
 
 " learn more about these
+Bundle 'vim-scripts/VOoM'
+Bundle 'L9'
+Bundle 'FuzzyFinder'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'majutsushi/tagbar'
 Bundle 'thinca/vim-fontzoom'
@@ -127,6 +130,8 @@ map ,bi :source $MYVIMRC<bar>:BundleInstall<CR>
 map ,bc :BundleClean<CR>
 map ,bu :BundleUpdate<CR>
 
+map ,vv :VoomToggle vimwiki<CR>
+
 " collapse all folds except the one where cursor is
 map ,zz zMzv
 map ,zj zMjzv
@@ -134,6 +139,10 @@ map ,zk zMkzv
 
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+
+map ,fb :FufBuffer<CR>
+map ,fd :FufDir<CR>
+map ,ff :FufFile<CR>
 
 " package setup {{{1
 " Rainbow Parentheses {{{2
