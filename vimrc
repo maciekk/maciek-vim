@@ -34,7 +34,10 @@ Bundle 'mileszs/ack.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'sjl/gundo.vim'
+"Bundle 'TVO--The-Vim-Outliner'
 Bundle 'utl.vim'
+"Bundle 'VimOutliner'
+Bundle 'votl'
 Bundle 'vimwiki'
 
 " snippets
