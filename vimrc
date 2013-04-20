@@ -132,6 +132,8 @@ map \bu :BundleUpdate<CR>
 
 map ,vv :VoomToggle vimwiki<CR>
 
+map ,ww :wall<CR>
+
 " collapse all folds except the one where cursor is
 map ,zz zMzv
 map ,zj zMjzv
