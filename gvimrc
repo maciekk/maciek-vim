@@ -3,8 +3,8 @@ if has('gui_gtk2')
     ":set guifont=Luxi\ Mono\ 12
     "set guifont=Lucida\ Sans\ Typewriter\ 10
     "set guifont=LucidaTypewriter\ 9
-    "set guifont=Deja\ Vu\ Sans\ Mono\ 10
-    set guifont=Liberation\ Mono\ 10
+    set guifont=Deja\ Vu\ Sans\ Mono\ 10
+    "set guifont=Liberation\ Mono\ 10
 elseif has('x11')
     " Also for GTK 1
     "set guifont=*-lucidatypewriter-medium-r-normal-*-*-180-*-*-m-*-*

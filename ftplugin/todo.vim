@@ -13,6 +13,12 @@ map <buffer> <LocalLeader>x ^rx^
 " Mark entry as waiting / blocked.
 map <buffer> <LocalLeader>w ^rw^
 
+" Change priorities.
+map <buffer> <LocalLeader>0 ^r0w
+map <buffer> <LocalLeader>1 ^r1w
+map <buffer> <LocalLeader>2 ^r2w
+map <buffer> <LocalLeader>3 ^r3w
+
 " Go to today's entry; if it is missing, create it.
 function! GoToToday()
     let day = substitute(strftime("%e"), " ", "", "g")
@@ -20,7 +26,7 @@ function! GoToToday()
     call cursor(1,1)
     if search("^".headline."$", "c") == 0
         " Create fresh entry. We are already at top.
-        call append(0, [headline, "    * ", ""])
+        call append(0, [headline, "    2 ", ""])
         call cursor(line(".") - 2, 1)
         startinsert!
     endif
