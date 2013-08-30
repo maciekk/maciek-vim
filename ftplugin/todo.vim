@@ -11,7 +11,7 @@ map <buffer> <LocalLeader>c ^rx^
 map <buffer> <LocalLeader>x ^rx^
 
 " Mark entry as waiting / blocked.
-map <buffer> <LocalLeader>w ^rw^
+"map <buffer> <LocalLeader>w ^rw^
 
 " Change priorities.
 map <buffer> <LocalLeader>0 ^r0w
