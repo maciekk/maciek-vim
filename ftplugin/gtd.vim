@@ -1,5 +1,6 @@
 " Getting Things Done file type.
 
+" Better indentation-based folding {{{1
 setlocal fdm=expr
 setlocal foldexpr=GetGtdFold(v:lnum)
 
@@ -41,3 +42,9 @@ function! GetGtdFold(lnum)
         return '>' . next_indent
     endif
 endfunction
+
+" Priority-based sorting (from todo.vim type) {{{1
+map <silent> <buffer> <LocalLeader>s vipoj:sort /\S/r<CR>
+
+" }}}1
+" vim:fdm=marker
