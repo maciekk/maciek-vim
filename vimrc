@@ -39,6 +39,7 @@ Bundle 'utl.vim'
 "Bundle 'VimOutliner'
 Bundle 'votl'
 Bundle 'vimwiki'
+Bundle 'chrisbra/NrrwRgn'
 
 " snippets
 Bundle 'SirVer/ultisnips'
@@ -125,6 +126,10 @@ set nowrap
 "set wrapmargin=2
 "set showbreak=…
 "set linebreak
+
+set backup
+set backupcopy=yes
+set backupdir=~/.bak,~/tmp,.,/tmp
 
 " mappings {{{1
 command! W :w  " in case we didn't let go of Shift fast enough

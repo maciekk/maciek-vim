@@ -10,8 +10,8 @@ map <buffer> <LocalLeader>d ^r_^
 map <buffer> <LocalLeader>c ^rx^
 map <buffer> <LocalLeader>x ^rx^
 
-" Mark entry as waiting / blocked.
-map <buffer> <LocalLeader>w ^rw^
+" Mark entry as blocked.
+map <buffer> <LocalLeader>b ^rb^
 
 " Change priorities.
 map <buffer> <LocalLeader>0 ^r0w
