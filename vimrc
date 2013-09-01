@@ -138,9 +138,9 @@ map \bi :source $MYVIMRC<bar>:BundleInstall<CR>
 map \bc :BundleClean<CR>
 map \bu :BundleUpdate<CR>
 
-map ,vv :VoomToggle vimwiki<CR>
+map ,,v :VoomToggle vimwiki<CR>
 
-map ,ww :wall<CR>
+map ,,w :wall<CR>
 
 " collapse all folds except the one where cursor is
 map ,zz zMzv
@@ -185,7 +185,7 @@ au Syntax * RainbowParenthesesLoadBraces
 " Vimwiki {{{2
 " NOTE: set / override g:vimwiki_list in local.vim
 let g:vimwiki_list = [{'path': '~/Google Drive/vim/wiki/'}]
-let g:vimwiki_folding = 1
+let g:vimwiki_folding = 'expr'
 
 " Powerline {{{2
 let g:Powerline_symbols = 'compatible'
