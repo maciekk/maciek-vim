@@ -37,7 +37,7 @@ Bundle 'sjl/gundo.vim'
 "Bundle 'TVO--The-Vim-Outliner'
 Bundle 'utl.vim'
 "Bundle 'VimOutliner'
-Bundle 'votl'
+Bundle 'insanum/votl'
 Bundle 'vimwiki'
 Bundle 'chrisbra/NrrwRgn'
 

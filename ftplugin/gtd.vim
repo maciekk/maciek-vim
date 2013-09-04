@@ -1,6 +1,12 @@
 " Getting Things Done file type.
 
-" Better indentation-based folding {{{1
+" Only do this when not done yet for this buffer. {{{1
+if exists("b:did_ftplugin")
+  finish
+endif
+let b:did_ftplugin = 1
+
+" better indentation-based folding {{{1
 setlocal fdm=expr
 setlocal foldexpr=GetGtdFold(v:lnum)
 
@@ -43,8 +49,12 @@ function! GetGtdFold(lnum)
     endif
 endfunction
 
-" Priority-based sorting (from todo.vim type) {{{1
+" priority-based sorting (from todo.vim type) {{{1
 map <silent> <buffer> <LocalLeader>s vipoj:sort /\S/r<CR>
+
+" other settings {{{1
+setlocal shiftwidth=2
+setlocal textwidth=999
 
 " }}}1
 " vim:fdm=marker
