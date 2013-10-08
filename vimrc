@@ -50,6 +50,9 @@ Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/neocomplcache'
 Bundle 'h1mesuke/unite-outline'
 
+" HTML
+Bundle 'mattn/emmet-vim'
+
 " learn more about these
 Bundle 'vim-scripts/VOoM'
 Bundle 'L9'
