@@ -1,10 +1,10 @@
 " Getting Things Done file type.
 
 " Only do this when not done yet for this buffer. {{{1
-if exists("b:did_ftplugin")
-  finish
+if exists("b:did_gtd_ftplugin")
+  "finish
 endif
-let b:did_ftplugin = 1
+let b:did_gtd_ftplugin = 1
 
 " better indentation-based folding {{{1
 setlocal fdm=expr
