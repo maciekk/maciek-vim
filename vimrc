@@ -216,5 +216,12 @@ syntax enable
 " TODO: is this needed?
 runtime macros/matchit.vim
 
+" Create global mapping to go to "today" daily page.
+function! EditTodayDaily()
+    let l:daily_fname = strftime("~/Google\\\\ Drive/GTD/daily/%Y-%m-%d.txt")
+    execute "tabnew" expand(l:daily_fname)
+endfunction
+map <Leader>t :call EditTodayDaily()<cr>
+
 " }}}1
 " vim:fdm=marker:
