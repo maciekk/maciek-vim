@@ -224,6 +224,9 @@ runtime macros/matchit.vim
 function! EditTodayDaily()
     let l:daily_fname = strftime("~/Google\\\\ Drive/GTD/daily/%Y-%m-%d.txt")
     execute "tabnew" expand(l:daily_fname)
+    if line('$') == 1 && getline(1) == ''
+      exe "normal iOBJsTODAYDONEgg"
+    endif
 endfunction
 map <Leader>t :call EditTodayDaily()<cr>
 
