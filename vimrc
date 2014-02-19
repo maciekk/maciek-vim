@@ -63,6 +63,9 @@ Bundle 'thinca/vim-fontzoom'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 
+" suggested by YouCompleteMe (corp)
+Bundle 'scrooloose/syntastic'
+
 " to try
 "Bundle 'xolox/vim-session'
 "Bundle 'techlivezheng/vim-plugin-minibufexpl'
@@ -208,7 +211,8 @@ if filereadable(local_settings)
 endif
 
 " cosmetics {{{1
-colorscheme molokai
+"colorscheme molokai
+colorscheme pyte
 syntax enable
 
 " misc {{{1
