@@ -49,8 +49,23 @@ function! GetGtdFold(lnum)
     endif
 endfunction
 
+function! GtdMarkDone(lnum)
+  m/^DONE$/<CR>
+  call cursor(a:lnum, 2)
+endfunction
+
+function! GtdMoveToNow(lnum)
+  m?^@now$?<CR>
+  call cursor(a:lnum, 2)
+endfunction
+
 " priority-based sorting (from todo.vim type) {{{1
 map <silent> <buffer> <LocalLeader>s vipoj:sort /\S/r<CR>
+
+map <buffer> <LocalLeader>d :call GtdMarkDone(line("."))<CR>
+map <buffer> <LocalLeader>n :call GtdMoveToNow(line("."))<CR>
+" HACK: unmap corpdoc macro
+silent! unmap <buffer> <LocalLeader>df
 
 " other settings {{{1
 setlocal shiftwidth=2

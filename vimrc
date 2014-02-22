@@ -222,7 +222,13 @@ runtime macros/matchit.vim
 
 " Create global mapping to go to "today" daily page.
 function! EditTodayDaily()
-    let l:daily_fname = strftime("~/Google\\\\ Drive/GTD/daily/%Y-%m-%d.txt")
+    if isdirectory("~/Google\\\\ Drive")
+        let l:GTD_path = "~/Google\\\\ Drive/GTD"
+    else
+        let l:GTD_path = "~/GTD"
+    endif
+    let l:daily_fname = l:GTD_path . strftime("/daily/%Y-%m-%d.txt")
+
     execute "tabnew" expand(l:daily_fname)
     if line('$') == 1 && getline(1) == ''
       exe "normal iOBJsTODAYDONEgg"
