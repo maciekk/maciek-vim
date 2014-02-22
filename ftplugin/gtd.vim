@@ -52,6 +52,9 @@ endfunction
 " priority-based sorting (from todo.vim type) {{{1
 map <silent> <buffer> <LocalLeader>s vipoj:sort /\S/r<CR>
 
+" mark item as DONE
+map <silent> <buffer> <LocalLeader>d jmmk^r.ddGp`m^
+
 " other settings {{{1
 setlocal shiftwidth=2
 setlocal textwidth=999

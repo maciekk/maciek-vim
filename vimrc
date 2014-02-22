@@ -96,6 +96,7 @@ set number
 set ruler
 set scrolloff=1
 set shiftwidth=4
+set shortmess+=I
 set showcmd
 set showmatch
 set showmode
@@ -205,7 +206,8 @@ if filereadable(local_settings)
 endif
 
 " cosmetics {{{1
-colorscheme molokai
+"colorscheme molokai
+colorscheme pyte
 syntax enable
 
 " misc {{{1
