@@ -59,6 +59,16 @@ function! GtdMoveToNow(lnum)
   call cursor(a:lnum, 2)
 endfunction
 
+function! GtdMoveToBlocked(lnum)
+  m?^@blocked$?<CR>
+  call cursor(a:lnum, 2)
+endfunction
+
+function! GtdMoveToZ(lnum)
+  m'z<CR>
+  call cursor(a:lnum, 2)
+endfunction
+
 " priority-based sorting (from todo.vim type) {{{1
 map <silent> <buffer> <LocalLeader>s vipoj:sort /\S/r<CR>
 
@@ -66,6 +76,10 @@ map <silent> <buffer> <LocalLeader>s vipoj:sort /\S/r<CR>
 map <buffer> <LocalLeader>d :call GtdMarkDone(line("."))<CR>
 " move item up to @now
 map <buffer> <LocalLeader>n :call GtdMoveToNow(line("."))<CR>
+" move item up to @blocked
+map <buffer> <LocalLeader>b :call GtdMoveToBlocked(line("."))<CR>
+" move item to mark `z
+map <buffer> <LocalLeader>. :call GtdMoveToZ(line("."))<CR>
 " HACK: unmap corpdoc macro
 silent! unmap <buffer> <LocalLeader>df
 

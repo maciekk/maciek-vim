@@ -212,8 +212,8 @@ if filereadable(local_settings)
 endif
 
 " cosmetics {{{1
-"colorscheme molokai
-colorscheme pyte
+colorscheme molokai
+"colorscheme pyte
 syntax enable
 
 " misc {{{1
@@ -223,19 +223,24 @@ runtime macros/matchit.vim
 
 " Create global mapping to go to "today" daily page.
 function! EditTodayDaily()
-    if isdirectory("~/Google\\\\ Drive")
-        let l:GTD_path = "~/Google\\\\ Drive/GTD"
-    else
+    let l:GTD_path = "~/Google Drive/GTD"
+    if !isdirectory(glob(l:GTD_path))
         let l:GTD_path = "~/GTD"
     endif
     let l:daily_fname = l:GTD_path . strftime("/daily/%Y-%m-%d.txt")
 
-    execute "tabnew" expand(l:daily_fname)
+    execute "tabnew" fnameescape(expand(l:daily_fname))
     if line('$') == 1 && getline(1) == ''
       exe "normal iOBJsTODAYDONEgg"
     endif
 endfunction
-map <Leader>t :call EditTodayDaily()<cr>
+noremap <Leader>t :call EditTodayDaily()<cr>
+
+let maplocalleader = "\\"
+
+" Quick edit of vimrc file
+nnoremap <Leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <Leader>sv :source $MYVIMRC<cr>
 
 " }}}1
 " vim:fdm=marker:
