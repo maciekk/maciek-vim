@@ -106,6 +106,8 @@ set shortmess+=I
 set showcmd
 set showmatch
 set showmode
+set splitbelow
+set splitright
 set viminfo='100,<50,s10,h,%
 set wildmenu
 set wildmode=list:longest,full
@@ -236,6 +238,7 @@ function! EditTodayDaily()
 endfunction
 noremap <Leader>t :call EditTodayDaily()<cr>
 
+let mapleader = ","
 let maplocalleader = "\\"
 
 " Quick edit of vimrc file
