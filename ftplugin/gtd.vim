@@ -86,6 +86,7 @@ silent! unmap <buffer> <LocalLeader>df
 " other settings {{{1
 setlocal shiftwidth=2
 setlocal textwidth=999
+setlocal autoindent
 
 " }}}1
 " vim:fdm=marker
