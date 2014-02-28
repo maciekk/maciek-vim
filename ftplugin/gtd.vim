@@ -50,6 +50,7 @@ function! GetGtdFold(lnum)
 endfunction
 
 function! GtdMarkDone(lnum)
+  normal 0wr.
   m/^DONE$/<CR>
   call cursor(a:lnum, 2)
 endfunction
