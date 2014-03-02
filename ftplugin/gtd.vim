@@ -49,6 +49,13 @@ function! GetGtdFold(lnum)
     endif
 endfunction
 
+function! NormalizeFile()
+    " remove any multiple blank lines
+    g/^$/,/./-j
+    " remove trailing whitespace
+    silent g/\s\+$/s///e
+endfunction
+
 function! GtdMarkDone(lnum)
   normal 0wr.
   m/^DONE$/<CR>

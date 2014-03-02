@@ -2,7 +2,7 @@ if exists("b:current_syntax")
     finish
 endif
 
-syntax match gtdHeading "\v^\S+$"
+syntax match gtdHeading "\v^\S+.*"
 syntax match gtdPriority "\v^\s+\S+"
 
 highlight link gtdHeading Function

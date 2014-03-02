@@ -218,28 +218,37 @@ colorscheme molokai
 "colorscheme pyte
 syntax enable
 
+" GTD {{{1
+let g:GTD_path = "~/Google Drive/GTD"
+if !isdirectory(glob(g:GTD_path))
+    let g:GTD_path = "~/GTD"
+endif
+
+" Create global mapping to go to "today" daily page.
+function! EditTodayDaily()
+    let l:daily_fname = g:GTD_path . strftime("/daily/%Y-%m-%d.txt")
+    execute "tab drop" fnameescape(expand(l:daily_fname))
+"    if line('$') == 1 && getline(1) == ''
+"      exe "normal iOBJsTODAYDONEgg"
+"    endif
+endfunction
+noremap <Leader>t :call EditTodayDaily()<cr>
+
+" default template
+augroup gtdgroup
+  autocmd!
+  autocmd BufNewFile */GTD/daily/*.txt execute "0r" fnameescape(join([g:GTD_path, "/daily/template.txt"], ""))
+augroup END
+
 " misc {{{1
 
 " TODO: is this needed?
 runtime macros/matchit.vim
 
-" Create global mapping to go to "today" daily page.
-function! EditTodayDaily()
-    let l:GTD_path = "~/Google Drive/GTD"
-    if !isdirectory(glob(l:GTD_path))
-        let l:GTD_path = "~/GTD"
-    endif
-    let l:daily_fname = l:GTD_path . strftime("/daily/%Y-%m-%d.txt")
-
-    execute "tabnew" fnameescape(expand(l:daily_fname))
-    if line('$') == 1 && getline(1) == ''
-      exe "normal iOBJsTODAYDONEgg"
-    endif
-endfunction
-noremap <Leader>t :call EditTodayDaily()<cr>
-
-let mapleader = ","
-let maplocalleader = "\\"
+" One is bound to use the LocalLeader more often (it is specific to the
+" buffer/file), so it should use the easier-to-reach character.
+let mapleader = "\\"
+let maplocalleader = ","
 
 " Quick edit of vimrc file
 nnoremap <Leader>ev :vsplit $MYVIMRC<cr>
