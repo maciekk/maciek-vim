@@ -224,13 +224,21 @@ if !isdirectory(glob(g:GTD_path))
     let g:GTD_path = "~/GTD"
 endif
 
+function! GtdFindSection(section)
+    call cursor(1, 1)
+    let l:loc = search("^\\S.*" . a:section)
+    if l:loc > 0
+        call cursor(l:loc, 1)
+    endif
+endfunction
+
 " Create global mapping to go to "today" daily page.
 function! EditTodayDaily()
     let l:daily_fname = g:GTD_path . strftime("/daily/%Y-%m-%d.txt")
+    " TODO: this creates unwanted new tab when current instance of buffer is
+    " in split window
     execute "tab drop" fnameescape(expand(l:daily_fname))
-"    if line('$') == 1 && getline(1) == ''
-"      exe "normal iOBJsTODAYDONEgg"
-"    endif
+    call GtdFindSection("now")
 endfunction
 noremap <Leader>t :call EditTodayDaily()<cr>
 
