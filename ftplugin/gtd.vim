@@ -64,17 +64,45 @@ endfunction
 
 function! GtdMoveToNow(lnum)
   m?^@now$?<CR>
-  call cursor(a:lnum, 2)
+  call cursor(a:lnum + 1, 2)
 endfunction
 
 function! GtdMoveToBlocked(lnum)
   m?^@blocked$?<CR>
-  call cursor(a:lnum, 2)
+  call cursor(a:lnum + 1, 2)
 endfunction
 
 function! GtdMoveToZ(lnum)
   m'z<CR>
-  call cursor(a:lnum, 2)
+  " TODO: use just a:lnum if mark z is AFTER a:lnum
+  call cursor(a:lnum + 1, 2)
+endfunction
+
+" Return line number of section head, or 0 if not found.
+function! GtdFindSection(section)
+  return search("^" . a:section . "$", "wn")
+endfunction
+
+" Move current line to top of given section.
+function! GtdMoveLineToSectionTop(section)
+  let section_line = GtdFindSection(a:section)
+  if (section_line == 0)
+    echo "Unknown section ".a:section
+    return
+  endif
+  exec "m" section_line
+endfunction
+
+function! GtdMoveLineToSectionEnd(section)
+  let section_line = GtdFindSection(a:section)
+  if (section_line == 0)
+    echo "Unknown section ".a:section
+    return
+  endif
+  norm dd
+  call cursor(section_line, 1)
+  norm }
+  norm P
 endfunction
 
 " priority-based sorting (from todo.vim type) {{{1

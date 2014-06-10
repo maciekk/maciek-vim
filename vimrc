@@ -40,6 +40,7 @@ Bundle 'utl.vim'
 Bundle 'insanum/votl'
 Bundle 'vimwiki'
 Bundle 'chrisbra/NrrwRgn'
+Bundle 'freitass/todo.txt-vim'
 
 " snippets
 Bundle 'SirVer/ultisnips'
@@ -57,7 +58,7 @@ Bundle 'mattn/emmet-vim'
 Bundle 'vim-scripts/VOoM'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
-Bundle 'jnwhiteh/vim-golang'
+"Bundle 'jnwhiteh/vim-golang'
 Bundle 'majutsushi/tagbar'
 Bundle 'thinca/vim-fontzoom'
 Bundle 'tpope/vim-fugitive'
@@ -151,13 +152,16 @@ map ,,v :VoomToggle vimwiki<CR>
 
 map ,,w :wall<CR>
 
-" collapse all folds except the one where cursor is
+" Collapse all folds except the one where cursor is.
 map ,zz zMzv
 map ,zj zMjzv
 map ,zk zMkzv
 
+" Swap keys for filtered/unfiltered history scroll.
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+cnoremap <Up> <C-p>
+cnoremap <Down> <C-n>
 
 map ,fb :FufBuffer<CR>
 map ,fd :FufDir<CR>
@@ -216,6 +220,7 @@ endif
 " cosmetics {{{1
 colorscheme molokai
 "colorscheme pyte
+"colorscheme fine_blue
 syntax enable
 
 " GTD {{{1
