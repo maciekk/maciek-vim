@@ -262,5 +262,8 @@ let maplocalleader = ","
 nnoremap <Leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <Leader>sv :source $MYVIMRC<cr>
 
+" Quick access to scratch file
+nnoremap <Leader>es :vsplit ~/secure/scratch.txt<cr>
+
 " }}}1
 " vim:fdm=marker:
