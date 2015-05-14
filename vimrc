@@ -13,75 +13,78 @@ filetype on
 filetype off                   " required!
 
 if has ('win32')
-    set runtimepath+=$HOME/vimfiles/bundle/vundle/
+    set runtimepath+=$HOME/vimfiles/bundle/Vundle.vim
 else
-    set runtimepath+=$HOME/.vim/bundle/vundle/
+    set runtimepath+=$HOME/.vim/bundle/Vundle.vim
 endif
-call vundle#rc()
+"call vundle#rc()
+call vundle#begin()
 
 " let Vundle manage Vundle
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 " bundles {{{1
 "
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'bufexplorer.zip'
-Bundle 'kien/ctrlp.vim'
-Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'kien/tabman.vim'
-Bundle 'matchit.zip'
-Bundle 'mileszs/ack.vim'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'sjl/gundo.vim'
-"Bundle 'TVO--The-Vim-Outliner'
-Bundle 'utl.vim'
-"Bundle 'VimOutliner'
-Bundle 'insanum/votl'
-Bundle 'vimwiki'
-Bundle 'chrisbra/NrrwRgn'
-Bundle 'freitass/todo.txt-vim'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'bufexplorer.zip'
+Plugin 'kien/ctrlp.vim'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'kien/tabman.vim'
+Plugin 'matchit.zip'
+Plugin 'mileszs/ack.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'sjl/gundo.vim'
+"Plugin 'TVO--The-Vim-Outliner'
+Plugin 'utl.vim'
+"Plugin 'VimOutliner'
+Plugin 'insanum/votl'
+Plugin 'vimwiki'
+Plugin 'chrisbra/NrrwRgn'
+Plugin 'freitass/todo.txt-vim'
 
 " snippets
-Bundle 'SirVer/ultisnips'
-Bundle 'acustodioo/vim-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'acustodioo/vim-snippets'
 
 " outline stuff; dump?
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/neocomplcache'
-Bundle 'h1mesuke/unite-outline'
+Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/neocomplcache'
+Plugin 'h1mesuke/unite-outline'
 
 " HTML
-Bundle 'mattn/emmet-vim'
+Plugin 'mattn/emmet-vim'
 
 " learn more about these
-Bundle 'vim-scripts/VOoM'
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-"Bundle 'jnwhiteh/vim-golang'
-Bundle 'majutsushi/tagbar'
-Bundle 'thinca/vim-fontzoom'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
+Plugin 'vim-scripts/VOoM'
+Plugin 'L9'
+Plugin 'FuzzyFinder'
+"Plugin 'jnwhiteh/vim-golang'
+Plugin 'majutsushi/tagbar'
+Plugin 'thinca/vim-fontzoom'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
 
 " suggested by YouCompleteMe (corp)
-Bundle 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 
 " to try
-"Bundle 'xolox/vim-session'
-"Bundle 'techlivezheng/vim-plugin-minibufexpl'
-"Bundle 'taglist.vim'  " superseded by 'tagbar'?
+"Plugin 'xolox/vim-session'
+"Plugin 'techlivezheng/vim-plugin-minibufexpl'
+"Plugin 'taglist.vim'  " superseded by 'tagbar'?
 
 " Org mode in Vim
 "https://github.com/hsitz/VimOrganizer
-"Bundle 'jceb/vim-orgmode'
+"Plugin 'jceb/vim-orgmode'
 
 " color themes
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'tomasr/molokai'
-"Bundle 'flazz/vim-colorschemes'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'tomasr/molokai'
+"Plugin 'flazz/vim-colorschemes'
 
-filetype plugin indent on     " required!
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 " or
 " filetype plugin on          " to not use the indentation settings set by plugins
 
