@@ -1,7 +1,7 @@
 " Maciej's Vim setup
 "
 " Version controlled here:
-"   https://code.google.com/p/maciek-vim/
+"   https://github.com/maciekk/vimrc
 
 " Vundle setup {{{1
 set nocompatible               " be iMproved
@@ -18,6 +18,7 @@ else
     let $MYVIMDIR="$HOME/.vim"
 endif
 set runtimepath+=$MYVIMDIR
+
 let &runtimepath.=','.$MYVIMDIR.'/bundle/Vundle.vim'
 call vundle#begin()
 
@@ -26,6 +27,11 @@ Plugin 'gmarik/vundle'
 
 " bundles {{{1
 "
+" Main bindings to remember/use:
+" - \be : BufferExplorer
+" - <C-p> : CtrlP
+" - \mt | \mf : Tabman
+" - :Note : note taking
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'bufexplorer.zip'
 Plugin 'kien/ctrlp.vim'
@@ -244,6 +250,7 @@ function! GtdFindSection(section)
 endfunction
 
 " Create global mapping to go to "today" daily page.
+" TODO: DEPRECATED
 function! EditTodayDaily()
     let l:daily_fname = g:GTD_path . strftime("/daily/%Y-%m-%d.txt")
     " TODO: this creates unwanted new tab when current instance of buffer is
