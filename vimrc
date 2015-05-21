@@ -13,11 +13,12 @@ filetype on
 filetype off                   " required!
 
 if has ('win32')
-    set runtimepath+=$HOME/vimfiles/bundle/Vundle.vim
+    let $MYVIMDIR="$HOME/vimfiles"
 else
-    set runtimepath+=$HOME/.vim/bundle/Vundle.vim
+    let $MYVIMDIR="$HOME/.vim"
 endif
-"call vundle#rc()
+set runtimepath+=$MYVIMDIR
+let &runtimepath.=','.$MYVIMDIR.'/bundle/Vundle.vim'
 call vundle#begin()
 
 " let Vundle manage Vundle
@@ -64,6 +65,8 @@ Plugin 'majutsushi/tagbar'
 Plugin 'thinca/vim-fontzoom'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
 
 " suggested by YouCompleteMe (corp)
 Plugin 'scrooloose/syntastic'
@@ -146,14 +149,10 @@ set backupdir=~/.bak,~/tmp,.,/tmp
 
 " mappings {{{1
 command! W :w  " in case we didn't let go of Shift fast enough
-
-map \bi :source $MYVIMRC<bar>:BundleInstall<CR>
-map \bc :BundleClean<CR>
-map \bu :BundleUpdate<CR>
+map <C-s> :w<CR>
+imap <C-s> <C-o>:w<CR>
 
 map ,,v :VoomToggle vimwiki<CR>
-
-map ,,w :wall<CR>
 
 " Collapse all folds except the one where cursor is.
 map ,zz zMzv
@@ -193,10 +192,11 @@ let g:rbpt_colorpairs = [
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
 
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+"" TODO: Temporary
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
 
 " Vimwiki {{{2
 " NOTE: set / override g:vimwiki_list in local.vim
@@ -208,6 +208,9 @@ let g:Powerline_symbols = 'compatible'
 
 " CtrlP {{{2
 let g:ctrlp_cmd = 'CtrlPBuffer'
+
+" Notes {{{2
+:let g:notes_directories = ['~/Google Drive/Notes']
 
 " local configs {{{1
 if has('win32') || has('win64') || has('win16')
@@ -258,6 +261,8 @@ augroup END
 
 " misc {{{1
 
+source $MYVIMDIR/abbreviations.vim
+
 " TODO: is this needed?
 runtime macros/matchit.vim
 
@@ -267,7 +272,7 @@ let mapleader = "\\"
 let maplocalleader = ","
 
 " Quick edit of vimrc file
-nnoremap <Leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <Leader>ev :vsplit ~/.vim/vimrc<cr>
 nnoremap <Leader>sv :source $MYVIMRC<cr>
 
 " Quick access to scratch file
