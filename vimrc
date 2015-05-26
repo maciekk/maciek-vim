@@ -278,6 +278,12 @@ runtime macros/matchit.vim
 let mapleader = "\\"
 let maplocalleader = ","
 
+" todo.txt additional bindings
+augroup todotxtgroup
+    autocmd!
+    autocmd BufNewFile,BufRead,BufEnter todo.txt so <sfile>:h/todo-extra.vim
+augroup END
+
 " Quick edit of vimrc file
 nnoremap <Leader>ev :vsplit ~/.vim/vimrc<cr>
 nnoremap <Leader>sv :source $MYVIMRC<cr>
