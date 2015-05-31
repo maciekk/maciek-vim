@@ -3,13 +3,21 @@ if exists("b:current_syntax")
 endif
 
 syntax match gtdHeading "\v^\S+"
-syntax match gtdPriority "\v^\s+\S+"
-syntax match gtdContext "\v\@\S+"
-syntax match gtdProject "\v\s\+\S+"
+highlight link gtdHeading Title
 
-highlight link gtdHeading Function
-highlight link gtdPriority Comment
-highlight link gtdContext String
-highlight link gtdProject Number
+syntax match gtdStatusWIP "\v\s*WIP\s"
+syntax match gtdStatusBlocked "\v\s*BLOCKED\s"
+syntax match gtdStatusDone "\v\s*DONE\s"
+highlight link gtdStatusWIP Character
+highlight link gtdStatusBlocked Comment
+highlight link gtdStatusDone Function
+
+syntax match gtdPriority "\v\[[A-C]\]"
+highlight link gtdPriority Error
+
+syntax match gtdContext "\v\@\S+"
+syntax match gtdProject "\v\s#\S+"
+highlight link gtdContext Number
+highlight link gtdProject Define
 
 let b:current_syntax = "gtd"
