@@ -161,6 +161,7 @@ imap <C-s> <C-o>:w<CR>
 map ,,v :VoomToggle vimwiki<CR>
 
 " Collapse all folds except the one where cursor is.
+map zz zMzv
 map ,zz zMzv
 map ,zj zMjzv
 map ,zk zMkzv
@@ -290,6 +291,9 @@ nnoremap <Leader>sv :source $MYVIMRC<cr>
 
 " Quick access to scratch file
 nnoremap <Leader>es :vsplit ~/secure/scratch.txt<cr>
+
+" other
+autocmd Filetype gtd setlocal fdm=indent
 
 " }}}1
 " vim:fdm=marker:
