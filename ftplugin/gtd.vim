@@ -217,8 +217,9 @@ nnoremap <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<CR>
 
 nnoremap <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
 
-nnoremap <buffer> <D-Up> :m -2<CR>
-nnoremap <buffer> <D-Down> :m +1<CR>
+" TODO: why do folds keep closing withou the 'zv'?
+nnoremap <buffer> <D-Up> :m -2<CR>:norm! zv<CR>
+nnoremap <buffer> <D-Down> :m +1<CR>:norm! zv<CR>
 
 " HACK: unmap corpdoc macro
 silent! unmap <buffer> <LocalLeader>df
