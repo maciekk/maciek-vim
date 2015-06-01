@@ -2,13 +2,15 @@
 " Maciej Kalisiak <mkalisiak@gmail.com>
 "
 " TODO:
-" - switch to using '' for regexs, to avoid extra escaping
+" - switch "BLOCKED" to "WAIT"?
+" - better keybinding for switching to "BLOCKED"
 " - add "NEXT" status?
-" - make into proper Vim plugin
+" - make into proper Vim plugin (:he write-plugin)
 " - make into separate Github project too, so can use w/Vundle
 " - try unittests; Vader seems best? (https://github.com/junegunn/vader.vim)
 " - change 'foldtext' to reflect # of items in that list
 " - special syntax colouring for #MIT?
+" - comply with http://google.github.io/styleguide/vimscriptguide.xml
 
 " skip if already loaded. {{{1
 if exists("b:did_gtd_ftplugin")
@@ -25,10 +27,10 @@ let s:sec_done = "DONE"
 
 " motion funcs {{{1
 func! s:GtdJumpTo(sec_name)
-    norm 0gg
+    norm! 0gg
     if search('^' . a:sec_name . '$', 'c')
         " Section WAS found; advance to first task in it.
-        norm jzMzo
+        norm! jzMzo
     endif
 endfunc
 
@@ -194,26 +196,29 @@ setlocal autoindent
 " bindings {{{1
 
 " priority-based sorting (from todo.vim type)
-map <silent> <buffer> <LocalLeader>s vipoj:sort /\S/r<CR>
+nnoremap <silent> <buffer> <LocalLeader>s vipoj:sort /\S/r<CR>
 
-map <buffer><silent> <LocalLeader>jn :call GtdJumpToNow()<CR>
-map <buffer><silent> <LocalLeader>jt :call GtdJumpToToday()<CR>
-map <buffer><silent> <LocalLeader>ji :call GtdJumpToInbox()<CR>
-map <buffer><silent> <LocalLeader>jb :call GtdJumpToBacklog()<CR>
-map <buffer><silent> <LocalLeader>jd :call GtdJumpToDone()<CR>
+nnoremap <buffer><silent> <LocalLeader>jn :call GtdJumpToNow()<CR>
+nnoremap <buffer><silent> <LocalLeader>jt :call GtdJumpToToday()<CR>
+nnoremap <buffer><silent> <LocalLeader>ji :call GtdJumpToInbox()<CR>
+nnoremap <buffer><silent> <LocalLeader>jb :call GtdJumpToBacklog()<CR>
+nnoremap <buffer><silent> <LocalLeader>jd :call GtdJumpToDone()<CR>
 
-map <buffer> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
-map <buffer> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>
-map <buffer> <LocalLeader>c :call <SID>GtdChangePrio('C')<CR>
-map <buffer> <LocalLeader><space> :call <SID>GtdChangePrio('')<CR>
+nnoremap <buffer> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
+nnoremap <buffer> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>
+nnoremap <buffer> <LocalLeader>c :call <SID>GtdChangePrio('C')<CR>
+nnoremap <buffer> <LocalLeader><space> :call <SID>GtdChangePrio('')<CR>
 
-map <buffer> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
-map <buffer> <LocalLeader>B :call <SID>GtdChangeStatus('BLOCKED')<CR>
-map <buffer> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
+nnoremap <buffer> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
+nnoremap <buffer> <LocalLeader>B :call <SID>GtdChangeStatus('BLOCKED')<CR>
+nnoremap <buffer> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
 
-map <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<CR>
+nnoremap <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<CR>
 
-map <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
+nnoremap <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
+
+nnoremap <buffer> <D-Up> :m -2<CR>
+nnoremap <buffer> <D-Down> :m +1<CR>
 
 " HACK: unmap corpdoc macro
 silent! unmap <buffer> <LocalLeader>df
