@@ -54,9 +54,47 @@ func! GtdJumpToDone()
     call s:GtdJumpTo(s:sec_done)
 endfunc
 
-" Return line number of section head, or 0 if not found.
-func! GtdFindSection(section)
-  return search('^' . a:section . '$', 'wn')
+" Task move functions {{{1
+func! s:GtdMoveTo(sec_name)
+    " Save starting location.
+    let save_cursor = getcurpos()
+
+    " First, find line number of where to move the line to.
+    call cursor(1,1)
+    let dest = search('^'.a:sec_name.'$', 'c')
+    if dest == 0
+        throw 'Could not find section named '.a:sec_name
+    endif
+
+    " Now do the move.
+    call setpos('.', save_cursor)
+    echo 'Moving line to: '.dest
+    exec 'm '.dest
+
+    " Bring back cursor to starting point, in case want to move more items.
+    let save_cursor[1] += 1
+    call setpos('.', save_cursor)
+    norm! zo
+endfunc
+
+func! GtdMoveToNow()
+    call s:GtdMoveTo(s:sec_now)
+endfunc
+
+func! GtdMoveToToday()
+    call s:GtdMoveTo(s:sec_today)
+endfunc
+
+func! GtdMoveToInbox()
+    call s:GtdMoveTo(s:sec_inbox)
+endfunc
+
+func! GtdMoveToBacklog()
+    call s:GtdMoveTo(s:sec_backlog)
+endfunc
+
+func! GtdMoveToDone()
+    call s:GtdMoveTo(s:sec_done)
 endfunc
 
 " sorting {{{1
@@ -203,6 +241,12 @@ nnoremap <buffer><silent> <LocalLeader>jt :call GtdJumpToToday()<CR>
 nnoremap <buffer><silent> <LocalLeader>ji :call GtdJumpToInbox()<CR>
 nnoremap <buffer><silent> <LocalLeader>jb :call GtdJumpToBacklog()<CR>
 nnoremap <buffer><silent> <LocalLeader>jd :call GtdJumpToDone()<CR>
+
+nnoremap <buffer><silent> <LocalLeader>mn :call GtdMoveToNow()<CR>
+nnoremap <buffer><silent> <LocalLeader>mt :call GtdMoveToToday()<CR>
+nnoremap <buffer><silent> <LocalLeader>mi :call GtdMoveToInbox()<CR>
+nnoremap <buffer><silent> <LocalLeader>mb :call GtdMoveToBacklog()<CR>
+nnoremap <buffer><silent> <LocalLeader>md :call GtdMoveToDone()<CR>
 
 nnoremap <buffer> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
 nnoremap <buffer> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>

@@ -12,8 +12,12 @@ highlight link gtdStatusWIP Character
 highlight link gtdStatusBlocked Comment
 highlight link gtdStatusDone Function
 
-syntax match gtdPriority "\v\[[A-C]\]"
-highlight link gtdPriority Error
+syntax match gtdHighPriority "\[A\]"
+syntax match gtdMediumPriority "\[B\]"
+syntax match gtdLowPriority "\[C\]"
+highlight link gtdHighPriority ErrorMsg
+highlight link gtdMediumPriority Error
+highlight link gtdLowPriority Comment
 
 syntax match gtdContext "\v\@\S+"
 syntax match gtdProject "\v\s#\S+"
