@@ -2,7 +2,6 @@
 " Maciej Kalisiak <mkalisiak@gmail.com>
 "
 " TODO:
-" - make helper functions script-local (i.e., prefix with 's:')
 " - switch to using '' for regexs, to avoid extra escaping
 " - add "NEXT" status?
 " - make into proper Vim plugin
@@ -25,62 +24,37 @@ let s:sec_backlog = "BACKLOG"
 let s:sec_done = "DONE"
 
 " motion funcs {{{1
-func! GtdJumpTo(sec_name)
+func! s:GtdJumpTo(sec_name)
     norm 0gg
-    call search("^" . a:sec_name . "$")
+    if search("^" . a:sec_name . "$", "c")
+        " Section WAS found; advance to first task in it.
+        norm jzMzo
+    endif
 endfunc
 
 func! GtdJumpToNow()
-    call GtdJumpTo(s:sec_now)
+    call s:GtdJumpTo(s:sec_now)
 endfunc
 
 func! GtdJumpToToday()
-    call GtdJumpTo(s:sec_today)
+    call s:GtdJumpTo(s:sec_today)
 endfunc
 
 func! GtdJumpToInbox()
-    call GtdJumpTo(s:sec_inbox)
+    call s:GtdJumpTo(s:sec_inbox)
 endfunc
 
 func! GtdJumpToBacklog()
-    call GtdJumpTo(s:sec_backlog)
+    call s:GtdJumpTo(s:sec_backlog)
 endfunc
 
 func! GtdJumpToDone()
-    call GtdJumpTo(s:sec_done)
-endfunc
-
-func! GtdMoveToZ(lnum)
-  m'z<CR>
-  " TODO: use just a:lnum if mark z is AFTER a:lnum
-  call cursor(a:lnum + 1, 2)
+    call s:GtdJumpTo(s:sec_done)
 endfunc
 
 " Return line number of section head, or 0 if not found.
 func! GtdFindSection(section)
   return search("^" . a:section . "$", "wn")
-endfunc
-
-" Move current line to top of given section.
-func! GtdMoveLineToSectionTop(section)
-  let section_line = GtdFindSection(a:section)
-  if (section_line == 0)
-    echo "Unknown section ".a:section
-    return
-  endif
-  exec "m" section_line
-endfunc
-
-func! GtdMoveLineToSectionEnd(section)
-  let section_line = GtdFindSection(a:section)
-  if (section_line == 0)
-    echo "Unknown section ".a:section
-    return
-  endif
-  norm dd
-  call cursor(section_line, 1)
-  norm }
-  norm P
 endfunc
 
 " sorting {{{1
@@ -90,16 +64,16 @@ endfunc
 " - secondary key is prio, in this order: A, B, [none], C
 "   (absence of priority is equivalent to B)
 func! GtdSortSection()
-    let section_extent = s:section_extents()
+    let section_extent = s:GtdSectionExtens()
     let content = getline(section_extent[0], section_extent[1])
-    call sort(content, "GtdSortFn")
+    call sort(content, "s:GtdSortFn")
     " TODO: only setline() if content changed.
     call setline(section_extent[0], content)
 endfunc
 
 " Return [start, end] line numbers of current section.
 " Does NOT include the section heading, only actual tasks.
-func! s:section_extents()
+func! s:GtdSectionExtens()
     let hit = search('^\S', 'bcnW')
     if hit == 0
         throw "Invalid section: no leading section title."
@@ -116,15 +90,15 @@ func! s:section_extents()
 endfunc
 
 " Task sort function.
-func! GtdSortFn(i1, i2)
-    let status_prio1 = GtdGetStatusPrio(a:i1)
-    let status_prio2 = GtdGetStatusPrio(a:i2)
+func! s:GtdSortFn(i1, i2)
+    let status_prio1 = s:GtdGetStatusPrio(a:i1)
+    let status_prio2 = s:GtdGetStatusPrio(a:i2)
 
     " Convert to numeric, for ease of sorting.
-    let status_pos1 = GtdStatusSortPosition(status_prio1[0])
-    let status_pos2 = GtdStatusSortPosition(status_prio2[0])
-    let prio_pos1 = GtdPrioSortPosition(status_prio1[1])
-    let prio_pos2 = GtdPrioSortPosition(status_prio2[1])
+    let status_pos1 = s:GtdStatusSortPosition(status_prio1[0])
+    let status_pos2 = s:GtdStatusSortPosition(status_prio2[0])
+    let prio_pos1 = s:GtdPrioSortPosition(status_prio1[1])
+    let prio_pos2 = s:GtdPrioSortPosition(status_prio2[1])
 
     if status_pos1 < status_pos2
         return -1
@@ -143,7 +117,7 @@ func! GtdSortFn(i1, i2)
 endfunc
 
 " Extract the status and priority elements of the task.
-func! GtdGetStatusPrio(line)
+func! s:GtdGetStatusPrio(line)
     let status_prio = matchlist(a:line, '\s*\(WIP\|BLOCKED\|DONE\)\?\s\(\[[A-C]\]\)\?')
     if empty(status_prio)
         " If no hits on any groups, matchlist() returns a plain '[]'
@@ -159,7 +133,7 @@ func! GtdGetStatusPrio(line)
     return status_prio
 endfunc
 
-func! GtdStatusSortPosition(status)
+func! s:GtdStatusSortPosition(status)
     if a:status == "BLOCKED"
         return 0
     elseif a:status == "WIP"
@@ -173,7 +147,7 @@ func! GtdStatusSortPosition(status)
     endif
 endfunc
 
-func! GtdPrioSortPosition(prio)
+func! s:GtdPrioSortPosition(prio)
     if a:prio == "A"
         return 0
     elseif a:prio == "B"
@@ -190,7 +164,7 @@ endfunc
 " change priority or status {{{1
 
 " Change status of task on current line.
-func! GtdChangeStatus(status)
+func! s:GtdChangeStatus(status)
     let save_cursor = getcurpos()
     " First, remove any status present. Ignore if not present.
     s/^\(\s*\)\(DONE\|WIP\|BLOCKED\) /\1/e
@@ -199,7 +173,7 @@ func! GtdChangeStatus(status)
     call setpos('.', save_cursor)
 endfunc
 
-func! GtdChangePrio(prio)
+func! s:GtdChangePrio(prio)
     let save_cursor = getcurpos()
     let prio_str = ""
     if !empty(a:prio)
@@ -222,23 +196,20 @@ setlocal autoindent
 " priority-based sorting (from todo.vim type)
 map <silent> <buffer> <LocalLeader>s vipoj:sort /\S/r<CR>
 
-" move item to mark `z
-map <buffer> <LocalLeader>. :call GtdMoveToZ(line("."))<CR>
+map <buffer><silent> <LocalLeader>jn :call GtdJumpToNow()<CR>
+map <buffer><silent> <LocalLeader>jt :call GtdJumpToToday()<CR>
+map <buffer><silent> <LocalLeader>ji :call GtdJumpToInbox()<CR>
+map <buffer><silent> <LocalLeader>jb :call GtdJumpToBacklog()<CR>
+map <buffer><silent> <LocalLeader>jd :call GtdJumpToDone()<CR>
 
-map <buffer> <LocalLeader>jn :call GtdJumpToNow()<CR>
-map <buffer> <LocalLeader>jt :call GtdJumpToToday()<CR>
-map <buffer> <LocalLeader>ji :call GtdJumpToInbox()<CR>
-map <buffer> <LocalLeader>jb :call GtdJumpToBacklog()<CR>
-map <buffer> <LocalLeader>jd :call GtdJumpToDone()<CR>
+map <buffer> <LocalLeader>a :call <SID>GtdChangePrio("A")<CR>
+map <buffer> <LocalLeader>b :call <SID>GtdChangePrio("B")<CR>
+map <buffer> <LocalLeader>c :call <SID>GtdChangePrio("C")<CR>
+map <buffer> <LocalLeader><space> :call <SID>GtdChangePrio("")<CR>
 
-map <buffer> <LocalLeader>a :call GtdChangePrio("A")<CR>
-map <buffer> <LocalLeader>b :call GtdChangePrio("B")<CR>
-map <buffer> <LocalLeader>c :call GtdChangePrio("C")<CR>
-map <buffer> <LocalLeader><space> :call GtdChangePrio("")<CR>
-
-map <buffer> <LocalLeader>w :call GtdChangeStatus("WIP")<CR>
-map <buffer> <LocalLeader>B :call GtdChangeStatus("BLOCKED")<CR>
-map <buffer> <LocalLeader>d :call GtdChangeStatus("DONE")<CR>
+map <buffer> <LocalLeader>w :call <SID>GtdChangeStatus("WIP")<CR>
+map <buffer> <LocalLeader>B :call <SID>GtdChangeStatus("BLOCKED")<CR>
+map <buffer> <LocalLeader>d :call <SID>GtdChangeStatus("DONE")<CR>
 
 map <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<CR>
 
@@ -249,15 +220,16 @@ silent! unmap <buffer> <LocalLeader>df
 
 " better indentation-based folding {{{1
 setlocal fdm=expr
-setlocal foldexpr=GetGtdFold(v:lnum)
+setlocal foldexpr=s:GetGtdFold(v:lnum)
 
 " Based on ideas from
 " http://learnvimscriptthehardway.stevelosh.com/chapters/49.html
-func! IndentLevel(lnum)
+" TODO: this is dead code?
+func! s:IndentLevel(lnum)
     return indent(a:lnum) / &shiftwidth
 endfunc
 
-func! NextNonBlankLine(lnum)
+func! s:NextNonBlankLine(lnum)
     let numlines = line('$')
     let current = a:lnum + 1
     while current <= numlines
@@ -269,14 +241,15 @@ func! NextNonBlankLine(lnum)
     return -2
 endfunc
 
-func! GetGtdFold(lnum)
+" TODO: this is dead code?
+func! s:GetGtdFold(lnum)
     " Blank lines have indent of NEXT line.
     if getline(a:lnum) =~? '\v^\s*$'
         return '-1'
     endif
 
-    let this_indent = IndentLevel(a:lnum)
-    let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
+    let this_indent = s:IndentLevel(a:lnum)
+    let next_indent = s:IndentLevel(s:NextNonBlankLine(a:lnum))
 
     if next_indent == this_indent
         return this_indent
