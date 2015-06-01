@@ -281,7 +281,7 @@ let maplocalleader = ","
 " todo.txt additional bindings
 augroup todotxtgroup
     autocmd!
-    autocmd BufNewFile,BufRead,BufEnter todo.txt so <sfile>:h/todo-extra.vim
+    autocmd BufNewFile,BufRead,BufEnter todo.txt so $MYVIMDIR/todo-extra.vim
 augroup END
 
 " Quick edit of vimrc file
