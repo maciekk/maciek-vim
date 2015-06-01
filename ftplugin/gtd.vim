@@ -26,7 +26,7 @@ let s:sec_done = "DONE"
 " motion funcs {{{1
 func! s:GtdJumpTo(sec_name)
     norm 0gg
-    if search("^" . a:sec_name . "$", "c")
+    if search('^' . a:sec_name . '$', 'c')
         " Section WAS found; advance to first task in it.
         norm jzMzo
     endif
@@ -54,7 +54,7 @@ endfunc
 
 " Return line number of section head, or 0 if not found.
 func! GtdFindSection(section)
-  return search("^" . a:section . "$", "wn")
+  return search('^' . a:section . '$', 'wn')
 endfunc
 
 " sorting {{{1
@@ -66,7 +66,7 @@ endfunc
 func! GtdSortSection()
     let section_extent = s:GtdSectionExtens()
     let content = getline(section_extent[0], section_extent[1])
-    call sort(content, "s:GtdSortFn")
+    call sort(content, 's:GtdSortFn')
     " TODO: only setline() if content changed.
     call setline(section_extent[0], content)
 endfunc
@@ -76,7 +76,7 @@ endfunc
 func! s:GtdSectionExtens()
     let hit = search('^\S', 'bcnW')
     if hit == 0
-        throw "Invalid section: no leading section title."
+        throw 'Invalid section: no leading section title.'
     endif
     let start = hit + 1
 
@@ -121,7 +121,7 @@ func! s:GtdGetStatusPrio(line)
     let status_prio = matchlist(a:line, '\s*\(WIP\|BLOCKED\|DONE\)\?\s\(\[[A-C]\]\)\?')
     if empty(status_prio)
         " If no hits on any groups, matchlist() returns a plain '[]'
-        let status_prio = ["", ""]
+        let status_prio = ['', '']
     else
         " Discard the 0th element (whole match).
         let status_prio = status_prio[1:2]
@@ -134,30 +134,30 @@ func! s:GtdGetStatusPrio(line)
 endfunc
 
 func! s:GtdStatusSortPosition(status)
-    if a:status == "BLOCKED"
+    if a:status == 'BLOCKED'
         return 0
-    elseif a:status == "WIP"
+    elseif a:status == 'WIP'
         return 1
-    elseif a:status == ""
+    elseif a:status == ''
         return 2
-    elseif a:status == "DONE"
+    elseif a:status == 'DONE'
         return 3
     else
-        throw "UNKNOWN_STATUS: ".a:status
+        throw 'UNKNOWN_STATUS: '.a:status
     endif
 endfunc
 
 func! s:GtdPrioSortPosition(prio)
-    if a:prio == "A"
+    if a:prio == 'A'
         return 0
-    elseif a:prio == "B"
+    elseif a:prio == 'B'
         return 1
-    elseif a:prio == ""
+    elseif a:prio == ''
         return 2
-    elseif a:prio == "C"
+    elseif a:prio == 'C'
         return 3
     else
-        throw "UNKNOWN_PRIORITY: ".a:prio
+        throw 'UNKNOWN_PRIORITY: '.a:prio
     endif
 endfunc
 
@@ -169,20 +169,20 @@ func! s:GtdChangeStatus(status)
     " First, remove any status present. Ignore if not present.
     s/^\(\s*\)\(DONE\|WIP\|BLOCKED\) /\1/e
     " Now add the status.
-    exec "s/^\\(\\s*\\)\\(.*\\)/\\1".a:status." \\2/"
+    exec 's/^\(\s*\)\(.*\)/\1'.a:status.' \2/'
     call setpos('.', save_cursor)
 endfunc
 
 func! s:GtdChangePrio(prio)
     let save_cursor = getcurpos()
-    let prio_str = ""
+    let prio_str = ''
     if !empty(a:prio)
-        let prio_str = "[".a:prio."] "
+        let prio_str = '['.a:prio.'] '
     endif
     " First, remove any prio present. Ignore if not present.
     s/^\(\s*\)\(DONE\|WIP\|BLOCKED\)\? \[[A-C]\] /\1\2 /e
     " Now add the prio.
-    exec "s/^\\(\\s*\\)\\(DONE\\|WIP\\|BLOCKED\\)\\? /\\1\\2 ".prio_str."/"
+    exec 's/^\(\s*\)\(DONE\|WIP\|BLOCKED\)\? /\1\2 '.prio_str.'/'
     call setpos('.', save_cursor)
 endfunc
 
@@ -202,14 +202,14 @@ map <buffer><silent> <LocalLeader>ji :call GtdJumpToInbox()<CR>
 map <buffer><silent> <LocalLeader>jb :call GtdJumpToBacklog()<CR>
 map <buffer><silent> <LocalLeader>jd :call GtdJumpToDone()<CR>
 
-map <buffer> <LocalLeader>a :call <SID>GtdChangePrio("A")<CR>
-map <buffer> <LocalLeader>b :call <SID>GtdChangePrio("B")<CR>
-map <buffer> <LocalLeader>c :call <SID>GtdChangePrio("C")<CR>
-map <buffer> <LocalLeader><space> :call <SID>GtdChangePrio("")<CR>
+map <buffer> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
+map <buffer> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>
+map <buffer> <LocalLeader>c :call <SID>GtdChangePrio('C')<CR>
+map <buffer> <LocalLeader><space> :call <SID>GtdChangePrio('')<CR>
 
-map <buffer> <LocalLeader>w :call <SID>GtdChangeStatus("WIP")<CR>
-map <buffer> <LocalLeader>B :call <SID>GtdChangeStatus("BLOCKED")<CR>
-map <buffer> <LocalLeader>d :call <SID>GtdChangeStatus("DONE")<CR>
+map <buffer> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
+map <buffer> <LocalLeader>B :call <SID>GtdChangeStatus('BLOCKED')<CR>
+map <buffer> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
 
 map <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<CR>
 
