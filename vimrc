@@ -250,17 +250,6 @@ function! GtdFindSection(section)
     endif
 endfunction
 
-" Create global mapping to go to "today" daily page.
-" TODO: DEPRECATED
-function! EditTodayDaily()
-    let l:daily_fname = g:GTD_path . strftime("/daily/%Y-%m-%d.txt")
-    " TODO: this creates unwanted new tab when current instance of buffer is
-    " in split window
-    execute "tab drop" fnameescape(expand(l:daily_fname))
-    call GtdFindSection("now")
-endfunction
-noremap <Leader>t :call EditTodayDaily()<cr>
-
 " default template
 augroup gtdgroup
   autocmd!
@@ -294,6 +283,20 @@ nnoremap <Leader>es :vsplit ~/secure/scratch.txt<cr>
 
 " other
 autocmd Filetype gtd setlocal fdm=indent
+
+hi ColorColumn guibg=#330000 ctermbg=Black
+
+" Stolen from:
+"   https://youtu.be/aHm36-na4-4?list=PLdyMeP7HZ2xYPEilzjwqK6LDKOrGFtowI
+"   (4:04 timepoint)
+"set nocolorcolumn
+"call matchadd('ColorColumn', '\%81v', 100)
+
+" From:
+"  http://vim.wikia.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " }}}1
 " vim:fdm=marker:
