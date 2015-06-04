@@ -12,6 +12,9 @@ highlight link gtdStatusWIP Character
 highlight link gtdStatusBlocked Comment
 highlight link gtdStatusDone Function
 
+syntax match gtdDoneLine "\v(\s*DONE\s)\@=.*$" contains=gtdStatusDone
+highlight link gtdDoneLine Comment
+
 syntax match gtdHighPriority "\[A\]"
 syntax match gtdMediumPriority "\[B\]"
 syntax match gtdLowPriority "\[C\]"

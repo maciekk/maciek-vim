@@ -2,6 +2,12 @@
 " Maciej Kalisiak <mkalisiak@gmail.com>
 "
 " TODO:
+" - insert compact timestamp on transition to "DONE"
+" - don't use "zo" on jump to section; sometimes not in section (e.g., section
+"   has 1 item, and cursor ends just after it
+" - on item move, use marks instead of saved pos, for greater accuracy
+"   (problem with one-off, depending on whether moved item before or after
+"   cursor)
 " - switch "BLOCKED" to "WAIT"?
 " - better keybinding for switching to "BLOCKED"
 " - add "NEXT" status?
