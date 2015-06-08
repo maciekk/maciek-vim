@@ -260,7 +260,7 @@ nnoremap <buffer> <LocalLeader>c :call <SID>GtdChangePrio('C')<CR>
 nnoremap <buffer> <LocalLeader><space> :call <SID>GtdChangePrio('')<CR>
 
 nnoremap <buffer> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
-nnoremap <buffer> <LocalLeader>B :call <SID>GtdChangeStatus('BLOCKED')<CR>
+nnoremap <buffer> <LocalLeader>z :call <SID>GtdChangeStatus('BLOCKED')<CR>
 nnoremap <buffer> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
 
 nnoremap <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<CR>

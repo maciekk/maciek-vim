@@ -158,14 +158,6 @@ command! W :w  " in case we didn't let go of Shift fast enough
 map <C-s> :w<CR>
 imap <C-s> <C-o>:w<CR>
 
-map ,,v :VoomToggle vimwiki<CR>
-
-" Collapse all folds except the one where cursor is.
-map zz zMzv
-map ,zz zMzv
-map ,zj zMjzv
-map ,zk zMkzv
-
 " Swap keys for filtered/unfiltered history scroll.
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
