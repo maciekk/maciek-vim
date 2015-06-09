@@ -2,7 +2,9 @@
 " Maciej Kalisiak <mkalisiak@gmail.com>
 "
 " TODO:
-" - insert compact timestamp on transition to "DONE"
+" - if change prio or status command is given on empty line, do nothing
+" - move task to same place as last time; want to be able to bounce on a key
+"   to repetitively move a set of tasks.
 " - don't use "zo" on jump to section; sometimes not in section (e.g., section
 "   has 1 item, and cursor ends just after it
 " - on item move, use marks instead of saved pos, for greater accuracy
@@ -60,7 +62,7 @@ func! GtdJumpToDone()
     call s:GtdJumpTo(s:sec_done)
 endfunc
 
-" Task move functions {{{1
+" task move functions {{{1
 func! s:GtdMoveTo(sec_name)
     " Save starting location.
     let save_cursor = getcurpos()
@@ -212,10 +214,16 @@ endfunc
 " Change status of task on current line.
 func! s:GtdChangeStatus(status)
     let save_cursor = getcurpos()
+    if a:status == 'DONE'
+        " Extend it with a timestamp.
+        let status_maybe_tstamp = a:status.' '.strftime("%y.%m.%d-%H:%M")
+    else
+        let status_maybe_tstamp = a:status
+    endif
     " First, remove any status present. Ignore if not present.
     s/^\(\s*\)\(DONE\|WIP\|BLOCKED\) /\1/e
     " Now add the status.
-    exec 's/^\(\s*\)\(.*\)/\1'.a:status.' \2/'
+    exec 's/^\(\s*\)\(.*\)/\1'.status_maybe_tstamp.' \2/'
     call setpos('.', save_cursor)
 endfunc
 
