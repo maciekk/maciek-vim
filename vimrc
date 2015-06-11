@@ -159,14 +159,6 @@ command! W :w  " in case we didn't let go of Shift fast enough
 map <C-s> :w<CR>
 imap <C-s> <C-o>:w<CR>
 
-map ,,v :VoomToggle vimwiki<CR>
-
-" Collapse all folds except the one where cursor is.
-map zz zMzv
-map ,zz zMzv
-map ,zj zMjzv
-map ,zk zMkzv
-
 " Swap keys for filtered/unfiltered history scroll.
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
@@ -237,26 +229,6 @@ colorscheme molokai
 "colorscheme fine_blue
 syntax enable
 
-" GTD {{{1
-let g:GTD_path = "~/Google Drive/GTD"
-if !isdirectory(glob(g:GTD_path))
-    let g:GTD_path = "~/GTD"
-endif
-
-function! GtdFindSection(section)
-    call cursor(1, 1)
-    let l:loc = search("^\\S.*" . a:section)
-    if l:loc > 0
-        call cursor(l:loc, 1)
-    endif
-endfunction
-
-" default template
-augroup gtdgroup
-  autocmd!
-  autocmd BufNewFile */GTD/daily/*.txt execute "0r" fnameescape(join([g:GTD_path, "/daily/template.txt"], ""))
-augroup END
-
 " misc {{{1
 
 source $MYVIMDIR/abbreviations.vim
@@ -276,8 +248,11 @@ augroup todotxtgroup
 augroup END
 
 " Quick edit of vimrc file
-nnoremap <Leader>ev :vsplit ~/.vim/vimrc<cr>
-nnoremap <Leader>sv :source $MYVIMRC<cr>
+nnoremap <Leader>ve :vsplit ~/.vim/vimrc<cr>
+nnoremap <Leader>vs :source $MYVIMRC<cr>
+
+" Quick edit gtd.txt
+nnoremap <Leader>g :e ~/Google\ Drive/GTD/gtd.txt<cr>
 
 " Quick access to scratch file
 nnoremap <Leader>es :vsplit ~/secure/scratch.txt<cr>
