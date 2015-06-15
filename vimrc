@@ -241,6 +241,9 @@ runtime macros/matchit.vim
 let mapleader = "\\"
 let maplocalleader = ","
 
+" Esc alternative (easy on Dvorak)
+inoremap hh <Esc>
+
 " todo.txt additional bindings
 augroup todotxtgroup
     autocmd!

@@ -4,7 +4,8 @@
 " TODO:
 " - if change prio or status command is given on empty line, do nothing
 " - move task to same place as last time; want to be able to bounce on a key
-"   to repetitively move a set of tasks.
+"   to repetitively move a set of tasks. See if can use tpope/vim-repeat
+" - use <Plug> within plugin, and push out actual key bindings to user's vimrc
 " - don't use "zo" on jump to section; sometimes not in section (e.g., section
 "   has 1 item, and cursor ends just after it
 " - on item move, use marks instead of saved pos, for greater accuracy
@@ -275,7 +276,10 @@ nnoremap <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<CR>
 
 nnoremap <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
 
-" TODO: why do folds keep closing withou the 'zv'?
+" Close all sections, and reopen only the current one.
+nnoremap <buffer><silent> z. zMzv
+
+" TODO: why do folds keep closing without the 'zv'?
 nnoremap <buffer> <D-Up> :m -2<CR>:norm! zv<CR>
 nnoremap <buffer> <D-Down> :m +1<CR>:norm! zv<CR>
 
