@@ -251,8 +251,8 @@ augroup todotxtgroup
 augroup END
 
 " Quick edit of vimrc file
-nnoremap <Leader>ve :vsplit ~/.vim/vimrc<cr>
-nnoremap <Leader>vs :source $MYVIMRC<cr>
+nnoremap <Leader>ev :vsplit ~/.vim/vimrc<cr>
+nnoremap <Leader>sv :source $MYVIMRC<cr>
 
 " Quick edit gtd.txt
 nnoremap <Leader>g :e ~/Google\ Drive/GTD/gtd.txt<cr>
