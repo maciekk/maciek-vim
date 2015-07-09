@@ -2,24 +2,28 @@
 " Maciej Kalisiak <mkalisiak@gmail.com>
 "
 " TODO:
-" - if change prio or status command is given on empty line, do nothing
-" - move task to same place as last time; want to be able to bounce on a key
+" - 1/on leader-D, try to keep cursor as close as possible to original
+"   location
+" - 1/fix M-space binding: leaves leading space, does not erase timestamp
+" - 1/insert-mode entry of prio at start: AA -> [A}, etc.
+" - 1/moving last item in section should not trigger errors / warnings
+" - 1/key bind to show JUST the NOW section? "narrowing" to avoid noise, for
+"   ease of execution...
+" - 2/bug: marking item DONE multiple times keeps adding extra timestamps
+" - 2/move task to same place as last time; want to be able to bounce on a key
 "   to repetitively move a set of tasks. See if can use tpope/vim-repeat
-" - use <Plug> within plugin, and push out actual key bindings to user's vimrc
-" - don't use "zo" on jump to section; sometimes not in section (e.g., section
+" - 2/use <Plug> within plugin, and push out actual key bindings to user's vimrc
+" - 2/don't use "zo" on jump to section; sometimes not in section (e.g., section
 "   has 1 item, and cursor ends just after it
-" - on item move, use marks instead of saved pos, for greater accuracy
-"   (problem with one-off, depending on whether moved item before or after
-"   cursor)
-" - switch "BLOCKED" to "WAIT"?
-" - better keybinding for switching to "BLOCKED"
-" - add "NEXT" status?
-" - make into proper Vim plugin (:he write-plugin)
-" - make into separate Github project too, so can use w/Vundle
-" - try unittests; Vader seems best? (https://github.com/junegunn/vader.vim)
-" - change 'foldtext' to reflect # of items in that list
-" - special syntax colouring for #MIT?
-" - comply with http://google.github.io/styleguide/vimscriptguide.xml
+" - 2/switch "BLOCKED" status to "WAIT"?
+" - 2/better keybinding for switching to "BLOCKED"
+" - 3/add "NEXT" status?
+" - 3/make into proper Vim plugin (:he write-plugin)
+" - 3/make into separate Github project too, so can use w/Vundle
+" - 3/try unittests; Vader seems best? (https://github.com/junegunn/vader.vim)
+" - 3/change 'foldtext' to reflect # of items in that list
+" - 3/special syntax colouring for #MIT?
+" - 3/comply with http://google.github.io/styleguide/vimscriptguide.xml
 
 " skip if already loaded. {{{1
 if exists("b:did_gtd_ftplugin")
@@ -28,11 +32,32 @@ endif
 let b:did_gtd_ftplugin = 1
 
 " section names {{{1
+let s:sec_inbox = "INBOX"
 let s:sec_now = "NOW"
 let s:sec_today = "TODAY"
-let s:sec_inbox = "INBOX"
 let s:sec_backlog = "BACKLOG"
+let s:sec_someday = "SOMEDAY"
 let s:sec_done = "DONE"
+
+" helper functions {{{1
+
+" Returns true if the specified 'line' contains a task.
+func! s:GtdLineIsTask(line)
+    " Find first non-blank character on line.
+    let first_nonblank = match(getline(a:line), '\S')
+
+    " Line is NOT task if it is whitespace-only, or it is a section name.
+    if first_nonblank == -1 || first_nonblank == 0
+        return 0
+    else
+        return 1
+    endif
+endfunc
+
+" Returns line number of specified 'section'. Returns 0 if section not found.
+func! s:GtdFindSection(section)
+    return search('^'.a:section.'$', 'cnw')
+endfunc
 
 " motion funcs {{{1
 func! s:GtdJumpTo(sec_name)
@@ -59,31 +84,59 @@ func! GtdJumpToBacklog()
     call s:GtdJumpTo(s:sec_backlog)
 endfunc
 
+func! GtdJumpToSomeday()
+    call s:GtdJumpTo(s:sec_someday)
+endfunc
+
 func! GtdJumpToDone()
     call s:GtdJumpTo(s:sec_done)
 endfunc
 
 " task move functions {{{1
 func! s:GtdMoveTo(sec_name)
-    " Save starting location.
-    let save_cursor = getcurpos()
-
-    " First, find line number of where to move the line to.
-    call cursor(1,1)
-    let dest = search('^'.a:sec_name.'$', 'c')
-    if dest == 0
+    let cur_line = line('.')
+    let dest_line = <SID>GtdFindSection(a:sec_name)
+    if dest_line == 0
         throw 'Could not find section named '.a:sec_name
     endif
 
-    " Now do the move.
-    call setpos('.', save_cursor)
-    echo 'Moving line to: '.dest
-    exec 'm '.dest
+    exec 'move '.dest_line
 
-    " Bring back cursor to starting point, in case want to move more items.
-    let save_cursor[1] += 1
-    call setpos('.', save_cursor)
+    " Move cursor to 'next item', so can continue moving tasks.
+    if dest_line < cur_line
+        " We moved the prior task earlier, so next task is STILL on next line.
+        " Had we moved it below, next task would have been automatically moved
+        " up to CURRENT line.
+        let cur_line += 1
+    endif
+    call cursor(cur_line, 0)
+
     norm! zo
+endfunc
+
+" Move up task under cursor so that it is first in current section.
+func! s:GtdMakeFirst()
+    let curline = line('.')
+    let section_start = search('^\S', 'bcnW')
+
+    " Do nothing if not on a task line.
+    if match(getline('.'), '\S') == -1
+        return
+    endif
+    if curline == section_start
+        return
+    endif
+
+    " Do nothing if already first item.
+    if curline == section_start + 1
+        return
+    endif
+
+    " Do the move.
+    exec curline.' move '.section_start
+
+    " Move cursor to item that was next after the moved one.
+    call cursor(curline+1, 0)
 endfunc
 
 func! GtdMoveToNow()
@@ -100,6 +153,10 @@ endfunc
 
 func! GtdMoveToBacklog()
     call s:GtdMoveTo(s:sec_backlog)
+endfunc
+
+func! GtdMoveToSomeday()
+    call s:GtdMoveTo(s:sec_someday)
 endfunc
 
 func! GtdMoveToDone()
@@ -214,6 +271,9 @@ endfunc
 
 " Change status of task on current line.
 func! s:GtdChangeStatus(status)
+    if !<SID>GtdLineIsTask('.')
+        return
+    endif
     let save_cursor = getcurpos()
     if a:status == 'DONE'
         " Extend it with a timestamp.
@@ -229,6 +289,9 @@ func! s:GtdChangeStatus(status)
 endfunc
 
 func! s:GtdChangePrio(prio)
+    if !<SID>GtdLineIsTask('.')
+        return
+    endif
     let save_cursor = getcurpos()
     let prio_str = ''
     if !empty(a:prio)
@@ -255,24 +318,27 @@ nnoremap <buffer><silent> <LocalLeader>jn :call GtdJumpToNow()<CR>
 nnoremap <buffer><silent> <LocalLeader>jt :call GtdJumpToToday()<CR>
 nnoremap <buffer><silent> <LocalLeader>ji :call GtdJumpToInbox()<CR>
 nnoremap <buffer><silent> <LocalLeader>jb :call GtdJumpToBacklog()<CR>
+nnoremap <buffer><silent> <LocalLeader>js :call GtdJumpToSomeday()<CR>
 nnoremap <buffer><silent> <LocalLeader>jd :call GtdJumpToDone()<CR>
 
 nnoremap <buffer><silent> <LocalLeader>mn :call GtdMoveToNow()<CR>
 nnoremap <buffer><silent> <LocalLeader>mt :call GtdMoveToToday()<CR>
 nnoremap <buffer><silent> <LocalLeader>mi :call GtdMoveToInbox()<CR>
 nnoremap <buffer><silent> <LocalLeader>mb :call GtdMoveToBacklog()<CR>
+nnoremap <buffer><silent> <LocalLeader>ms :call GtdMoveToSomeday()<CR>
 nnoremap <buffer><silent> <LocalLeader>md :call GtdMoveToDone()<CR>
+nnoremap <buffer><silent> <LocalLeader>mu :call <SID>GtdMakeFirst()<CR>
 
 nnoremap <buffer> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
 nnoremap <buffer> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>
 nnoremap <buffer> <LocalLeader>c :call <SID>GtdChangePrio('C')<CR>
-nnoremap <buffer> <LocalLeader><space> :call <SID>GtdChangePrio('')<CR>
+nnoremap <buffer> <LocalLeader><space> :call <SID>GtdChangePrio('')<Bar>:call <SID>GtdChangeStatus('')<CR>
 
 nnoremap <buffer> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
 nnoremap <buffer> <LocalLeader>z :call <SID>GtdChangeStatus('BLOCKED')<CR>
 nnoremap <buffer> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
 
-nnoremap <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<CR>
+nnoremap <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<Bar>nohls<CR>
 
 nnoremap <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
 
@@ -284,6 +350,7 @@ nnoremap <buffer> <D-Up> :m -2<CR>:norm! zv<CR>
 nnoremap <buffer> <D-Down> :m +1<CR>:norm! zv<CR>
 
 " HACK: unmap corpdoc macro
+" TODO: move this into site-local config file
 silent! unmap <buffer> <LocalLeader>df
 
 " better indentation-based folding {{{1

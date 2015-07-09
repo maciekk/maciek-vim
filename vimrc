@@ -250,9 +250,9 @@ augroup todotxtgroup
     autocmd BufNewFile,BufRead,BufEnter todo.txt so $MYVIMDIR/todo-extra.vim
 augroup END
 
-" Quick edit access
-nnoremap <Leader>ve :vsplit ~/.vim/vimrc<cr>
-nnoremap <Leader>vs :source $MYVIMRC<cr>
+" Quick edit & similar
+nnoremap <Leader>ev :vsplit ~/.vim/vimrc<cr>
+nnoremap <Leader>sv :source $MYVIMRC<cr>
 nnoremap <Leader>g :e ~/Google\ Drive/GTD/gtd.txt<cr>
 nnoremap <Leader>es :vsplit ~/secure/scratch.txt<cr>
 
