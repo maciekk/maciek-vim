@@ -2,13 +2,12 @@
 " Maciej Kalisiak <mkalisiak@gmail.com>
 "
 " TODO:
+" - 1/fix M-space binding: leaves leading space, does not erase timestamp
 " - 1/insert-mode entry of prio at start: AA -> [A}, etc.
 " - 1/moving last item in section should not trigger errors / warnings
 " - 1/key bind to show JUST the NOW section? "narrowing" to avoid noise, for
 "   ease of execution...
-" - 2/M-space clears prio, but how to clear status? (e.g., WIP)
 " - 2/bug: marking item DONE multiple times keeps adding extra timestamps
-" - 2/if change prio or status command is given on empty line, do nothing
 " - 2/move task to same place as last time; want to be able to bounce on a key
 "   to repetitively move a set of tasks. See if can use tpope/vim-repeat
 " - 2/use <Plug> within plugin, and push out actual key bindings to user's vimrc
@@ -40,6 +39,19 @@ let s:sec_today = "TODAY"
 let s:sec_backlog = "BACKLOG"
 let s:sec_someday = "SOMEDAY"
 let s:sec_done = "DONE"
+
+" helper functions {{{1
+func! s:GtdLineIsTask(line)
+    " Find first non-blank character on line.
+    let first_nonblank = match(getline(a:line), '\S')
+
+    " Line is NOT task if it is whitespace-only, or it is a section name.
+    if first_nonblank == -1 || first_nonblank == 0
+        return 0
+    else
+        return 1
+    endif
+endfunc
 
 " motion funcs {{{1
 func! s:GtdJumpTo(sec_name)
@@ -254,6 +266,9 @@ endfunc
 
 " Change status of task on current line.
 func! s:GtdChangeStatus(status)
+    if !<SID>GtdLineIsTask('.')
+        return
+    endif
     let save_cursor = getcurpos()
     if a:status == 'DONE'
         " Extend it with a timestamp.
@@ -269,6 +284,9 @@ func! s:GtdChangeStatus(status)
 endfunc
 
 func! s:GtdChangePrio(prio)
+    if !<SID>GtdLineIsTask('.')
+        return
+    endif
     let save_cursor = getcurpos()
     let prio_str = ''
     if !empty(a:prio)
