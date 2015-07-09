@@ -13,9 +13,6 @@
 " - 2/use <Plug> within plugin, and push out actual key bindings to user's vimrc
 " - 2/don't use "zo" on jump to section; sometimes not in section (e.g., section
 "   has 1 item, and cursor ends just after it
-" - 2/on item move, use marks instead of saved pos, for greater accuracy
-"   (problem with one-off, depending on whether moved item before or after
-"   cursor)
 " - 2/switch "BLOCKED" status to "WAIT"?
 " - 2/better keybinding for switching to "BLOCKED"
 " - 3/add "NEXT" status?
@@ -41,6 +38,8 @@ let s:sec_someday = "SOMEDAY"
 let s:sec_done = "DONE"
 
 " helper functions {{{1
+
+" Returns true if the specified 'line' contains a task.
 func! s:GtdLineIsTask(line)
     " Find first non-blank character on line.
     let first_nonblank = match(getline(a:line), '\S')
@@ -51,6 +50,11 @@ func! s:GtdLineIsTask(line)
     else
         return 1
     endif
+endfunc
+
+" Returns line number of specified 'section'. Returns 0 if section not found.
+func! s:GtdFindSection(section)
+    return search('^'.a:section.'$', 'cnw')
 endfunc
 
 " motion funcs {{{1
@@ -88,24 +92,23 @@ endfunc
 
 " task move functions {{{1
 func! s:GtdMoveTo(sec_name)
-    " Save starting location.
-    let save_cursor = getcurpos()
-
-    " First, find line number of where to move the line to.
-    call cursor(1,1)
-    let dest = search('^'.a:sec_name.'$', 'c')
-    if dest == 0
+    let cur_line = line('.')
+    let dest_line = <SID>GtdFindSection(a:sec_name)
+    if dest_line == 0
         throw 'Could not find section named '.a:sec_name
     endif
 
-    " Now do the move.
-    call setpos('.', save_cursor)
-    echo 'Moving line to: '.dest
-    exec 'm '.dest
+    exec 'move '.dest_line
 
-    " Bring back cursor to starting point, in case want to move more items.
-    let save_cursor[1] += 1
-    call setpos('.', save_cursor)
+    " Move cursor to 'next item', so can continue moving tasks.
+    if dest_line < cur_line
+        " We moved the prior task earlier, so next task is STILL on next line.
+        " Had we moved it below, next task would have been automatically moved
+        " up to CURRENT line.
+        let cur_line += 1
+    endif
+    call cursor(cur_line, 0)
+
     norm! zo
 endfunc
 
