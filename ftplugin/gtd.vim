@@ -2,6 +2,8 @@
 " Maciej Kalisiak <mkalisiak@gmail.com>
 "
 " TODO:
+" - 1/on leader-D, try to keep cursor as close as possible to original
+"   location
 " - 1/fix M-space binding: leaves leading space, does not erase timestamp
 " - 1/insert-mode entry of prio at start: AA -> [A}, etc.
 " - 1/moving last item in section should not trigger errors / warnings
@@ -336,7 +338,7 @@ nnoremap <buffer> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
 nnoremap <buffer> <LocalLeader>z :call <SID>GtdChangeStatus('BLOCKED')<CR>
 nnoremap <buffer> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
 
-nnoremap <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<CR>
+nnoremap <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<Bar>nohls<CR>
 
 nnoremap <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
 
