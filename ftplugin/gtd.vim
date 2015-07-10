@@ -9,7 +9,6 @@
 " - 1/moving last item in section should not trigger errors / warnings
 " - 1/key bind to show JUST the NOW section? "narrowing" to avoid noise, for
 "   ease of execution...
-" - 2/bug: marking item DONE multiple times keeps adding extra timestamps
 " - 2/move task to same place as last time; want to be able to bounce on a key
 "   to repetitively move a set of tasks. See if can use tpope/vim-repeat
 " - 2/use <Plug> within plugin, and push out actual key bindings to user's vimrc
@@ -57,6 +56,15 @@ endfunc
 " Returns line number of specified 'section'. Returns 0 if section not found.
 func! s:GtdFindSection(section)
     return search('^'.a:section.'$', 'cnw')
+endfunc
+
+" Return the status of the task on current line.
+func! s:GtdTaskStatus()
+    let first_word = matchlist(getline('.'), '\v\s+(\S+)')[1]
+    if match(first_word, '\v^WIP|BLOCKED|DONE$') > -1
+        return first_word
+    endif
+    return ''
 endfunc
 
 " motion funcs {{{1
@@ -271,7 +279,12 @@ endfunc
 
 " Change status of task on current line.
 func! s:GtdChangeStatus(status)
+    " Do nothing if not on a task line.
     if !<SID>GtdLineIsTask('.')
+        return
+    endif
+    " Do nothing if task already has requested status.
+    if a:status == <SID>GtdTaskStatus()
         return
     endif
     let save_cursor = getcurpos()
