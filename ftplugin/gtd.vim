@@ -312,7 +312,7 @@ setlocal autoindent
 " bindings {{{1
 
 " priority-based sorting (from todo.vim type)
-nnoremap <silent> <buffer> <LocalLeader>s vipoj:sort /\S/r<CR>
+nnoremap <buffer><silent> <LocalLeader>s vipoj:sort /\S/r<CR>
 
 nnoremap <buffer><silent> <LocalLeader>jn :call GtdJumpToNow()<CR>
 nnoremap <buffer><silent> <LocalLeader>jt :call GtdJumpToToday()<CR>
@@ -329,16 +329,16 @@ nnoremap <buffer><silent> <LocalLeader>ms :call GtdMoveToSomeday()<CR>
 nnoremap <buffer><silent> <LocalLeader>md :call GtdMoveToDone()<CR>
 nnoremap <buffer><silent> <LocalLeader>mu :call <SID>GtdMakeFirst()<CR>
 
-nnoremap <buffer> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
-nnoremap <buffer> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>
-nnoremap <buffer> <LocalLeader>c :call <SID>GtdChangePrio('C')<CR>
-nnoremap <buffer> <LocalLeader><space> :call <SID>GtdChangePrio('')<Bar>:call <SID>GtdChangeStatus('')<CR>
+nnoremap <buffer><silent> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
+nnoremap <buffer><silent> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>
+nnoremap <buffer><silent> <LocalLeader>c :call <SID>GtdChangePrio('C')<CR>
+nnoremap <buffer><silent> <LocalLeader><space> :call <SID>GtdChangePrio('')<Bar>:call <SID>GtdChangeStatus('')<CR>
 
-nnoremap <buffer> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
-nnoremap <buffer> <LocalLeader>z :call <SID>GtdChangeStatus('BLOCKED')<CR>
-nnoremap <buffer> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
+nnoremap <buffer><silent> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
+nnoremap <buffer><silent> <LocalLeader>z :call <SID>GtdChangeStatus('BLOCKED')<CR>
+nnoremap <buffer><silent> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
 
-nnoremap <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<Bar>nohls<CR>
+nnoremap <buffer><silent> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<Bar>nohls<CR>
 
 nnoremap <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
 
@@ -346,8 +346,8 @@ nnoremap <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
 nnoremap <buffer><silent> z. zMzv
 
 " TODO: why do folds keep closing without the 'zv'?
-nnoremap <buffer> <D-Up> :m -2<CR>:norm! zv<CR>
-nnoremap <buffer> <D-Down> :m +1<CR>:norm! zv<CR>
+nnoremap <buffer><silent> <D-Up> :m -2<CR>:norm! zv<CR>
+nnoremap <buffer><silent> <D-Down> :m +1<CR>:norm! zv<CR>
 
 " HACK: unmap corpdoc macro
 " TODO: move this into site-local config file
