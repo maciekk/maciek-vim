@@ -184,6 +184,7 @@ func! s:GtdCleanUpDone()
     0,/^DONE$/g/^\s*DONE\s/m/^DONE$/
     nohls
     call cursor(return_to_line, 0)
+    call s:GtdMaybeOpenFold()
 endfunc
 
 " sorting {{{1
