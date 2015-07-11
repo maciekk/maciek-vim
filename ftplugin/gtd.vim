@@ -12,8 +12,6 @@
 " - 2/move task to same place as last time; want to be able to bounce on a key
 "   to repetitively move a set of tasks. See if can use tpope/vim-repeat
 " - 2/use <Plug> within plugin, and push out actual key bindings to user's vimrc
-" - 2/don't use "zo" on jump to section; sometimes not in section (e.g., section
-"   has 1 item, and cursor ends just after it
 " - 2/switch "BLOCKED" status to "WAIT"?
 " - 2/better keybinding for switching to "BLOCKED"
 " - 3/add "NEXT" status?
@@ -67,12 +65,21 @@ func! s:GtdTaskStatus()
     return ''
 endfunc
 
+" Open fold under cursor, but only IF there is one.
+"
+" Primarily used to avoid E490 errors.
+" Based on: http://stackoverflow.com/questions/5850103/try-catch-in-vimscript
+func! s:GtdMaybeOpenFold()
+    try | foldopen! | catch | | endtry
+endfunc
+
 " motion funcs {{{1
 func! s:GtdJumpTo(sec_name)
     norm! 0gg
     if search('^' . a:sec_name . '$', 'c')
         " Section WAS found; advance to first task in it.
-        norm! jzMzo
+        norm! jzM
+        call s:GtdMaybeOpenFold()
     endif
 endfunc
 
@@ -103,7 +110,7 @@ endfunc
 " task move functions {{{1
 func! s:GtdMoveTo(sec_name)
     let cur_line = line('.')
-    let dest_line = <SID>GtdFindSection(a:sec_name)
+    let dest_line = s:GtdFindSection(a:sec_name)
     if dest_line == 0
         throw 'Could not find section named '.a:sec_name
     endif
@@ -119,7 +126,7 @@ func! s:GtdMoveTo(sec_name)
     endif
     call cursor(cur_line, 0)
 
-    norm! zo
+    silent call s:GtdMaybeOpenFold()
 endfunc
 
 " Move up task under cursor so that it is first in current section.
@@ -280,11 +287,11 @@ endfunc
 " Change status of task on current line.
 func! s:GtdChangeStatus(status)
     " Do nothing if not on a task line.
-    if !<SID>GtdLineIsTask('.')
+    if !s:GtdLineIsTask('.')
         return
     endif
     " Do nothing if task already has requested status.
-    if a:status == <SID>GtdTaskStatus()
+    if a:status == s:GtdTaskStatus()
         return
     endif
     let save_cursor = getcurpos()
@@ -302,7 +309,7 @@ func! s:GtdChangeStatus(status)
 endfunc
 
 func! s:GtdChangePrio(prio)
-    if !<SID>GtdLineIsTask('.')
+    if !s:GtdLineIsTask('.')
         return
     endif
     let save_cursor = getcurpos()
