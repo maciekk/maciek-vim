@@ -2,8 +2,6 @@
 " Maciej Kalisiak <mkalisiak@gmail.com>
 "
 " TODO:
-" - 1/on leader-D, try to keep cursor as close as possible to original
-"   location
 " - 1/fix M-space binding: leaves leading space, does not erase timestamp
 " - 1/insert-mode entry of prio at start: AA -> [A}, etc.
 " - 1/moving last item in section should not trigger errors / warnings
@@ -176,6 +174,16 @@ endfunc
 
 func! GtdMoveToDone()
     call s:GtdMoveTo(s:sec_done)
+endfunc
+
+" Move all DONE items to bottom of file.
+func! s:GtdCleanUpDone()
+    " Establish (non-DONE) task to which we will move cursor after the clean
+    " up.
+    let return_to_line = search('\v(^\s+DONE )@<!', 'bcnW')
+    0,/^DONE$/g/^\s*DONE\s/m/^DONE$/
+    nohls
+    call cursor(return_to_line, 0)
 endfunc
 
 " sorting {{{1
@@ -358,7 +366,7 @@ nnoremap <buffer><silent> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
 nnoremap <buffer><silent> <LocalLeader>z :call <SID>GtdChangeStatus('BLOCKED')<CR>
 nnoremap <buffer><silent> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
 
-nnoremap <buffer><silent> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<Bar>nohls<CR>
+nnoremap <buffer><silent> <LocalLeader>D :call <SID>GtdCleanUpDone()<CR>
 
 nnoremap <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
 
