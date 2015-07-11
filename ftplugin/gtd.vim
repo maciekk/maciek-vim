@@ -150,6 +150,8 @@ func! s:GtdMakeFirst()
 
     " Move cursor to item that was next after the moved one.
     call cursor(curline+1, 0)
+
+    call s:GtdMaybeOpenFold()
 endfunc
 
 func! GtdMoveToNow()
