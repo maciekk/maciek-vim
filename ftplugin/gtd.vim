@@ -2,19 +2,14 @@
 " Maciej Kalisiak <mkalisiak@gmail.com>
 "
 " TODO:
-" - 1/on leader-D, try to keep cursor as close as possible to original
-"   location
 " - 1/fix M-space binding: leaves leading space, does not erase timestamp
 " - 1/insert-mode entry of prio at start: AA -> [A}, etc.
 " - 1/moving last item in section should not trigger errors / warnings
 " - 1/key bind to show JUST the NOW section? "narrowing" to avoid noise, for
 "   ease of execution...
-" - 2/bug: marking item DONE multiple times keeps adding extra timestamps
 " - 2/move task to same place as last time; want to be able to bounce on a key
 "   to repetitively move a set of tasks. See if can use tpope/vim-repeat
 " - 2/use <Plug> within plugin, and push out actual key bindings to user's vimrc
-" - 2/don't use "zo" on jump to section; sometimes not in section (e.g., section
-"   has 1 item, and cursor ends just after it
 " - 2/switch "BLOCKED" status to "WAIT"?
 " - 2/better keybinding for switching to "BLOCKED"
 " - 3/add "NEXT" status?
@@ -59,12 +54,30 @@ func! s:GtdFindSection(section)
     return search('^'.a:section.'$', 'cnw')
 endfunc
 
+" Return the status of the task on current line.
+func! s:GtdTaskStatus()
+    let first_word = matchlist(getline('.'), '\v\s+(\S+)')[1]
+    if match(first_word, '\v^WIP|BLOCKED|DONE$') > -1
+        return first_word
+    endif
+    return ''
+endfunc
+
+" Open fold under cursor, but only IF there is one.
+"
+" Primarily used to avoid E490 errors.
+" Based on: http://stackoverflow.com/questions/5850103/try-catch-in-vimscript
+func! s:GtdMaybeOpenFold()
+    try | foldopen! | catch | | endtry
+endfunc
+
 " motion funcs {{{1
 func! s:GtdJumpTo(sec_name)
     norm! 0gg
     if search('^' . a:sec_name . '$', 'c')
         " Section WAS found; advance to first task in it.
-        norm! jzMzo
+        norm! jzM
+        call s:GtdMaybeOpenFold()
     endif
 endfunc
 
@@ -95,7 +108,7 @@ endfunc
 " task move functions {{{1
 func! s:GtdMoveTo(sec_name)
     let cur_line = line('.')
-    let dest_line = <SID>GtdFindSection(a:sec_name)
+    let dest_line = s:GtdFindSection(a:sec_name)
     if dest_line == 0
         throw 'Could not find section named '.a:sec_name
     endif
@@ -111,7 +124,7 @@ func! s:GtdMoveTo(sec_name)
     endif
     call cursor(cur_line, 0)
 
-    norm! zo
+    silent call s:GtdMaybeOpenFold()
 endfunc
 
 " Move up task under cursor so that it is first in current section.
@@ -161,6 +174,16 @@ endfunc
 
 func! GtdMoveToDone()
     call s:GtdMoveTo(s:sec_done)
+endfunc
+
+" Move all DONE items to bottom of file.
+func! s:GtdCleanUpDone()
+    " Establish (non-DONE) task to which we will move cursor after the clean
+    " up.
+    let return_to_line = search('\v(^\s+DONE )@<!', 'bcnW')
+    0,/^DONE$/g/^\s*DONE\s/m/^DONE$/
+    nohls
+    call cursor(return_to_line, 0)
 endfunc
 
 " sorting {{{1
@@ -271,7 +294,12 @@ endfunc
 
 " Change status of task on current line.
 func! s:GtdChangeStatus(status)
-    if !<SID>GtdLineIsTask('.')
+    " Do nothing if not on a task line.
+    if !s:GtdLineIsTask('.')
+        return
+    endif
+    " Do nothing if task already has requested status.
+    if a:status == s:GtdTaskStatus()
         return
     endif
     let save_cursor = getcurpos()
@@ -289,7 +317,7 @@ func! s:GtdChangeStatus(status)
 endfunc
 
 func! s:GtdChangePrio(prio)
-    if !<SID>GtdLineIsTask('.')
+    if !s:GtdLineIsTask('.')
         return
     endif
     let save_cursor = getcurpos()
@@ -312,7 +340,7 @@ setlocal autoindent
 " bindings {{{1
 
 " priority-based sorting (from todo.vim type)
-nnoremap <silent> <buffer> <LocalLeader>s vipoj:sort /\S/r<CR>
+nnoremap <buffer><silent> <LocalLeader>s vipoj:sort /\S/r<CR>
 
 nnoremap <buffer><silent> <LocalLeader>jn :call GtdJumpToNow()<CR>
 nnoremap <buffer><silent> <LocalLeader>jt :call GtdJumpToToday()<CR>
@@ -329,16 +357,16 @@ nnoremap <buffer><silent> <LocalLeader>ms :call GtdMoveToSomeday()<CR>
 nnoremap <buffer><silent> <LocalLeader>md :call GtdMoveToDone()<CR>
 nnoremap <buffer><silent> <LocalLeader>mu :call <SID>GtdMakeFirst()<CR>
 
-nnoremap <buffer> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
-nnoremap <buffer> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>
-nnoremap <buffer> <LocalLeader>c :call <SID>GtdChangePrio('C')<CR>
-nnoremap <buffer> <LocalLeader><space> :call <SID>GtdChangePrio('')<Bar>:call <SID>GtdChangeStatus('')<CR>
+nnoremap <buffer><silent> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
+nnoremap <buffer><silent> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>
+nnoremap <buffer><silent> <LocalLeader>c :call <SID>GtdChangePrio('C')<CR>
+nnoremap <buffer><silent> <LocalLeader><space> :call <SID>GtdChangePrio('')<Bar>:call <SID>GtdChangeStatus('')<CR>
 
-nnoremap <buffer> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
-nnoremap <buffer> <LocalLeader>z :call <SID>GtdChangeStatus('BLOCKED')<CR>
-nnoremap <buffer> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
+nnoremap <buffer><silent> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
+nnoremap <buffer><silent> <LocalLeader>z :call <SID>GtdChangeStatus('BLOCKED')<CR>
+nnoremap <buffer><silent> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
 
-nnoremap <buffer> <LocalLeader>D :0,/^DONE$/g/^\s*DONE\s/m/^DONE$/<Bar>nohls<CR>
+nnoremap <buffer><silent> <LocalLeader>D :call <SID>GtdCleanUpDone()<CR>
 
 nnoremap <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
 
@@ -346,8 +374,8 @@ nnoremap <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
 nnoremap <buffer><silent> z. zMzv
 
 " TODO: why do folds keep closing without the 'zv'?
-nnoremap <buffer> <D-Up> :m -2<CR>:norm! zv<CR>
-nnoremap <buffer> <D-Down> :m +1<CR>:norm! zv<CR>
+nnoremap <buffer><silent> <D-Up> :m -2<CR>:norm! zv<CR>
+nnoremap <buffer><silent> <D-Down> :m +1<CR>:norm! zv<CR>
 
 " HACK: unmap corpdoc macro
 " TODO: move this into site-local config file
