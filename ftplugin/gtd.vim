@@ -430,4 +430,5 @@ func! s:GetGtdFold(lnum)
     endif
 endfunc
 
-" {{{1 vim:fdm=marker: }}}
+" {{{1 vim:fdm=marker:
+" }}}
