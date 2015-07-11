@@ -353,6 +353,13 @@ nnoremap <buffer> <D-Down> :m +1<CR>:norm! zv<CR>
 " TODO: move this into site-local config file
 silent! unmap <buffer> <LocalLeader>df
 
+" {{{1 abbreviations
+
+" On-the-fly priority entry
+iabbrev AA [A]
+iabbrev BB [B]
+iabbrev CC [C]
+
 " better indentation-based folding {{{1
 setlocal fdm=expr
 setlocal foldexpr=s:GetGtdFold(v:lnum)
@@ -395,5 +402,4 @@ func! s:GetGtdFold(lnum)
     endif
 endfunc
 
-" }}}
-" vim:fdm=marker
+" {{{1 vim:fdm=marker: }}}
