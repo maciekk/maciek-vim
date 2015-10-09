@@ -15,7 +15,9 @@ elseif has('gui_win32')
     "set guifont=Inconsolata:h12
     set guifont=gohufont-14
 elseif has('gui_macvim')
-    set guifont=Inconsolata:h18
+    "set guifont=Inconsolata:h18
+    "set guifont=Osaka-Mono:h20
+    set guifont=PT\ Mono:h18
 endif
 
 set guioptions=gc

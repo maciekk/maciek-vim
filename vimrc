@@ -169,6 +169,11 @@ map ,fb :FufBuffer<CR>
 map ,fd :FufDir<CR>
 map ,ff :FufFile<CR>
 
+" Mapping to repeat last search using global command, and bring up quickfix.
+" Purloined from:
+"   http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
+nmap g/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
+
 " package setup {{{1
 " Rainbow Parentheses {{{2
 let g:rbpt_colorpairs = [

@@ -2,8 +2,8 @@
 " Maciej Kalisiak <mkalisiak@gmail.com>
 "
 " TODO:
-" - 1/fix M-space binding: leaves leading space, does not erase timestamp
-" - 1/insert-mode entry of prio at start: AA -> [A}, etc.
+" - 0/on <Leader>h or <Leader>?, show quickfix window with cheatsheet of
+"   most useful GTD bindings
 " - 1/moving last item in section should not trigger errors / warnings
 " - 1/key bind to show JUST the NOW section? "narrowing" to avoid noise, for
 "   ease of execution...
@@ -308,14 +308,14 @@ func! s:GtdChangeStatus(status)
     let save_cursor = getcurpos()
     if a:status == 'DONE'
         " Extend it with a timestamp.
-        let status_maybe_tstamp = a:status.' '.strftime("%y.%m.%d-%H:%M")
+        let status_maybe_tstamp = a:status.' '.strftime("%y.%m.%d-%H:%M").' '
     else
         let status_maybe_tstamp = a:status
     endif
     " First, remove any status present. Ignore if not present.
     s/^\(\s*\)\(DONE\|WIP\|BLOCKED\) /\1/e
     " Now add the status.
-    exec 's/^\(\s*\)\(.*\)/\1'.status_maybe_tstamp.' \2/'
+    exec 's/^\(\s*\)\(.*\)/\1'.status_maybe_tstamp.'\2/'
     call setpos('.', save_cursor)
 endfunc
 
@@ -363,7 +363,9 @@ nnoremap <buffer><silent> <LocalLeader>mu :call <SID>GtdMakeFirst()<CR>
 nnoremap <buffer><silent> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
 nnoremap <buffer><silent> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>
 nnoremap <buffer><silent> <LocalLeader>c :call <SID>GtdChangePrio('C')<CR>
-nnoremap <buffer><silent> <LocalLeader><space> :call <SID>GtdChangePrio('')<Bar>:call <SID>GtdChangeStatus('')<CR>
+nnoremap <buffer><silent> <LocalLeader><space> 
+            \:call <SID>GtdChangePrio('')<Bar>
+            \:call <SID>GtdChangeStatus('')<CR>
 
 nnoremap <buffer><silent> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
 nnoremap <buffer><silent> <LocalLeader>z :call <SID>GtdChangeStatus('BLOCKED')<CR>
