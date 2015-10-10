@@ -182,10 +182,13 @@ endfunc
 func! s:GtdCleanUpDone()
     " Establish (non-DONE) task to which we will move cursor after the clean
     " up.
-    let return_to_line = search('\v(^\s+DONE )@<!', 'bcnW')
+    " regexp based on:
+    "   http://vim.wikia.com/wiki/Search_for_lines_not_containing_pattern#Using_the_:v_command
+    call search('\v^((\s+DONE.*)@!.)*$', 'bcW')
+    mark '
     0,/^DONE$/g/^\s*DONE\s/m/^DONE$/
     nohls
-    call cursor(return_to_line, 0)
+    normal ''
     call s:GtdMaybeOpenFold()
 endfunc
 
@@ -295,6 +298,15 @@ endfunc
 
 " change priority or status {{{1
 
+" Remove any status strings in current line.
+func! s:GtdRemoveStatus()
+    " First try the easy ones.
+    s/^\(\s*\)\(WIP\|BLOCKED\) /\1/e
+
+    " Now try DONE, with the timestamp.
+    s/^\(\s*\)\(DONE \d\+\.\d\+\.\d\+-\d\+:\d\+\) /\1/e
+endfunc
+
 " Change status of task on current line.
 func! s:GtdChangeStatus(status)
     " Do nothing if not on a task line.
@@ -305,17 +317,19 @@ func! s:GtdChangeStatus(status)
     if a:status == s:GtdTaskStatus()
         return
     endif
+    call s:GtdRemoveStatus()
+    if a:status == ''
+        return
+    endif
     let save_cursor = getcurpos()
     if a:status == 'DONE'
         " Extend it with a timestamp.
-        let status_maybe_tstamp = a:status.' '.strftime("%y.%m.%d-%H:%M").' '
+        let status_str = a:status.' '.strftime("%y.%m.%d-%H:%M")
     else
-        let status_maybe_tstamp = a:status
+        let status_str = a:status
     endif
-    " First, remove any status present. Ignore if not present.
-    s/^\(\s*\)\(DONE\|WIP\|BLOCKED\) /\1/e
     " Now add the status.
-    exec 's/^\(\s*\)\(.*\)/\1'.status_maybe_tstamp.'\2/'
+    exec 's/^\(\s*\)\(.*\)/\1'.status_str.' \2/'
     call setpos('.', save_cursor)
 endfunc
 
