@@ -1,10 +1,11 @@
-" Getting Things Done file type.
-" Maciej Kalisiak <mkalisiak@gmail.com>
+" Vim filetype plugin for Getting Things Done
+" Last Change:	2000 Oct 15
+" Maintainer:	Maciej Kalisiak <maciej.kalisiak@gmail.com>
+" License:	This file is placed in the public domain.
 "
 " TODO:
 " - 0/on <Leader>h or <Leader>?, show quickfix window with cheatsheet of
 "   most useful GTD bindings
-" - 1/moving last item in section should not trigger errors / warnings
 " - 1/key bind to show JUST the NOW section? "narrowing" to avoid noise, for
 "   ease of execution...
 " - 2/move task to same place as last time; want to be able to bounce on a key
@@ -72,7 +73,7 @@ func! s:GtdMaybeOpenFold()
 endfunc
 
 " motion funcs {{{1
-func! s:GtdJumpTo(sec_name)
+func! s:JumpTo(sec_name)
     norm! 0gg
     if search('^' . a:sec_name . '$', 'c')
         " Section WAS found; advance to first task in it.
@@ -81,32 +82,8 @@ func! s:GtdJumpTo(sec_name)
     endif
 endfunc
 
-func! GtdJumpToNow()
-    call s:GtdJumpTo(s:sec_now)
-endfunc
-
-func! GtdJumpToToday()
-    call s:GtdJumpTo(s:sec_today)
-endfunc
-
-func! GtdJumpToInbox()
-    call s:GtdJumpTo(s:sec_inbox)
-endfunc
-
-func! GtdJumpToBacklog()
-    call s:GtdJumpTo(s:sec_backlog)
-endfunc
-
-func! GtdJumpToSomeday()
-    call s:GtdJumpTo(s:sec_someday)
-endfunc
-
-func! GtdJumpToDone()
-    call s:GtdJumpTo(s:sec_done)
-endfunc
-
 " task move functions {{{1
-func! s:GtdMoveTo(sec_name)
+func! <SID>MoveTo(sec_name)
     let cur_line = line('.')
     let dest_line = s:GtdFindSection(a:sec_name)
     if dest_line == 0
@@ -355,24 +332,84 @@ setlocal textwidth=999
 setlocal autoindent
 
 " bindings {{{1
+"
+" NOTES:
+" - <buffer> not needed for ftplugins? (already local?)
+" - users can remap these in ~/.vimrc, which will prevent mappings here from
+"   being applied
 
 " priority-based sorting (from todo.vim type)
-nnoremap <buffer><silent> <LocalLeader>s vipoj:sort /\S/r<CR>
+if !hasmapto('<Plug>(GtdSortByPrio)')
+  nmap <silent><unique> <LocalLeader>s <Plug>(GtdSortByPrio)
+endif
+nnoremap <Plug>(GtdSortByPrio)
+            \ vipoj:sort /\S/r<CR>
 
-nnoremap <buffer><silent> <LocalLeader>jn :call GtdJumpToNow()<CR>
-nnoremap <buffer><silent> <LocalLeader>jt :call GtdJumpToToday()<CR>
-nnoremap <buffer><silent> <LocalLeader>ji :call GtdJumpToInbox()<CR>
-nnoremap <buffer><silent> <LocalLeader>jb :call GtdJumpToBacklog()<CR>
-nnoremap <buffer><silent> <LocalLeader>js :call GtdJumpToSomeday()<CR>
-nnoremap <buffer><silent> <LocalLeader>jd :call GtdJumpToDone()<CR>
+if !hasmapto('<Plug>(GtdJumpToNow)')
+  nmap <silent><unique> <LocalLeader>jn <Plug>(GtdJumpToNow)
+endif
+if !hasmapto('<Plug>(GtdJumpToToday)')
+  nmap <silent><unique> <LocalLeader>jt  <Plug>(GtdJumpToToday)
+endif
+if !hasmapto('<Plug>(GtdJumpToInbox)')
+  nmap <silent><unique> <LocalLeader>ji  <Plug>(GtdJumpToInbox)
+endif
+if !hasmapto('<Plug>(GtdJumpToBacklog)')
+  nmap <silent><unique> <LocalLeader>jb  <Plug>(GtdJumpToBacklog)
+endif
+if !hasmapto('<Plug>(GtdJumpToSomeday)')
+  nmap <silent><unique> <LocalLeader>js  <Plug>(GtdJumpToSomeday)
+endif
+if !hasmapto('<Plug>(GtdJumpToDone)')
+  nmap <silent><unique> <LocalLeader>jd  <Plug>(GtdJumpToDone)
+endif
 
-nnoremap <buffer><silent> <LocalLeader>mn :call GtdMoveToNow()<CR>
-nnoremap <buffer><silent> <LocalLeader>mt :call GtdMoveToToday()<CR>
-nnoremap <buffer><silent> <LocalLeader>mi :call GtdMoveToInbox()<CR>
-nnoremap <buffer><silent> <LocalLeader>mb :call GtdMoveToBacklog()<CR>
-nnoremap <buffer><silent> <LocalLeader>ms :call GtdMoveToSomeday()<CR>
-nnoremap <buffer><silent> <LocalLeader>md :call GtdMoveToDone()<CR>
-nnoremap <buffer><silent> <LocalLeader>mu :call <SID>GtdMakeFirst()<CR>
+nnoremap <Plug>(GtdJumpToNow)
+            \ :call <SID>JumpTo("NOW")<CR>
+nnoremap <Plug>(GtdJumpToToday)
+            \ :call <SID>JumpTo("TODAY")<CR>
+nnoremap <Plug>(GtdJumpToInbox)
+            \ :call <SID>JumpTo("INBOX")<CR>
+nnoremap <Plug>(GtdJumpToBacklog)
+            \ :call <SID>JumpTo("BACKLOG")<CR>
+nnoremap <Plug>(GtdJumpToSomeday)
+            \ :call <SID>JumpTo("SOMEDAY")<CR>
+nnoremap <Plug>(GtdJumpToDone)
+            \ :call <SID>JumpTo("DONE")<CR>
+
+if !hasmapto('<Plug>(GtdMoveToNow)')
+  nmap <silent><unique> <LocalLeader>mn <Plug>(GtdMoveToNow)
+endif
+if !hasmapto('<Plug>(GtdMoveToToday)')
+  nmap <silent><unique> <LocalLeader>mt  <Plug>(GtdMoveToToday)
+endif
+if !hasmapto('<Plug>(GtdMoveToInbox)')
+  nmap <silent><unique> <LocalLeader>mi  <Plug>(GtdMoveToInbox)
+endif
+if !hasmapto('<Plug>(GtdMoveToBacklog)')
+  nmap <silent><unique> <LocalLeader>mb  <Plug>(GtdMoveToBacklog)
+endif
+if !hasmapto('<Plug>(GtdMoveToSomeday)')
+  nmap <silent><unique> <LocalLeader>ms  <Plug>(GtdMoveToSomeday)
+endif
+if !hasmapto('<Plug>(GtdMoveToDone)')
+  nmap <silent><unique> <LocalLeader>md  <Plug>(GtdMoveToDone)
+endif
+
+nnoremap <Plug>(GtdMoveToNow)
+            \ :call <SID>MoveTo("NOW")<CR>
+nnoremap <Plug>(GtdMoveToToday)
+            \ :call <SID>MoveTo("TODAY")<CR>
+nnoremap <Plug>(GtdMoveToInbox)
+            \ :call <SID>MoveTo("INBOX")<CR>
+nnoremap <Plug>(GtdMoveToBacklog)
+            \ :call <SID>MoveTo("BACKLOG")<CR>
+nnoremap <Plug>(GtdMoveToSomeday)
+            \ :call <SID>MoveTo("SOMEDAY")<CR>
+nnoremap <Plug>(GtdMoveToDone)
+            \ :call <SID>MoveTo("DONE")<CR>
+
+" TODO: update the rest of these mappnigs to use <Plug>
 
 nnoremap <buffer><silent> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
 nnoremap <buffer><silent> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>
@@ -395,10 +432,6 @@ nnoremap <buffer><silent> z. zMzv
 " TODO: why do folds keep closing without the 'zv'?
 nnoremap <buffer><silent> <D-Up> :m -2<CR>:norm! zv<CR>
 nnoremap <buffer><silent> <D-Down> :m +1<CR>:norm! zv<CR>
-
-" HACK: unmap corpdoc macro
-" TODO: move this into site-local config file
-silent! unmap <buffer> <LocalLeader>df
 
 " {{{1 abbreviations
 
