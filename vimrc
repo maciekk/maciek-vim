@@ -217,6 +217,11 @@ let g:ctrlp_cmd = 'CtrlPBuffer'
 " Notes {{{2
 :let g:notes_directories = ['~/Google Drive/Notes']
 
+" NarrowRegion {{{2
+let g:nrrw_rgn_rel_min = 10
+let g:nrrw_rgn_rel_max = 80
+let g:nrrw_rgn_incr = 99
+
 " local configs {{{1
 if has('win32') || has('win64') || has('win16')
     let local_settings = $HOME . 'vimfiles/LOCAL/local.vim'
