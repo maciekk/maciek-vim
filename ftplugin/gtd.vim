@@ -4,21 +4,20 @@
 " License:	This file is placed in the public domain.
 "
 " TODO:
+" - 0/have fn to filter :map listing to only those lines that match a regexp
 " - 0/on <Leader>h or <Leader>?, show quickfix window with cheatsheet of
-"   most useful GTD bindings
+"   most useful GTD bindings (:cexp or setqflist()), or all Gtd.* fns
 " - 1/key bind to show JUST the NOW section? "narrowing" to avoid noise, for
-"   ease of execution...
+"   ease of execution; use :NarrowRegion, requires the plugin
 " - 2/move task to same place as last time; want to be able to bounce on a key
 "   to repetitively move a set of tasks. See if can use tpope/vim-repeat
-" - 2/use <Plug> within plugin, and push out actual key bindings to user's vimrc
+" - 2/WIP - use <Plug> within plugin, and push out actual key bindings to user's vimrc
 " - 2/switch "BLOCKED" status to "WAIT"?
 " - 2/better keybinding for switching to "BLOCKED"
 " - 3/add "NEXT" status?
 " - 3/make into proper Vim plugin (:he write-plugin)
 " - 3/make into separate Github project too, so can use w/Vundle
 " - 3/try unittests; Vader seems best? (https://github.com/junegunn/vader.vim)
-" - 3/change 'foldtext' to reflect # of items in that list
-" - 3/special syntax colouring for #MIT?
 " - 3/comply with http://google.github.io/styleguide/vimscriptguide.xml
 
 " skip if already loaded. {{{1
@@ -26,14 +25,6 @@ if exists("b:did_gtd_ftplugin")
   "finish
 endif
 let b:did_gtd_ftplugin = 1
-
-" section names {{{1
-let s:sec_inbox = "INBOX"
-let s:sec_now = "NOW"
-let s:sec_today = "TODAY"
-let s:sec_backlog = "BACKLOG"
-let s:sec_someday = "SOMEDAY"
-let s:sec_done = "DONE"
 
 " helper functions {{{1
 
@@ -129,30 +120,6 @@ func! s:GtdMakeFirst()
     call cursor(curline+1, 0)
 
     call s:GtdMaybeOpenFold()
-endfunc
-
-func! GtdMoveToNow()
-    call s:GtdMoveTo(s:sec_now)
-endfunc
-
-func! GtdMoveToToday()
-    call s:GtdMoveTo(s:sec_today)
-endfunc
-
-func! GtdMoveToInbox()
-    call s:GtdMoveTo(s:sec_inbox)
-endfunc
-
-func! GtdMoveToBacklog()
-    call s:GtdMoveTo(s:sec_backlog)
-endfunc
-
-func! GtdMoveToSomeday()
-    call s:GtdMoveTo(s:sec_someday)
-endfunc
-
-func! GtdMoveToDone()
-    call s:GtdMoveTo(s:sec_done)
 endfunc
 
 " Move all DONE items to bottom of file.
