@@ -14,7 +14,6 @@
 " - 2/WIP - use <Plug> within plugin, and push out actual key bindings to user's vimrc
 " - 2/switch "BLOCKED" status to "WAIT"?
 " - 2/better keybinding for switching to "BLOCKED"
-" - 3/add "NEXT" status?
 " - 3/make into proper Vim plugin (:he write-plugin)
 " - 3/make into separate Github project too, so can use w/Vundle
 " - 3/try unittests; Vader seems best? (https://github.com/junegunn/vader.vim)
@@ -49,7 +48,7 @@ endfunc
 " Return the status of the task on current line.
 func! s:GtdTaskStatus()
     let first_word = matchlist(getline('.'), '\v\s+(\S+)')[1]
-    if match(first_word, '\v^WIP|BLOCKED|DONE$') > -1
+    if match(first_word, '\v^BLOCKED|WIP|NEXT|DONE$') > -1
         return first_word
     endif
     return ''
@@ -197,7 +196,8 @@ endfunc
 
 " Extract the status and priority elements of the task.
 func! s:GtdGetStatusPrio(line)
-    let status_prio = matchlist(a:line, '\s*\(WIP\|BLOCKED\|DONE\)\?\s\(\[[A-C]\]\)\?')
+    let status_prio = matchlist(a:line,
+                \ '\s*\(BLOCKED\|WIP\|NEXT\|DONE\)\?\s\(\[[A-C]\]\)\?')
     if empty(status_prio)
         " If no hits on any groups, matchlist() returns a plain '[]'
         let status_prio = ['', '']
@@ -217,10 +217,12 @@ func! s:GtdStatusSortPosition(status)
         return 0
     elseif a:status == 'WIP'
         return 1
-    elseif a:status == ''
+    elseif a:status == 'NEXT'
         return 2
-    elseif a:status == 'DONE'
+    elseif a:status == ''
         return 3
+    elseif a:status == 'DONE'
+        return 4
     else
         throw 'UNKNOWN_STATUS: '.a:status
     endif
@@ -245,7 +247,7 @@ endfunc
 " Remove any status strings in current line.
 func! s:GtdRemoveStatus()
     " First try the easy ones.
-    s/^\(\s*\)\(WIP\|BLOCKED\) /\1/e
+    s/^\(\s*\)\(BLOCKED\|WIP\|NEXT\) /\1/e
 
     " Now try DONE, with the timestamp.
     s/^\(\s*\)\(DONE \d\+\.\d\+\.\d\+-\d\+:\d\+\) /\1/e
@@ -287,9 +289,9 @@ func! s:GtdChangePrio(prio)
         let prio_str = '['.a:prio.'] '
     endif
     " First, remove any prio present. Ignore if not present.
-    s/^\(\s*\)\(DONE\|WIP\|BLOCKED\)\? \[[A-C]\] /\1\2 /e
+    s/^\(\s*\)\(DONE\|NEXT\|WIP\|BLOCKED\)\? \[[A-C]\] /\1\2 /e
     " Now add the prio.
-    exec 's/^\(\s*\)\(DONE\|WIP\|BLOCKED\)\? /\1\2 '.prio_str.'/'
+    exec 's/^\(\s*\)\(DONE\|NEXT\|WIP\|BLOCKED\)\? /\1\2 '.prio_str.'/'
     call setpos('.', save_cursor)
 endfunc
 
@@ -401,6 +403,7 @@ nnoremap <buffer><silent> <LocalLeader><space>
 
 nnoremap <buffer><silent> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
 nnoremap <buffer><silent> <LocalLeader>z :call <SID>GtdChangeStatus('BLOCKED')<CR>
+nnoremap <buffer><silent> <LocalLeader>n :call <SID>GtdChangeStatus('NEXT')<CR>
 nnoremap <buffer><silent> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
 
 nnoremap <buffer><silent> <LocalLeader>D :call <SID>GtdCleanUpDone()<CR>
@@ -446,7 +449,7 @@ endfunc
 
 " TODO: this is dead code?
 func! s:GetGtdFold(lnum)
-    " Blank lines have indent of NEXT line.
+    " Blank lines have indent of _next_ line.
     if getline(a:lnum) =~? '\v^\s*$'
         return '-1'
     endif
