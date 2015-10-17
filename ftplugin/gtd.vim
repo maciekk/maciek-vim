@@ -63,7 +63,7 @@ func! s:GtdMaybeOpenFold()
     try | foldopen! | catch | | endtry
 endfunc
 
-" motion funcs {{{1
+" cursor motion funcs {{{1
 func! s:JumpTo(sec_name)
     norm! 0gg
     if search('^' . a:sec_name . '$', 'c')
@@ -96,7 +96,7 @@ func! <SID>MoveTo(sec_name)
 endfunc
 
 " Move up task under cursor so that it is first in current section.
-func! s:GtdMakeFirst()
+func! s:MoveToFirst()
     let curline = line('.')
     let section_start = search('^\S', 'bcnW')
 
@@ -372,6 +372,9 @@ endif
 if !hasmapto('<Plug>(GtdMoveToDone)')
   nmap <silent><unique> <LocalLeader>md  <Plug>(GtdMoveToDone)
 endif
+if !hasmapto('<Plug>(GtdMoveToFirst)')
+  nmap <silent><unique> <LocalLeader>m1  <Plug>(GtdMoveToFirst)
+endif
 
 nnoremap <Plug>(GtdMoveToNow)
             \ :call <SID>MoveTo("NOW")<CR>
@@ -385,6 +388,8 @@ nnoremap <Plug>(GtdMoveToSomeday)
             \ :call <SID>MoveTo("SOMEDAY")<CR>
 nnoremap <Plug>(GtdMoveToDone)
             \ :call <SID>MoveTo("DONE")<CR>
+nnoremap <Plug>(GtdMoveToFirst)
+            \ :call <SID>MoveToFirst()<CR>
 
 " TODO: update the rest of these mappnigs to use <Plug>
 
