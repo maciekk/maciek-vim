@@ -293,6 +293,16 @@ func! s:GtdChangePrio(prio)
     call setpos('.', save_cursor)
 endfunc
 
+" Remove status from task, if it has one, else remove prio.
+" This is useful for removing both: simply call execute function twice.
+func! s:GtdRemoveStatusThenPrio()
+    if '' == s:GtdTaskStatus()
+        call s:GtdChangePrio('')
+    else
+        call s:GtdRemoveStatus()
+    endif
+endfunc
+
 " option settings {{{1
 setlocal shiftwidth=2
 setlocal textwidth=999
@@ -382,8 +392,7 @@ nnoremap <buffer><silent> <LocalLeader>a :call <SID>GtdChangePrio('A')<CR>
 nnoremap <buffer><silent> <LocalLeader>b :call <SID>GtdChangePrio('B')<CR>
 nnoremap <buffer><silent> <LocalLeader>c :call <SID>GtdChangePrio('C')<CR>
 nnoremap <buffer><silent> <LocalLeader><space> 
-            \:call <SID>GtdChangePrio('')<Bar>
-            \:call <SID>GtdChangeStatus('')<CR>
+            \:call <SID>GtdRemoveStatusThenPrio()<CR>
 
 nnoremap <buffer><silent> <LocalLeader>w :call <SID>GtdChangeStatus('WIP')<CR>
 nnoremap <buffer><silent> <LocalLeader>z :call <SID>GtdChangeStatus('BLOCKED')<CR>
