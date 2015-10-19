@@ -141,7 +141,7 @@ endfunc
 " - primary key is status, in this order: BLOCKED, WIP, [none], DONE
 " - secondary key is prio, in this order: A, B, [none], C
 "   (absence of priority is equivalent to B)
-func! GtdSortSection()
+func! s:GtdSortSection()
     let section_extent = s:GtdSectionExtens()
     let content = getline(section_extent[0], section_extent[1])
     call sort(content, 's:GtdSortFn')
@@ -164,6 +164,7 @@ func! s:GtdSectionExtens()
         let end = line('$')
     else
         let end = hit - 1
+    endif
     return [start, end]
 endfunc
 
@@ -317,13 +318,6 @@ setlocal autoindent
 " - users can remap these in ~/.vimrc, which will prevent mappings here from
 "   being applied
 
-" priority-based sorting (from todo.vim type)
-if !hasmapto('<Plug>(GtdSortByPrio)')
-  nmap <silent><unique> <LocalLeader>s <Plug>(GtdSortByPrio)
-endif
-nnoremap <Plug>(GtdSortByPrio)
-            \ vipoj:sort /\S/r<CR>
-
 if !hasmapto('<Plug>(GtdJumpToNow)')
   nmap <silent><unique> <LocalLeader>jn <Plug>(GtdJumpToNow)
 endif
@@ -408,7 +402,7 @@ nnoremap <buffer><silent> <LocalLeader>d :call <SID>GtdChangeStatus('DONE')<CR>
 
 nnoremap <buffer><silent> <LocalLeader>D :call <SID>GtdCleanUpDone()<CR>
 
-nnoremap <buffer><silent> <LocalLeader>s :call GtdSortSection()<CR>
+nnoremap <buffer><silent> <LocalLeader>s :call <SID>GtdSortSection()<CR>
 
 " Close all sections, and reopen only the current one.
 nnoremap <buffer><silent> z. zMzv
