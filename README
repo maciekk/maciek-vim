@@ -1,0 +1,7 @@
+Steps to install this Vim setup on new computer:
+$ cd ~
+$ git clone https://github.com/maciekk/vimrc.git .vim
+$ ln -s .vim/vimrc .vimrc
+$ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+Finally, in Vim run :VundleInstall
