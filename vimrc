@@ -13,9 +13,9 @@ filetype on
 filetype off                   " required!
 
 if has ('win32')
-    let $MYVIMDIR="$HOME/vimfiles"
+    let $MYVIMDIR="~/vimfiles"
 else
-    let $MYVIMDIR="$HOME/.vim"
+    let $MYVIMDIR="~/.vim"
 endif
 set runtimepath+=$MYVIMDIR
 
@@ -51,7 +51,7 @@ Plugin 'chrisbra/NrrwRgn'
 Plugin 'freitass/todo.txt-vim'
 
 " snippets
-Plugin 'SirVer/ultisnips'
+"Plugin 'SirVer/ultisnips'
 Plugin 'acustodioo/vim-snippets'
 
 " outline stuff; dump?
@@ -66,7 +66,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'vim-scripts/VOoM'
 Plugin 'L9'
 Plugin 'FuzzyFinder'
-"Plugin 'jnwhiteh/vim-golang'
+Plugin 'fatih/vim-go'
 Plugin 'majutsushi/tagbar'
 Plugin 'thinca/vim-fontzoom'
 Plugin 'tpope/vim-fugitive'
@@ -77,6 +77,11 @@ Plugin 'xolox/vim-notes'
 
 " suggested by YouCompleteMe (corp)
 Plugin 'scrooloose/syntastic'
+
+" Markdown improvements
+"Plugin 'godlygeek/tabular'
+"Plugin 'plasticboy/vim-markdown'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
 
 " to try
 "Plugin 'xolox/vim-session'
@@ -104,7 +109,7 @@ set cmdheight=1
 set diffopt+=vertical
 set directory=~/tmp,/var/tmp/,/tmp,.
 set expandtab
-set foldlevelstart=3
+set foldlevelstart=0
 set hidden
 set history=999
 set laststatus=2
@@ -152,7 +157,7 @@ set nowrap
 
 set backup
 set backupcopy=yes
-set backupdir=~/.bak,~/tmp,.,/tmp
+set backupdir=~/bak,~/tmp,.,/tmp
 
 " mappings {{{1
 command! W :w  " in case we didn't let go of Shift fast enough
@@ -222,6 +227,17 @@ let g:nrrw_rgn_rel_min = 10
 let g:nrrw_rgn_rel_max = 80
 let g:nrrw_rgn_incr = 99
 
+" pandoc-syntax {{{2
+" This is needed only if don't also have `pandoc` package installed.
+augroup pandoc_syntax
+    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+augroup END
+
+let g:pandoc#syntax#conceal#use=1
+let g:pandoc#syntax#conceal#urls=1
+let g:pandoc#syntax#style#emphases=1
+let g:pandoc#syntax#style#underline_special=1
+
 " local configs {{{1
 if has('win32') || has('win64') || has('win16')
     let local_settings = $HOME . 'vimfiles/LOCAL/local.vim'
@@ -282,6 +298,9 @@ hi ColorColumn guibg=#330000 ctermbg=Black
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+" Do not reveal Conceals items if in normal mode.
+set cocu=n
 
 " }}}1
 " vim:fdm=marker:
