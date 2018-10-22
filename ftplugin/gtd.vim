@@ -4,6 +4,7 @@
 " License:	This file is placed in the public domain.
 "
 " TODO:
+" - 0/status sorting should be case-sensitive: "next" != "NEXT"
 " - 0/have fn to filter :map listing to only those lines that match a regexp
 " - 0/on <Leader>h or <Leader>?, show quickfix window with cheatsheet of
 "   most useful GTD bindings (:cexp or setqflist()), or all Gtd.* fns
