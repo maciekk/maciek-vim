@@ -15,9 +15,15 @@ elseif has('gui_win32')
     "set guifont=Inconsolata:h12
     set guifont=gohufont-14
 elseif has('gui_macvim')
-    set guifont=Inconsolata:h18
+    "set guifont=Inconsolata:h18
+    "set guifont=Osaka-Mono:h20
+    "set guifont=PT\ Mono:h18
+    "set guifont=Cousine:h18
+    set guifont=CourierNewPSMT:h17
 endif
 
 set guioptions=gc
 " adjust cursor blink
 set guicursor+=a:blinkon100-blinkoff100-blinkwait500
+
+colorscheme pyte
