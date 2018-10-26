@@ -82,6 +82,7 @@ Plugin 'scrooloose/syntastic'
 "Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plugin 'mmai/vim-markdown-wiki'
 
 " to try
 "Plugin 'xolox/vim-session'
@@ -146,7 +147,8 @@ nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " soft breaks {{{2
 set textwidth=78
-set formatoptions=tcqn
+set formatoptions=tcq2n
+set autoindent
 
 set nowrap
 " uncomment for wrapping; might need to turn off 'list'
@@ -275,6 +277,10 @@ augroup todotxtgroup
     autocmd!
     autocmd BufNewFile,BufRead,BufEnter todo.txt so $MYVIMDIR/todo-extra.vim
 augroup END
+
+" Markdown bindings
+" Source: https://github.com/tpope/vim-surround/issues/15
+let g:surround_{char2nr('*')} = "**\r**"
 
 " Quick edit & similar
 nnoremap <Leader>ev :vsplit ~/.vim/vimrc<cr>
