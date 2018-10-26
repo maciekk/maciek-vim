@@ -109,7 +109,7 @@ set hidden
 set history=999
 set laststatus=2
 set list
-set listchars=tab:Â»Â·,trail:Â·,extends:Â»,precedes:Â«
+set listchars=tab:»·,trail:·,extends:»,precedes:«
 set matchpairs+=<:>
 set modeline
 set number
