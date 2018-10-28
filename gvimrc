@@ -19,7 +19,8 @@ elseif has('gui_macvim')
     "set guifont=Osaka-Mono:h20
     "set guifont=PT\ Mono:h18
     "set guifont=Cousine:h18
-    set guifont=CourierNewPSMT:h17
+    "set guifont=CourierNewPSMT:h17
+    set guifont=FantasqueSansMono-Regular:h18
 endif
 
 set guioptions=gc
