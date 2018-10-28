@@ -40,7 +40,8 @@ Plugin 'kien/tabman.vim'
 Plugin 'matchit.zip'
 Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdtree'
+" prefer the netrw :Explore command
 Plugin 'sjl/gundo.vim'
 "Plugin 'TVO--The-Vim-Outliner'
 Plugin 'utl.vim'
@@ -81,6 +82,7 @@ Plugin 'scrooloose/syntastic'
 " Markdown improvements
 "Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
+Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'mmai/vim-markdown-wiki'
 
@@ -229,16 +231,19 @@ let g:nrrw_rgn_rel_min = 10
 let g:nrrw_rgn_rel_max = 80
 let g:nrrw_rgn_incr = 99
 
-" pandoc-syntax {{{2
+" pandoc {{{2
 " This is needed only if don't also have `pandoc` package installed.
-augroup pandoc_syntax
-    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-augroup END
+"augroup pandoc_syntax
+"    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+"augroup END
 
 let g:pandoc#syntax#conceal#use=1
 let g:pandoc#syntax#conceal#urls=1
 let g:pandoc#syntax#style#emphases=1
 let g:pandoc#syntax#style#underline_special=1
+
+let g:pandoc#folding#level=2
+let g:pandoc#folding#fdc=0
 
 " local configs {{{1
 if has('win32') || has('win64') || has('win16')
