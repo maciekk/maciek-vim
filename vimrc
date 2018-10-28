@@ -14,13 +14,15 @@ filetype off                   " required!
 
 if has ('win32')
     let $MYVIMDIR="~/vimfiles"
+    let vundlepath='~/vimfiles/bundle'
 else
     let $MYVIMDIR="~/.vim"
+    let vundlepath='~/.vim/bundle'
 endif
 set runtimepath+=$MYVIMDIR
 
 let &runtimepath.=','.$MYVIMDIR.'/bundle/Vundle.vim'
-call vundle#begin()
+call vundle#begin(vundlepath)
 
 " let Vundle manage Vundle
 Plugin 'gmarik/vundle'
@@ -109,6 +111,7 @@ set backspace=indent,eol,start
 set cmdheight=1
 set diffopt+=vertical
 set directory=~/tmp,/var/tmp/,/tmp,.
+set encoding=utf-8
 set expandtab
 set foldlevelstart=0
 set hidden
