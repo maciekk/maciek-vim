@@ -13,7 +13,9 @@ elseif has('gui_win32')
     "set guifont=ProggyCleanTT:h12:cANSI
     "set guifont=Crisp:h12:cANSI
     "set guifont=Inconsolata:h12
-    set guifont=gohufont-14
+    "set guifont=gohufont-14
+    " source: https://github.com/belluzj/fantasque-sans
+    set guifont=Fantasque_Sans_Mono:h13
 elseif has('gui_macvim')
     "set guifont=Inconsolata:h18
     "set guifont=Osaka-Mono:h20
