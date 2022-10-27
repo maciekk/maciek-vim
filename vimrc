@@ -25,7 +25,7 @@ let &runtimepath.=','.$MYVIMDIR.'/bundle/Vundle.vim'
 call vundle#begin(vundlepath)
 
 " let Vundle manage Vundle
-Plugin 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.vim'
 
 " bundles {{{1
 "
@@ -34,52 +34,52 @@ Plugin 'gmarik/vundle'
 " - <C-p> : CtrlP
 " - \mt | \mf : Tabman
 " - :Note : note taking
-Plugin 'Lokaltog/vim-powerline'
-Plugin 'bufexplorer.zip'
-Plugin 'kien/ctrlp.vim'
+"Plugin 'Lokaltog/vim-powerline'
+"Plugin 'bufexplorer.zip'
+"Plugin 'kien/ctrlp.vim'
 Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'kien/tabman.vim'
-Plugin 'matchit.zip'
-Plugin 'mileszs/ack.vim'
-Plugin 'scrooloose/nerdcommenter'
+"Plugin 'kien/tabman.vim'
+"Plugin 'matchit.zip'
+"Plugin 'mileszs/ack.vim'
+"Plugin 'scrooloose/nerdcommenter'
 "Plugin 'scrooloose/nerdtree'
 " prefer the netrw :Explore command
 Plugin 'sjl/gundo.vim'
 "Plugin 'TVO--The-Vim-Outliner'
-Plugin 'utl.vim'
+"Plugin 'utl.vim'
 "Plugin 'VimOutliner'
-Plugin 'insanum/votl'
+"Plugin 'insanum/votl'
 Plugin 'vimwiki'
-Plugin 'chrisbra/NrrwRgn'
-Plugin 'freitass/todo.txt-vim'
+"Plugin 'chrisbra/NrrwRgn'
+"Plugin 'freitass/todo.txt-vim'
 
 " snippets
 "Plugin 'SirVer/ultisnips'
-Plugin 'acustodioo/vim-snippets'
+"Plugin 'acustodioo/vim-snippets'
 
 " outline stuff; dump?
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/neocomplcache'
-Plugin 'h1mesuke/unite-outline'
+"Plugin 'Shougo/unite.vim'
+"Plugin 'Shougo/neocomplcache'
+"Plugin 'h1mesuke/unite-outline'
 
 " HTML
 Plugin 'mattn/emmet-vim'
 
 " learn more about these
-Plugin 'vim-scripts/VOoM'
-Plugin 'L9'
-Plugin 'FuzzyFinder'
-Plugin 'fatih/vim-go'
-Plugin 'majutsushi/tagbar'
-Plugin 'thinca/vim-fontzoom'
-Plugin 'tpope/vim-fugitive'
+"Plugin 'vim-scripts/VOoM'
+"Plugin 'L9'
+"Plugin 'FuzzyFinder'
+"Plugin 'fatih/vim-go'
+"Plugin 'majutsushi/tagbar'
+"Plugin 'thinca/vim-fontzoom'
+"Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-notes'
+"Plugin 'xolox/vim-misc'
+"Plugin 'xolox/vim-notes'
 
 " suggested by YouCompleteMe (corp)
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 
 " Markdown improvements
 "Plugin 'godlygeek/tabular'
@@ -97,9 +97,19 @@ Plugin 'mmai/vim-markdown-wiki'
 "https://github.com/hsitz/VimOrganizer
 "Plugin 'jceb/vim-orgmode'
 
-" color themes
+" color schemes -- good source: http://vimcolorschemes.com
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'tomasr/molokai'
+Plugin 'sainnhe/everforest'
+Plugin 'morhetz/gruvbox'
+Plugin 'dracula/vim'
+Plugin 'lifepillar/vim-solarized8'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'endel/vim-github-colorscheme'
+Plugin 'nelstrom/vim-mac-classic-theme'
+Plugin 'yuttie/inkstained-vim'
+Plugin 'romgrk/github-light.vim'
+Plugin 'noah/vim256-color'
 "Plugin 'flazz/vim-colorschemes'
 
 " All of your Plugins must be added before the following line
@@ -135,7 +145,8 @@ set splitbelow
 set splitright
 set viminfo='100,<50,s10,h,%
 set wildmenu
-set wildmode=list:longest,full
+"set wildmode=list:longest,full
+set wildoptions=fuzzy,pum
 
 " This is at least where the words are on OS X.
 set dictionary=/usr/share/dict/words
@@ -270,7 +281,7 @@ syntax enable
 source $MYVIMDIR/abbreviations.vim
 
 " TODO: is this needed?
-runtime macros/matchit.vim
+"runtime macros/matchit.vim
 
 " One is bound to use the LocalLeader more often (it is specific to the
 " buffer/file), so it should use the easier-to-reach character.
@@ -299,7 +310,7 @@ nnoremap <Leader>es :vsplit ~/secure/scratch.txt<cr>
 " other
 autocmd Filetype gtd setlocal fdm=indent
 
-hi ColorColumn guibg=#330000 ctermbg=Black
+"hi ColorColumn guibg=#330000 ctermbg=Black
 
 " Stolen from:
 "   https://youtu.be/aHm36-na4-4?list=PLdyMeP7HZ2xYPEilzjwqK6LDKOrGFtowI
