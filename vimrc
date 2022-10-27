@@ -34,45 +34,58 @@ Plugin 'VundleVim/Vundle.vim'
 " - <C-p> : CtrlP
 " - \mt | \mf : Tabman
 " - :Note : note taking
-"Plugin 'Lokaltog/vim-powerline'
 "Plugin 'bufexplorer.zip'
-"Plugin 'kien/ctrlp.vim'
-Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'kien/ctrlp.vim'
 "Plugin 'kien/tabman.vim'
 "Plugin 'matchit.zip'
 "Plugin 'mileszs/ack.vim'
-"Plugin 'scrooloose/nerdcommenter'
-"Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
 " prefer the netrw :Explore command
 Plugin 'sjl/gundo.vim'
-"Plugin 'TVO--The-Vim-Outliner'
-"Plugin 'utl.vim'
-"Plugin 'VimOutliner'
-"Plugin 'insanum/votl'
-Plugin 'vimwiki'
 "Plugin 'chrisbra/NrrwRgn'
 "Plugin 'freitass/todo.txt-vim'
+
+" Powerline & similar
+"Plugin 'Lokaltog/vim-powerline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" rainbow parentheses, various choices
+"Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'frazrepo/vim-rainbow'
 
 " snippets
 "Plugin 'SirVer/ultisnips'
 "Plugin 'acustodioo/vim-snippets'
 
-" outline stuff; dump?
-"Plugin 'Shougo/unite.vim'
-"Plugin 'Shougo/neocomplcache'
-"Plugin 'h1mesuke/unite-outline'
-
 " HTML
 Plugin 'mattn/emmet-vim'
 
-" learn more about these
-"Plugin 'vim-scripts/VOoM'
+" Git - use :G
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+
+" a utility library for other scripts
 "Plugin 'L9'
-"Plugin 'FuzzyFinder'
+
+" Outliners
+"Plugin 'insanum/votl'
+"Plugin 'VimOutliner'
+"Plugin 'TVO--The-Vim-Outliner'
+"Plugin 'vim-scripts/VOoM'
+
+" Wiki & tools
+Plugin 'vimwiki'
+"Plugin 'utl.vim'
+
+" Go support
 "Plugin 'fatih/vim-go'
+
+" learn more about these
+"Plugin 'FuzzyFinder'
 "Plugin 'majutsushi/tagbar'
 "Plugin 'thinca/vim-fontzoom'
-"Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 "Plugin 'xolox/vim-misc'
@@ -130,7 +143,7 @@ set hidden
 set history=999
 set laststatus=2
 set list
-set listchars=tab:��,trail:�,extends:�,precedes:�
+set listchars=tab:»·,trail:·,extends:»,precedes:«
 set matchpairs+=<:>
 set modeline
 set number
@@ -145,7 +158,7 @@ set splitbelow
 set splitright
 set viminfo='100,<50,s10,h,%
 set wildmenu
-"set wildmode=list:longest,full
+set wildmode=list:longest,full
 set wildoptions=fuzzy,pum
 
 " This is at least where the words are on OS X.
@@ -158,7 +171,7 @@ set smartcase
 set nowrapscan
 set hlsearch
 set incsearch
-" hit C-l to run :noh AND redraw screen (from "Pratical Vim")
+" hit C-l to run :noh AND redraw screen (h/t "Pratical Vim")
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " soft breaks {{{2
@@ -170,9 +183,10 @@ set nowrap
 " uncomment for wrapping; might need to turn off 'list'
 "set wrap
 "set wrapmargin=2
-"set showbreak=…
+"set showbreak=â¦
 "set linebreak
 
+" backup {{{2
 set backup
 set backupcopy=yes
 set backupdir=~/bak,~/tmp,.,/tmp
@@ -226,6 +240,13 @@ let g:rbpt_loadcmd_toggle = 0
 "au Syntax * RainbowParenthesesLoadSquare
 "au Syntax * RainbowParenthesesLoadBraces
 
+" rainbow improved {{{2
+"
+"au FileType c,cpp,objc,objcpp call rainbow#load()
+"let g:rainbow_active = 1
+"
+" or just use :RainbowToggle to turn it on
+
 " Vimwiki {{{2
 " NOTE: set / override g:vimwiki_list in local.vim
 let g:vimwiki_list = [{'path': '~/Google Drive/vim/wiki/'}]
@@ -233,6 +254,21 @@ let g:vimwiki_folding = 'expr'
 
 " Powerline {{{2
 let g:Powerline_symbols = 'compatible'
+
+" airline {{{2
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+
+" Must define dictionary first if it does not exist,
+" as indicated in `:he airline-customization`
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+let g:airline_symbols.colnr = ' |:'
+let g:airline_symbols.linenr = ' ☰ :'
+"let g:airline_symbols.maxlinenr = '☰ '
+let g:airline_symbols.maxlinenr = ''
 
 " CtrlP {{{2
 let g:ctrlp_cmd = 'CtrlPBuffer'
@@ -259,6 +295,14 @@ let g:pandoc#syntax#style#underline_special=1
 let g:pandoc#folding#level=2
 let g:pandoc#folding#fdc=0
 
+" misc {{{2
+let g:gitgutter_set_sign_backgrounds = 1
+" vim-gitgutter used to do this by default:
+highlight! link SignColumn LineNr
+
+" turn off for now, until I figure out the background coloring
+let g:gitgutter_enabled = 0
+
 " local configs {{{1
 if has('win32') || has('win64') || has('win16')
     let local_settings = $HOME . 'vimfiles/LOCAL/local.vim'
@@ -271,9 +315,10 @@ if filereadable(local_settings)
 endif
 
 " cosmetics {{{1
-colorscheme molokai
-"colorscheme pyte
+colorscheme BusyBee
+"colorscheme molokai
 "colorscheme fine_blue
+"colorscheme pyte
 syntax enable
 
 " misc {{{1

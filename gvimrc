@@ -29,4 +29,3 @@ set guioptions=gc
 " adjust cursor blink
 set guicursor+=a:blinkon100-blinkoff100-blinkwait500
 
-colorscheme pyte
