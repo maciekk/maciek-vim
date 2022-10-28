@@ -35,21 +35,31 @@ Plugin 'VundleVim/Vundle.vim'
 " - \mt | \mf : Tabman
 " - :Note : note taking
 "Plugin 'bufexplorer.zip'
-Plugin 'kien/ctrlp.vim'
-"Plugin 'kien/tabman.vim'
-"Plugin 'matchit.zip'
+Plugin 'ctrlpvim/ctrlp.vim'
 "Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-" prefer the netrw :Explore command
-Plugin 'sjl/gundo.vim'
+" needs nerdtree-patched font to be set (in terminal, or set guifont=*)
+" For fantasque, on MacOS, did:
+"   $ brew tap homebrew/cask-fonts
+"   $ brew install --cask font-fantasque-sans-mono-nerd-font
+Plugin 'ryanoasis/vim-devicons'  " requires nerdtree fonts
+
 "Plugin 'chrisbra/NrrwRgn'
-"Plugin 'freitass/todo.txt-vim'
+
+" undo trees
+"Plugin 'sjl/gundo.vim'   " obsolete
+"Plugin 'simnalamburt/vim-mundo'   " gundo fork++; requires Python
+Plugin 'mbbill/undotree'
 
 " Powerline & similar
 "Plugin 'Lokaltog/vim-powerline'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+
+" matchit - use the one that comes with Vim; switch to external if want recent
+packadd! matchit
+"Plugin 'matchit.zip'
 
 " rainbow parentheses, various choices
 "Plugin 'kien/rainbow_parentheses.vim'
@@ -84,7 +94,6 @@ Plugin 'vimwiki'
 
 " learn more about these
 "Plugin 'FuzzyFinder'
-"Plugin 'majutsushi/tagbar'
 "Plugin 'thinca/vim-fontzoom'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
@@ -109,6 +118,11 @@ Plugin 'mmai/vim-markdown-wiki'
 " Org mode in Vim
 "https://github.com/hsitz/VimOrganizer
 "Plugin 'jceb/vim-orgmode'
+
+" no longer used
+"Plugin 'freitass/todo.txt-vim'
+"Plugin 'majutsushi/tagbar'
+"Plugin 'kien/tabman.vim'
 
 " color schemes -- good source: http://vimcolorschemes.com
 Plugin 'nanotech/jellybeans.vim'
