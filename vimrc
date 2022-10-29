@@ -3,6 +3,15 @@
 " Version controlled here:
 "   https://github.com/maciekk/vimrc
 
+" Choose better leaders.
+let mapleader = ","
+let maplocalleader = "\\"
+
+" First, some mappings to work with this config file.
+nnoremap <Leader>ve :vsplit ~/.vim/vimrc<cr>
+nnoremap <Leader>vs :so $MYVIMRC<cr>
+nnoremap <Leader>vp :so $MYVIMRC<cr>\|:VundleClean<cr>\|:VundleInstall<cr>
+
 " Vundle setup {{{1
 set nocompatible               " be iMproved
 
@@ -34,7 +43,27 @@ Plugin 'VundleVim/Vundle.vim'
 " - <C-p> : CtrlP
 " - \mt | \mf : Tabman
 " - :Note : note taking
-"Plugin 'bufexplorer.zip'
+
+" fancy startup page
+Plugin 'mhinz/vim-startify'
+
+" additional "verbs" & "nouns"
+" based on 'Mastering the Vim Language' talk
+"     https://www.youtube.com/watch?v=wlR5gYd6um0
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
+Plugin 'inkarkat/vim-ReplaceWithRegister'
+Plugin 'christoomey/vim-titlecase'
+Plugin 'christoomey/vim-sort-motion'
+Plugin 'christoomey/vim-system-copy'
+
+Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'kana/vim-textobj-line'
+Plugin 'kana/vim-textobj-entire'
+
+Plugin 'tpope/vim-repeat'
+
+Plugin 'bufexplorer.zip'
 Plugin 'ctrlpvim/ctrlp.vim'
 "Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdcommenter'
@@ -95,8 +124,6 @@ Plugin 'vimwiki'
 " learn more about these
 "Plugin 'FuzzyFinder'
 "Plugin 'thinca/vim-fontzoom'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
 "Plugin 'xolox/vim-misc'
 "Plugin 'xolox/vim-notes'
 
@@ -111,6 +138,7 @@ Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'mmai/vim-markdown-wiki'
 
 " to try
+Plugin 'voldikss/vim-floaterm'
 "Plugin 'xolox/vim-session'
 "Plugin 'techlivezheng/vim-plugin-minibufexpl'
 "Plugin 'taglist.vim'  " superseded by 'tagbar'?
@@ -125,19 +153,19 @@ Plugin 'mmai/vim-markdown-wiki'
 "Plugin 'kien/tabman.vim'
 
 " color schemes -- good source: http://vimcolorschemes.com
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'tomasr/molokai'
-Plugin 'sainnhe/everforest'
-Plugin 'morhetz/gruvbox'
-Plugin 'dracula/vim'
-Plugin 'lifepillar/vim-solarized8'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'endel/vim-github-colorscheme'
-Plugin 'nelstrom/vim-mac-classic-theme'
-Plugin 'yuttie/inkstained-vim'
-Plugin 'romgrk/github-light.vim'
-Plugin 'noah/vim256-color'
 "Plugin 'flazz/vim-colorschemes'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'dracula/vim'
+Plugin 'endel/vim-github-colorscheme'
+Plugin 'lifepillar/vim-solarized8'
+Plugin 'morhetz/gruvbox'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'nelstrom/vim-mac-classic-theme'
+Plugin 'noah/vim256-color'
+Plugin 'romgrk/github-light.vim'
+Plugin 'sainnhe/everforest'
+Plugin 'tomasr/molokai'
+Plugin 'yuttie/inkstained-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -161,8 +189,10 @@ set listchars=tab:»·,trail:·,extends:»,precedes:«
 set matchpairs+=<:>
 set modeline
 set number
+set relativenumber
 set ruler
-set scrolloff=1
+set scrolloff=4
+set sidescrolloff=4
 set shiftwidth=4
 set shortmess+=I
 set showcmd
@@ -329,7 +359,8 @@ if filereadable(local_settings)
 endif
 
 " cosmetics {{{1
-colorscheme BusyBee
+colorscheme strange
+"colorscheme BusyBee
 "colorscheme molokai
 "colorscheme fine_blue
 "colorscheme pyte
@@ -338,14 +369,6 @@ syntax enable
 " misc {{{1
 
 source $MYVIMDIR/abbreviations.vim
-
-" TODO: is this needed?
-"runtime macros/matchit.vim
-
-" One is bound to use the LocalLeader more often (it is specific to the
-" buffer/file), so it should use the easier-to-reach character.
-let mapleader = "\\"
-let maplocalleader = ","
 
 " Esc alternative (easy on Dvorak)
 inoremap hh <Esc>
@@ -359,12 +382,6 @@ augroup END
 " Markdown bindings
 " Source: https://github.com/tpope/vim-surround/issues/15
 let g:surround_{char2nr('*')} = "**\r**"
-
-" Quick edit & similar
-nnoremap <Leader>ev :vsplit ~/.vim/vimrc<cr>
-nnoremap <Leader>sv :source $MYVIMRC<cr>
-nnoremap <Leader>g :e ~/Google\ Drive/GTD/gtd.txt<cr>
-nnoremap <Leader>es :vsplit ~/secure/scratch.txt<cr>
 
 " other
 autocmd Filetype gtd setlocal fdm=indent
