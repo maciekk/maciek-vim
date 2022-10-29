@@ -12,6 +12,7 @@ Plugin 'christoomey/vim-system-copy'
 
 " nouns {{{1
 Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'kana/vim-textobj-user'  " needed by the textobj-line & textobj-entire
 Plugin 'kana/vim-textobj-line'
 Plugin 'kana/vim-textobj-entire'
 
