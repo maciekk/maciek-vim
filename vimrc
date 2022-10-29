@@ -1,7 +1,12 @@
 " Maciej's Vim setup
 "
-" Version controlled here:
+" Version-controlled here:
 "   https://github.com/maciekk/vimrc
+
+" TODO:
+" - why upon start is there always an empty buffer, in addition to buffers
+"   from last session?
+" - check for 'netrw'
 
 " Choose better leaders.
 let mapleader = ","
