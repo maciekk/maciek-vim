@@ -42,24 +42,24 @@ Plugin 'VundleVim/Vundle.vim'
 "Plugin 'mhinz/vim-startify'
 
 " fundamentals {{{2
-so ~/.vim/plugins/verbs-n-nouns.vim
-so ~/.vim/plugins/undo.vim
-so ~/.vim/plugins/matchit.vim
-so ~/.vim/plugins/narrow.vim
+so plugins/verbs-n-nouns.vim
+so plugins/undo.vim
+so plugins/matchit.vim
+so plugins/narrow.vim
 
 " conveniences {{{2
-so ~/.vim/plugins/ctrlp.vim
-"so ~/.vim/plugins/snippets.vim
+so plugins/ctrlp.vim
+"so plugins/snippets.vim
 
 " tools {{{2
-so ~/.vim/plugins/nerd.vim
-so ~/.vim/plugins/git.vim
-so ~/.vim/plugins/markdown.vim
-so ~/.vim/plugins/wiki.vim
-so ~/.vim/plugins/floaterm.vim
-so ~/.vim/plugins/notes.vim
-"so ~/.vim/plugins/outliners.vim
-"so ~/.vim/plugins/org.vim
+so plugins/nerd.vim
+so plugins/git.vim
+so plugins/markdown.vim
+so plugins/wiki.vim
+so plugins/floaterm.vim
+so plugins/notes.vim
+"so plugins/outliners.vim
+"so plugins/org.vim
 Plugin 'bufexplorer.zip'
 "Plugin 'mileszs/ack.vim'
 
@@ -68,10 +68,10 @@ Plugin 'mattn/emmet-vim'  " HTML
 "Plugin 'fatih/vim-go'
 
 " aeshtetics {{{2
-"so ~/.vim/plugins/powerline.vim
-so ~/.vim/plugins/airline.vim
-so ~/.vim/plugins/rainbow.vim
-so ~/.vim/plugins/colorschemes.vim
+"so plugins/powerline.vim
+so plugins/airline.vim
+so plugins/rainbow.vim
+so plugins/colorschemes.vim
 
 " review & try
 "Plugin 'FuzzyFinder'
