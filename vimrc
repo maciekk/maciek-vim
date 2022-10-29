@@ -36,136 +36,55 @@ call vundle#begin(vundlepath)
 " let Vundle manage Vundle
 Plugin 'VundleVim/Vundle.vim'
 
-" bundles {{{1
-"
-" Main bindings to remember/use:
-" - \be : BufferExplorer
-" - <C-p> : CtrlP
-" - \mt | \mf : Tabman
-" - :Note : note taking
+" plugins {{{1
 
 " fancy startup page
-Plugin 'mhinz/vim-startify'
+"Plugin 'mhinz/vim-startify'
 
-" additional "verbs" & "nouns"
-" based on 'Mastering the Vim Language' talk
-"     https://www.youtube.com/watch?v=wlR5gYd6um0
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-commentary'
-Plugin 'inkarkat/vim-ReplaceWithRegister'
-Plugin 'christoomey/vim-titlecase'
-Plugin 'christoomey/vim-sort-motion'
-Plugin 'christoomey/vim-system-copy'
+" fundamentals {{{2
+so ~/.vim/plugins/verbs-n-nouns.vim
+so ~/.vim/plugins/undo.vim
+so ~/.vim/plugins/matchit.vim
+so ~/.vim/plugins/narrow.vim
 
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'kana/vim-textobj-line'
-Plugin 'kana/vim-textobj-entire'
+" conveniences {{{2
+so ~/.vim/plugins/ctrlp.vim
+"so ~/.vim/plugins/snippets.vim
 
-Plugin 'tpope/vim-repeat'
-
+" tools {{{2
+so ~/.vim/plugins/nerd.vim
+so ~/.vim/plugins/git.vim
+so ~/.vim/plugins/markdown.vim
+so ~/.vim/plugins/wiki.vim
+so ~/.vim/plugins/floaterm.vim
+so ~/.vim/plugins/notes.vim
+"so ~/.vim/plugins/outliners.vim
+"so ~/.vim/plugins/org.vim
 Plugin 'bufexplorer.zip'
-Plugin 'ctrlpvim/ctrlp.vim'
 "Plugin 'mileszs/ack.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-" needs nerdtree-patched font to be set (in terminal, or set guifont=*)
-" For fantasque, on MacOS, did:
-"   $ brew tap homebrew/cask-fonts
-"   $ brew install --cask font-fantasque-sans-mono-nerd-font
-Plugin 'ryanoasis/vim-devicons'  " requires nerdtree fonts
 
-"Plugin 'chrisbra/NrrwRgn'
-
-" undo trees
-"Plugin 'sjl/gundo.vim'   " obsolete
-"Plugin 'simnalamburt/vim-mundo'   " gundo fork++; requires Python
-Plugin 'mbbill/undotree'
-
-" Powerline & similar
-"Plugin 'Lokaltog/vim-powerline'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
-" matchit - use the one that comes with Vim; switch to external if want recent
-packadd! matchit
-"Plugin 'matchit.zip'
-
-" rainbow parentheses, various choices
-"Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'frazrepo/vim-rainbow'
-
-" snippets
-"Plugin 'SirVer/ultisnips'
-"Plugin 'acustodioo/vim-snippets'
-
-" HTML
-Plugin 'mattn/emmet-vim'
-
-" Git - use :G
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-
-" a utility library for other scripts
-"Plugin 'L9'
-
-" Outliners
-"Plugin 'insanum/votl'
-"Plugin 'VimOutliner'
-"Plugin 'TVO--The-Vim-Outliner'
-"Plugin 'vim-scripts/VOoM'
-
-" Wiki & tools
-Plugin 'vimwiki'
-"Plugin 'utl.vim'
-
-" Go support
+" languages {{{2
+Plugin 'mattn/emmet-vim'  " HTML
 "Plugin 'fatih/vim-go'
 
-" learn more about these
+" aeshtetics {{{2
+"so ~/.vim/plugins/powerline.vim
+so ~/.vim/plugins/airline.vim
+so ~/.vim/plugins/rainbow.vim
+so ~/.vim/plugins/colorschemes.vim
+
+" review & try
 "Plugin 'FuzzyFinder'
 "Plugin 'thinca/vim-fontzoom'
-"Plugin 'xolox/vim-misc'
-"Plugin 'xolox/vim-notes'
+"Plugin 'techlivezheng/vim-plugin-minibufexpl'
+"Plugin 'taglist.vim'  " superseded by 'tagbar'?
 
 " suggested by YouCompleteMe (corp)
 "Plugin 'scrooloose/syntastic'
 
-" Markdown improvements
-"Plugin 'godlygeek/tabular'
-"Plugin 'plasticboy/vim-markdown'
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-Plugin 'mmai/vim-markdown-wiki'
-
-" to try
-Plugin 'voldikss/vim-floaterm'
-"Plugin 'xolox/vim-session'
-"Plugin 'techlivezheng/vim-plugin-minibufexpl'
-"Plugin 'taglist.vim'  " superseded by 'tagbar'?
-
-" Org mode in Vim
-"https://github.com/hsitz/VimOrganizer
-"Plugin 'jceb/vim-orgmode'
-
-" no longer used
-"Plugin 'freitass/todo.txt-vim'
-"Plugin 'majutsushi/tagbar'
+" cemetary: no longer used
 "Plugin 'kien/tabman.vim'
-
-" color schemes -- good source: http://vimcolorschemes.com
-"Plugin 'flazz/vim-colorschemes'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'dracula/vim'
-Plugin 'endel/vim-github-colorscheme'
-Plugin 'lifepillar/vim-solarized8'
-Plugin 'morhetz/gruvbox'
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'nelstrom/vim-mac-classic-theme'
-Plugin 'noah/vim256-color'
-Plugin 'romgrk/github-light.vim'
-Plugin 'sainnhe/everforest'
-Plugin 'tomasr/molokai'
-Plugin 'yuttie/inkstained-vim'
+"Plugin 'freitass/todo.txt-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -255,97 +174,8 @@ map ,ff :FufFile<CR>
 "   http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
 nmap g/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
 
-" package setup {{{1
-" Rainbow Parentheses {{{2
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-let g:rbpt_max = 16
-let g:rbpt_loadcmd_toggle = 0
-
-"" TODO: Temporary
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
-
-" rainbow improved {{{2
-"
-"au FileType c,cpp,objc,objcpp call rainbow#load()
-"let g:rainbow_active = 1
-"
-" or just use :RainbowToggle to turn it on
-
-" Vimwiki {{{2
-" NOTE: set / override g:vimwiki_list in local.vim
-let g:vimwiki_list = [{'path': '~/Google Drive/vim/wiki/'}]
-let g:vimwiki_folding = 'expr'
-
-" Powerline {{{2
-let g:Powerline_symbols = 'compatible'
-
-" airline {{{2
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-
-" Must define dictionary first if it does not exist,
-" as indicated in `:he airline-customization`
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-let g:airline_symbols.colnr = ' |:'
-let g:airline_symbols.linenr = ' ☰ :'
-"let g:airline_symbols.maxlinenr = '☰ '
-let g:airline_symbols.maxlinenr = ''
-
-" CtrlP {{{2
-let g:ctrlp_cmd = 'CtrlPBuffer'
-
-" Notes {{{2
-:let g:notes_directories = ['~/Google Drive/Notes']
-
-" NarrowRegion {{{2
-let g:nrrw_rgn_rel_min = 10
-let g:nrrw_rgn_rel_max = 80
-let g:nrrw_rgn_incr = 99
-
-" pandoc {{{2
-" This is needed only if don't also have `pandoc` package installed.
-"augroup pandoc_syntax
-"    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-"augroup END
-
-let g:pandoc#syntax#conceal#use=1
-let g:pandoc#syntax#conceal#urls=1
-let g:pandoc#syntax#style#emphases=1
-let g:pandoc#syntax#style#underline_special=1
-
-let g:pandoc#folding#level=2
-let g:pandoc#folding#fdc=0
-
-" misc {{{2
-let g:gitgutter_set_sign_backgrounds = 1
-" vim-gitgutter used to do this by default:
-highlight! link SignColumn LineNr
-
-" turn off for now, until I figure out the background coloring
-let g:gitgutter_enabled = 0
+" Close all /other/ buffers.
+nmap <leader>Q :%bd<cr>\|:e#<cr>
 
 " local configs {{{1
 if has('win32') || has('win64') || has('win16')
