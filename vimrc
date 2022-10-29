@@ -209,10 +209,6 @@ augroup todotxtgroup
     autocmd BufNewFile,BufRead,BufEnter todo.txt so $MYVIMDIR/todo-extra.vim
 augroup END
 
-" Markdown bindings
-" Source: https://github.com/tpope/vim-surround/issues/15
-let g:surround_{char2nr('*')} = "**\r**"
-
 " other
 autocmd Filetype gtd setlocal fdm=indent
 
