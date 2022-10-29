@@ -37,29 +37,30 @@ call vundle#begin(vundlepath)
 Plugin 'VundleVim/Vundle.vim'
 
 " plugins {{{1
+let $PLUGDIR=$MYVIMDIR."/plugins"
 
 " fancy startup page
 "Plugin 'mhinz/vim-startify'
 
 " fundamentals {{{2
-so ~/.vim/plugins/verbs-n-nouns.vim
-so ~/.vim/plugins/undo.vim
-so ~/.vim/plugins/matchit.vim
-so ~/.vim/plugins/narrow.vim
+so $PLUGDIR/verbs-n-nouns.vim
+so $PLUGDIR/undo.vim
+so $PLUGDIR/matchit.vim
+so $PLUGDIR/narrow.vim
 
 " conveniences {{{2
-so ~/.vim/plugins/ctrlp.vim
-"so ~/.vim/plugins/snippets.vim
+so $PLUGDIR/ctrlp.vim
+"so $PLUGDIR/snippets.vim
 
 " tools {{{2
-so ~/.vim/plugins/nerd.vim
-so ~/.vim/plugins/git.vim
-so ~/.vim/plugins/markdown.vim
-so ~/.vim/plugins/wiki.vim
-so ~/.vim/plugins/floaterm.vim
-so ~/.vim/plugins/notes.vim
-"so ~/.vim/plugins/outliners.vim
-"so ~/.vim/plugins/org.vim
+so $PLUGDIR/nerd.vim
+so $PLUGDIR/git.vim
+so $PLUGDIR/markdown.vim
+so $PLUGDIR/wiki.vim
+so $PLUGDIR/floaterm.vim
+so $PLUGDIR/notes.vim
+"so $PLUGDIR/outliners.vim
+"so $PLUGDIR/org.vim
 Plugin 'bufexplorer.zip'
 "Plugin 'mileszs/ack.vim'
 
@@ -68,10 +69,10 @@ Plugin 'mattn/emmet-vim'  " HTML
 "Plugin 'fatih/vim-go'
 
 " aeshtetics {{{2
-"so ~/.vim/plugins/powerline.vim
-so ~/.vim/plugins/airline.vim
-so ~/.vim/plugins/rainbow.vim
-so ~/.vim/plugins/colorschemes.vim
+"so $PLUGDIR/powerline.vim
+so $PLUGDIR/airline.vim
+so $PLUGDIR/rainbow.vim
+so $PLUGDIR/colorschemes.vim
 
 " review & try
 "Plugin 'FuzzyFinder'
