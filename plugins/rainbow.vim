@@ -1,7 +1,7 @@
 " Rainbow Improved {{{1
-Plugin 'luochen1990/rainbow'
+"Plugin 'luochen1990/rainbow'
 
-let g:rainbow_active = 1
+"let g:rainbow_active = 1
 " or just use :RainbowToggle to turn it on
 
 "au FileType c,cpp,objc,objcpp call rainbow#load()
@@ -38,5 +38,9 @@ let g:rbpt_loadcmd_toggle = 0
 "au Syntax * RainbowParenthesesLoadRound
 "au Syntax * RainbowParenthesesLoadSquare
 "au Syntax * RainbowParenthesesLoadBraces
+
+" simpler rainbow parentheses {{{1
+Plugin 'junegunn/rainbow_parentheses.vim'
+"RainbowParentheses
 
 " vim:fdm=marker
