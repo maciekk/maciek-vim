@@ -123,6 +123,7 @@ set listchars=tab:»·,trail:·,extends:»,precedes:«
 set matchpairs+=<:>
 set modeline
 set number
+set path=.,**
 set relativenumber
 set ruler
 set scrolloff=4
@@ -190,7 +191,9 @@ map ,ff :FufFile<CR>
 nmap g/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
 
 " Close all /other/ buffers.
-nmap <leader>Q :%bd<cr>\|:e#<cr>
+" TODO: ends up in wrong buffer when any buffers had unwritten changes and did
+" not delete (or floaterm buffer was in background)
+nmap <leader>Q :%bd<cr>\|:e#<cr>\|:bd#<cr>
 
 " local configs {{{1
 if has('win32') || has('win64') || has('win16')
