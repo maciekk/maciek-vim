@@ -150,8 +150,10 @@ set smartcase
 set nowrapscan
 set hlsearch
 set incsearch
+
 " hit C-l to run :noh AND redraw screen (h/t "Pratical Vim")
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+" disabled: now use vim-cool plugin for it
+"nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " soft breaks {{{2
 set textwidth=78
