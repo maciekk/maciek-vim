@@ -43,28 +43,33 @@ Plugin 'VundleVim/Vundle.vim'
 
 " plugins {{{1
 
+let $PLUGDIR=$MYVIMDIR.'/plugins'
+
 " fancy startup page
 "Plugin 'mhinz/vim-startify'
 
 " fundamentals {{{2
-so plugins/verbs-n-nouns.vim
-so plugins/undo.vim
-so plugins/matchit.vim
-so plugins/narrow.vim
+so $PLUGDIR/verbs-n-nouns.vim
+so $PLUGDIR/undo.vim
+so $PLUGDIR/matchit.vim
+so $PLUGDIR/narrow.vim
 
 " conveniences {{{2
-so plugins/ctrlp.vim
-"so plugins/snippets.vim
+so $PLUGDIR/ctrlp.vim
+"so $PLUGDIR/snippets.vim
+Plugin 'romainl/vim-cool'
+Plugin 'airblade/vim-rooter'
+Plugin 'tpope/vim-obsession'
 
 " tools {{{2
-so plugins/nerd.vim
-so plugins/git.vim
-so plugins/markdown.vim
-so plugins/wiki.vim
-so plugins/floaterm.vim
-so plugins/notes.vim
-"so plugins/outliners.vim
-"so plugins/org.vim
+so $PLUGDIR/nerd.vim
+so $PLUGDIR/git.vim
+so $PLUGDIR/markdown.vim
+so $PLUGDIR/wiki.vim
+so $PLUGDIR/floaterm.vim
+so $PLUGDIR/notes.vim
+"so $PLUGDIR/outliners.vim
+"so $PLUGDIR/org.vim
 Plugin 'bufexplorer.zip'
 "Plugin 'mileszs/ack.vim'
 
@@ -73,10 +78,15 @@ Plugin 'mattn/emmet-vim'  " HTML
 "Plugin 'fatih/vim-go'
 
 " aeshtetics {{{2
-"so plugins/powerline.vim
-so plugins/airline.vim
-so plugins/rainbow.vim
-so plugins/colorschemes.vim
+"so $PLUGDIR/powerline.vim
+so $PLUGDIR/airline.vim
+so $PLUGDIR/rainbow.vim
+so $PLUGDIR/colorschemes.vim
+
+" hide the vertical bar in vsplit
+"hi VertSplit guibg=bg guifg=bg
+set fillchars-=vert:\| | set fillchars+=vert:\│
+" alt chars: │┃┊┋
 
 " review & try
 "Plugin 'FuzzyFinder'
