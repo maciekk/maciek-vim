@@ -209,11 +209,16 @@ if filereadable(local_settings)
 endif
 
 " cosmetics {{{1
-colorscheme strange
-"colorscheme BusyBee
-"colorscheme molokai
-"colorscheme fine_blue
-"colorscheme pyte
+if has('win32')
+    colorscheme molokai
+else
+    "colorscheme strange
+    colorscheme BusyBee
+    "colorscheme molokai
+    "colorscheme fine_blue
+    "colorscheme pyte
+endif
+
 syntax enable
 
 " misc {{{1
