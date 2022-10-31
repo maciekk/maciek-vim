@@ -6,7 +6,9 @@
 " TODO:
 " - why upon start is there always an empty buffer, in addition to buffers
 "   from last session?
-" - check for 'netrw'
+" - why is BufExplorer slow to update screen when you press 'd' to delete
+"   buffer?
+" - why on restart does MacVim not reopen last view? need mksession?
 
 " Choose better leaders.
 let mapleader = ","
