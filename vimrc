@@ -52,6 +52,7 @@ so $PLUGDIR/ctrlp.vim
 Plug 'romainl/vim-cool'
 Plug 'tpope/vim-obsession'
 Plug 'junegunn/vim-peekaboo'
+Plug 'thinca/vim-fontzoom'
 Plug 'airblade/vim-rooter'
 "let g:rooter_patterns = ['.git', '>~']
 let g:rooter_patterns = ['>~']
@@ -65,7 +66,7 @@ so $PLUGDIR/floaterm.vim
 so $PLUGDIR/notes.vim
 "so $PLUGDIR/outliners.vim
 "so $PLUGDIR/org.vim
-Plug 'bufexplorer.zip'
+Plug 'jlanzarotta/bufexplorer'
 "Plug 'mileszs/ack.vim'
 
 " languages {{{2
@@ -85,7 +86,6 @@ set fillchars-=vert:\| | set fillchars+=vert:\│
 
 " review & try
 "Plug 'FuzzyFinder'
-"Plug 'thinca/vim-fontzoom'
 "Plug 'techlivezheng/vim-plugin-minibufexpl'
 "Plug 'taglist.vim'  " superseded by 'tagbar'?
 
