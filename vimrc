@@ -214,6 +214,20 @@ if filereadable(local_settings)
 endif
 
 " cosmetics {{{1
+
+" List of favourite themes:
+"   - BusyBee
+"   - molokai
+"   - pyte
+"   - fine_blue
+"   - fu
+"   - inkstained
+"   - strange
+"   - toast
+"   - melange
+"   - sonokai
+"   - candy
+
 if has('win32')
     colorscheme molokai
 else
