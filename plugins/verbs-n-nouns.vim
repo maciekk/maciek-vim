@@ -3,21 +3,21 @@
 "     https://www.youtube.com/watch?v=wlR5gYd6um0
 
 " VERBS {{{1
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-commentary'
-Plugin 'inkarkat/vim-ReplaceWithRegister'
-Plugin 'christoomey/vim-titlecase'
-Plugin 'christoomey/vim-sort-motion'
-Plugin 'christoomey/vim-system-copy'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'inkarkat/vim-ReplaceWithRegister'
+Plug 'christoomey/vim-titlecase'
+Plug 'christoomey/vim-sort-motion'
+Plug 'christoomey/vim-system-copy'
 
 " NOUNS {{{1
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'kana/vim-textobj-user'  " needed by the textobj-line & textobj-entire
-Plugin 'kana/vim-textobj-line'
-Plugin 'kana/vim-textobj-entire'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'kana/vim-textobj-user'  " needed by the textobj-line & textobj-entire
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-entire'
 
 " MISC {{{1
-Plugin 'tpope/vim-repeat'
+Plug 'tpope/vim-repeat'
 
 " TWEAKS {{{1
 

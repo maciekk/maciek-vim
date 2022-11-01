@@ -1,15 +1,15 @@
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
 let g:NERDTreeWinPos = "right"
 
 " Needs to come before 'vim-devicons'.
 " DISABLED: too much info, messes up [ ] in the NERDTree
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 let g:NERDTreeGitStatusUseNerdFonts = 1
 let g:NERDTreeGitStatusConcealBrackets = 0
 
-Plugin 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons'
 " Needs nerdtree-patched font to be set (in terminal, or set guifont=*)
 " For fantasque, on MacOS, did:
 "   $ brew tap homebrew/cask-fonts

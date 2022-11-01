@@ -1,3 +1,3 @@
 " snippets
-"Plugin 'SirVer/ultisnips'
-"Plugin 'acustodioo/vim-snippets'
+"Plug 'SirVer/ultisnips'
+"Plug 'acustodioo/vim-snippets'

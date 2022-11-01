@@ -19,36 +19,26 @@ nnoremap <Leader>ve :vsplit ~/.vim/vimrc<cr>
 nnoremap <Leader>vs :so $MYVIMRC<cr>
 nnoremap <Leader>vp :so $MYVIMRC<cr>\|:VundleClean<cr>\|:VundleInstall<cr>
 
-" Vundle setup {{{1
+" initial setup {{{1
 set nocompatible               " be iMproved
-
-" Ultimately want "filetype off" for Vundle here, but this on-then-off hack is
-" to fix an annoying issue:
-"   http://tooky.co.uk/2010/04/08/there-was-a-problem-with-the-editor-vi-git-on-mac-os-x.html
-filetype on
-filetype off                   " required!
 
 if has ('win32')
     let $MYVIMDIR="~/vimfiles"
-    let vundlepath='~/vimfiles/bundle'
 else
     let $MYVIMDIR="~/.vim"
-    let vundlepath='~/.vim/bundle'
 endif
 set runtimepath+=$MYVIMDIR
 
-let &runtimepath.=','.$MYVIMDIR.'/bundle/Vundle.vim'
-call vundle#begin(vundlepath)
-
-" let Vundle manage Vundle
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
 " plugins {{{1
 
 let $PLUGDIR=$MYVIMDIR.'/plugins'
 
+Plug 'junegunn/vim-plug'
+
 " fancy startup page
-"Plugin 'mhinz/vim-startify'
+"Plug 'mhinz/vim-startify'
 
 " fundamentals {{{2
 so $PLUGDIR/verbs-n-nouns.vim
@@ -59,9 +49,10 @@ so $PLUGDIR/narrow.vim
 " conveniences {{{2
 so $PLUGDIR/ctrlp.vim
 "so $PLUGDIR/snippets.vim
-Plugin 'romainl/vim-cool'
-Plugin 'tpope/vim-obsession'
-Plugin 'airblade/vim-rooter'
+Plug 'romainl/vim-cool'
+Plug 'tpope/vim-obsession'
+Plug 'junegunn/vim-peekaboo'
+Plug 'airblade/vim-rooter'
 "let g:rooter_patterns = ['.git', '>~']
 let g:rooter_patterns = ['>~']
 
@@ -74,12 +65,12 @@ so $PLUGDIR/floaterm.vim
 so $PLUGDIR/notes.vim
 "so $PLUGDIR/outliners.vim
 "so $PLUGDIR/org.vim
-Plugin 'bufexplorer.zip'
-"Plugin 'mileszs/ack.vim'
+Plug 'bufexplorer.zip'
+"Plug 'mileszs/ack.vim'
 
 " languages {{{2
-Plugin 'mattn/emmet-vim'  " HTML
-"Plugin 'fatih/vim-go'
+Plug 'mattn/emmet-vim'  " HTML
+"Plug 'fatih/vim-go'
 
 " aeshtetics {{{2
 "so $PLUGDIR/powerline.vim
@@ -93,23 +84,20 @@ set fillchars-=vert:\| | set fillchars+=vert:\│
 " alt chars: │┃┊┋
 
 " review & try
-"Plugin 'FuzzyFinder'
-"Plugin 'thinca/vim-fontzoom'
-"Plugin 'techlivezheng/vim-plugin-minibufexpl'
-"Plugin 'taglist.vim'  " superseded by 'tagbar'?
+"Plug 'FuzzyFinder'
+"Plug 'thinca/vim-fontzoom'
+"Plug 'techlivezheng/vim-plugin-minibufexpl'
+"Plug 'taglist.vim'  " superseded by 'tagbar'?
 
 " suggested by YouCompleteMe (corp)
-"Plugin 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
 
 " cemetary: no longer used
-"Plugin 'kien/tabman.vim'
-"Plugin 'freitass/todo.txt-vim'
+"Plug 'kien/tabman.vim'
+"Plug 'freitass/todo.txt-vim'
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" or
-" filetype plugin on          " to not use the indentation settings set by plugins
+call plug#end()
 
 " settings {{{1
 set backspace=indent,eol,start
@@ -247,6 +235,7 @@ endif
 "   - sonokai
 "   - candy
 
+set bg=dark
 colorscheme gruvbox
 "colorscheme strange
 "colorscheme BusyBee

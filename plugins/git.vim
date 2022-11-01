@@ -1,6 +1,7 @@
 " Git - use :G
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim'
 
 let g:gitgutter_set_sign_backgrounds = 1
 " vim-gitgutter used to do this by default:

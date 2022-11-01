@@ -1,3 +1,3 @@
 " Org mode in Vim
-"Plugin 'hsitz/VimOrganizer'
-"Plugin 'jceb/vim-orgmode'
+"Plug 'hsitz/VimOrganizer'
+"Plug 'jceb/vim-orgmode'

@@ -1,2 +1,2 @@
-Plugin 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_cmd = 'CtrlPBuffer'

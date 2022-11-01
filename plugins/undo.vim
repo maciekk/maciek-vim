@@ -1,6 +1,6 @@
 " undo trees
-"Plugin 'sjl/gundo.vim'   " obsolete
-"Plugin 'simnalamburt/vim-mundo'   " gundo fork++; requires Python
+"Plug 'sjl/gundo.vim'   " obsolete
+"Plug 'simnalamburt/vim-mundo'   " gundo fork++; requires Python
 
-Plugin 'mbbill/undotree'
+Plug 'mbbill/undotree'
 

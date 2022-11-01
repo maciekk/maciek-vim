@@ -1,4 +1,4 @@
-Plugin 'voldikss/vim-floaterm'
+Plug 'voldikss/vim-floaterm'
 
 let g:floaterm_keymap_new = '<Leader>tn'
 let g:floaterm_keymap_toggle = '<Leader>tt'

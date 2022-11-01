@@ -1,9 +1,9 @@
 " Markdown improvements
-"Plugin 'godlygeek/tabular'
-"Plugin 'plasticboy/vim-markdown'
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-Plugin 'mmai/vim-markdown-wiki'
+"Plug 'godlygeek/tabular'
+"Plug 'plasticboy/vim-markdown'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'mmai/vim-markdown-wiki'
 
 " This is needed only if don't also have `pandoc` package installed.
 "augroup pandoc_syntax
