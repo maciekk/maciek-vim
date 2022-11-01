@@ -6,8 +6,6 @@
 " TODO:
 " - why upon start is there always an empty buffer, in addition to buffers
 "   from last session?
-" - why is BufExplorer slow to update screen when you press 'd' to delete
-"   buffer?
 " - why on restart does MacVim not reopen last view? need mksession?
 
 " Choose better leaders.
@@ -67,6 +65,7 @@ so $PLUGDIR/notes.vim
 "so $PLUGDIR/outliners.vim
 "so $PLUGDIR/org.vim
 Plug 'jlanzarotta/bufexplorer'
+"Plug 'techlivezheng/vim-plugin-minibufexpl'
 "Plug 'mileszs/ack.vim'
 
 " languages {{{2
@@ -86,7 +85,6 @@ set fillchars-=vert:\| | set fillchars+=vert:\│
 
 " review & try
 "Plug 'FuzzyFinder'
-"Plug 'techlivezheng/vim-plugin-minibufexpl'
 "Plug 'taglist.vim'  " superseded by 'tagbar'?
 
 " suggested by YouCompleteMe (corp)
@@ -194,9 +192,10 @@ cnoremap <C-n> <Down>
 cnoremap <Up> <C-p>
 cnoremap <Down> <C-n>
 
-map ,fb :FufBuffer<CR>
-map ,fd :FufDir<CR>
-map ,ff :FufFile<CR>
+" minibufexpl
+"map <Leader>mbe :MBEOpen<cr>
+"map <Leader>mbc :MBEClose<cr>
+"map <Leader>mbt :MBEToggle<cr>
 
 " Mapping to repeat last search using global command, and bring up quickfix.
 " Purloined from:
