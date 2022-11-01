@@ -59,8 +59,10 @@ so $PLUGDIR/narrow.vim
 so $PLUGDIR/ctrlp.vim
 "so $PLUGDIR/snippets.vim
 Plugin 'romainl/vim-cool'
-Plugin 'airblade/vim-rooter'
 Plugin 'tpope/vim-obsession'
+Plugin 'airblade/vim-rooter'
+"let g:rooter_patterns = ['.git', '>~']
+let g:rooter_patterns = ['>~']
 
 " tools {{{2
 so $PLUGDIR/nerd.vim
