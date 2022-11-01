@@ -2,7 +2,7 @@
 " based on 'Mastering the Vim Language' talk
 "     https://www.youtube.com/watch?v=wlR5gYd6um0
 
-" verbs {{{1
+" VERBS {{{1
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'inkarkat/vim-ReplaceWithRegister'
