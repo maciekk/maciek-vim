@@ -7,10 +7,11 @@
 " - why upon start is there always an empty buffer, in addition to buffers
 "   from last session?
 " - check for 'netrw'
+" - why does 'vim256-color' colorscheme set fail on Win32?
 
 " Choose better leaders.
-let mapleader = ","
-let maplocalleader = "\\"
+let mapleader = " "
+let maplocalleader = ","
 
 " First, some mappings to work with this config file.
 nnoremap <Leader>ve :vsplit ~/.vim/vimrc<cr>
