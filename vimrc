@@ -11,8 +11,8 @@
 " - why on restart does MacVim not reopen last view? need mksession?
 
 " Choose better leaders.
-let mapleader = ","
-let maplocalleader = "\\"
+let mapleader = " "
+let maplocalleader = ","
 
 " First, some mappings to work with this config file.
 nnoremap <Leader>ve :vsplit ~/.vim/vimrc<cr>
@@ -60,8 +60,10 @@ so $PLUGDIR/narrow.vim
 so $PLUGDIR/ctrlp.vim
 "so $PLUGDIR/snippets.vim
 Plugin 'romainl/vim-cool'
-Plugin 'airblade/vim-rooter'
 Plugin 'tpope/vim-obsession'
+Plugin 'airblade/vim-rooter'
+"let g:rooter_patterns = ['.git', '>~']
+let g:rooter_patterns = ['>~']
 
 " tools {{{2
 so $PLUGDIR/nerd.vim
@@ -111,38 +113,57 @@ filetype plugin indent on    " required
 
 " settings {{{1
 set backspace=indent,eol,start
-set cmdheight=1
-set diffopt+=vertical
-set directory=~/tmp,/var/tmp/,/tmp,.
 set encoding=utf-8
-set expandtab
-set foldlevelstart=0
 set hidden
 set history=999
-set laststatus=2
+set incsearch
+set matchpairs+=<:>
+
+" content display
+set foldlevelstart=0
 set list
 set listchars=tab:»·,trail:·,extends:»,precedes:«
-set matchpairs+=<:>
+
+" history persistence
+set undofile
+set viminfo='100,<50,s10,h,%
+
+" window treatments
+set splitbelow
+set splitright
+set diffopt+=vertical
+
+" status-related
+set cmdheight=1
+set laststatus=2
 set modeline
-set number
-set path=.,**
-set relativenumber
 set ruler
-set scrolloff=4
-set sidescrolloff=4
-set shiftwidth=4
 set shortmess+=I
 set showcmd
 set showmatch
 set showmode
-set splitbelow
-set splitright
-set viminfo='100,<50,s10,h,%
+
+" Scrolling
+set scrolloff=4
+set sidescrolloff=4
+
+" Line numbers
+set number
+set relativenumber
+
+" Tabs & similar
+set expandtab
+set tabstop=4
+set shiftwidth=4
+
+" wild settings
 set wildmenu
 set wildmode=list:longest,full
 set wildoptions=fuzzy,pum
 
-" This is at least where the words are on OS X.
+" paths
+set path=.,**  " where to search for files when using 'gf' et al
+set directory=~/tmp,/var/tmp/,/tmp,.  " swap file locations
 set dictionary=/usr/share/dict/words
 
 " search settings {{{2
@@ -211,15 +232,27 @@ if filereadable(local_settings)
 endif
 
 " cosmetics {{{1
-if has('win32')
-    colorscheme molokai
-else
-    "colorscheme strange
-    colorscheme BusyBee
-    "colorscheme molokai
-    "colorscheme fine_blue
-    "colorscheme pyte
-endif
+
+" List of favourite themes:
+"   - BusyBee
+"   - molokai
+"   - gruvbox
+"   - pyte
+"   - fine_blue
+"   - fu
+"   - inkstained
+"   - strange
+"   - toast
+"   - melange
+"   - sonokai
+"   - candy
+
+colorscheme gruvbox
+"colorscheme strange
+"colorscheme BusyBee
+"colorscheme molokai
+"colorscheme fine_blue
+"colorscheme pyte
 
 syntax enable
 
