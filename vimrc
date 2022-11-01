@@ -112,40 +112,57 @@ filetype plugin indent on    " required
 
 " settings {{{1
 set backspace=indent,eol,start
-set cmdheight=1
-set diffopt+=vertical
-set directory=~/tmp,/var/tmp/,/tmp,.
 set encoding=utf-8
-set expandtab
-set foldlevelstart=0
 set hidden
 set history=999
 set incsearch
-set laststatus=2
+set matchpairs+=<:>
+
+" content display
+set foldlevelstart=0
 set list
 set listchars=tab:»·,trail:·,extends:»,precedes:«
-set matchpairs+=<:>
+
+" history persistence
+set undofile
+set viminfo='100,<50,s10,h,%
+
+" window treatments
+set splitbelow
+set splitright
+set diffopt+=vertical
+
+" status-related
+set cmdheight=1
+set laststatus=2
 set modeline
-set number
-set path=.,**
-set relativenumber
 set ruler
-set scrolloff=4
-set sidescrolloff=4
-set shiftwidth=4
 set shortmess+=I
 set showcmd
 set showmatch
 set showmode
-set splitbelow
-set splitright
-set undofile
-set viminfo='100,<50,s10,h,%
+
+" Scrolling
+set scrolloff=4
+set sidescrolloff=4
+
+" Line numbers
+set number
+set relativenumber
+
+" Tabs & similar
+set expandtab
+set tabstop=4
+set shiftwidth=4
+
+" wild settings
 set wildmenu
 set wildmode=list:longest,full
 set wildoptions=fuzzy,pum
 
-" This is at least where the words are on OS X.
+" paths
+set path=.,**  " where to search for files when using 'gf' et al
+set directory=~/tmp,/var/tmp/,/tmp,.  " swap file locations
 set dictionary=/usr/share/dict/words
 
 " search settings {{{2
