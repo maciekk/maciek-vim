@@ -218,6 +218,7 @@ endif
 " List of favourite themes:
 "   - BusyBee
 "   - molokai
+"   - gruvbox
 "   - pyte
 "   - fine_blue
 "   - fu
@@ -228,15 +229,12 @@ endif
 "   - sonokai
 "   - candy
 
-if has('win32')
-    colorscheme molokai
-else
-    "colorscheme strange
-    colorscheme BusyBee
-    "colorscheme molokai
-    "colorscheme fine_blue
-    "colorscheme pyte
-endif
+colorscheme gruvbox
+"colorscheme strange
+"colorscheme BusyBee
+"colorscheme molokai
+"colorscheme fine_blue
+"colorscheme pyte
 
 syntax enable
 
