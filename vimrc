@@ -118,6 +118,7 @@ set expandtab
 set foldlevelstart=0
 set hidden
 set history=999
+set incsearch
 set laststatus=2
 set list
 set listchars=tab:»·,trail:·,extends:»,precedes:«
@@ -136,6 +137,7 @@ set showmatch
 set showmode
 set splitbelow
 set splitright
+set undofile
 set viminfo='100,<50,s10,h,%
 set wildmenu
 set wildmode=list:longest,full
