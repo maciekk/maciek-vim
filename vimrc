@@ -17,7 +17,7 @@ let maplocalleader = ","
 " First, some mappings to work with this config file.
 nnoremap <Leader>ve :vsplit ~/.vim/vimrc<cr>
 nnoremap <Leader>vs :so $MYVIMRC<cr>
-nnoremap <Leader>vp :so $MYVIMRC<cr>\|:VundleClean<cr>\|:VundleInstall<cr>
+nnoremap <Leader>vp :so $MYVIMRC<cr>\|:PlugClean<cr>\|:PlugInstall<cr>
 
 " initial setup {{{1
 set nocompatible               " be iMproved
