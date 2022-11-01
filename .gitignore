@@ -10,5 +10,9 @@ LOCAL
 # Do not track session file.
 Session.vim
 
+# Ignore vim-plug staging area.
+autoload/
+plugged/
+
 # Backup files
 *~
