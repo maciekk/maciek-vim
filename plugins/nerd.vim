@@ -1,6 +1,10 @@
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-let g:NERDTreeWinPos = "right"
+
+" DISABLED: prefer 'netrw' instead
+" see:
+"   http://vimcasts.org/blog/2013/01/oil-and-vinegar-split-windows-and-project-drawer/
+"Plug 'scrooloose/nerdtree'
+"let g:NERDTreeWinPos = "right"
 
 " Needs to come before 'vim-devicons'.
 " DISABLED: too much info, messes up [ ] in the NERDTree
