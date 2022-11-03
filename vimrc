@@ -78,6 +78,7 @@ Plug 'mattn/emmet-vim'  " HTML
 so $PLUGDIR/airline.vim
 so $PLUGDIR/rainbow.vim
 so $PLUGDIR/colorschemes.vim
+Plug 'junegunn/goyo.vim'
 
 " hide the vertical bar in vsplit
 "hi VertSplit guibg=bg guifg=bg
