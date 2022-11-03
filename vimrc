@@ -50,7 +50,8 @@ so $PLUGDIR/ctrlp.vim
 Plug 'romainl/vim-cool'
 Plug 'tpope/vim-obsession'
 Plug 'junegunn/vim-peekaboo'
-Plug 'thinca/vim-fontzoom'
+"Plug 'thinca/vim-fontzoom'
+Plug 'tpope/vim-vinegar'
 Plug 'airblade/vim-rooter'
 "let g:rooter_patterns = ['.git', '>~']
 let g:rooter_patterns = ['>~']
