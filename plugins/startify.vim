@@ -6,7 +6,7 @@ let g:startify_lists = [
       \ { 'type': 'sessions',  'header': ['   Sessions']       },
       \ { 'type': 'commands',  'header': ['   Commands']       },
       \ ]
-let g:startify_bookmarks = [ {'c': '~/.vim/vimrc'}, '~/.bashrc' ]
+let g:startify_bookmarks = [ {'c': $MYVIMDIR.'/vimrc'}, '~/.bashrc' ]
 let g:startify_files_number = 8
 let g:ascii = [
 	\ ' _    ___         ',
