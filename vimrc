@@ -35,8 +35,7 @@ let $PLUGDIR=$MYVIMDIR.'/plugins'
 
 Plug 'junegunn/vim-plug'
 
-" fancy startup page
-"Plug 'mhinz/vim-startify'
+so $PLUGDIR/startify.vim
 
 " fundamentals {{{2
 so $PLUGDIR/verbs-n-nouns.vim
