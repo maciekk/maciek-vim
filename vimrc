@@ -52,8 +52,7 @@ Plug 'tpope/vim-obsession'
 Plug 'junegunn/vim-peekaboo'
 Plug 'tpope/vim-vinegar'
 Plug 'airblade/vim-rooter'
-"let g:rooter_patterns = ['.git', '>~']
-let g:rooter_patterns = ['>~']
+let g:rooter_patterns = ['vimrc', '.git']
 
 " tools {{{2
 so $PLUGDIR/nerd.vim
