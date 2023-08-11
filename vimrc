@@ -27,6 +27,8 @@ else
 endif
 set runtimepath+=$MYVIMDIR
 
+" NOTE: Vim plugin manager used: `vim-plug`
+"       https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 
 " plugins {{{1
