@@ -37,7 +37,9 @@ let $PLUGDIR=$MYVIMDIR.'/plugins'
 
 Plug 'junegunn/vim-plug'
 
-so $PLUGDIR/startify.vim
+"so $PLUGDIR/startify.vim
+Plug 'mhinz/vim-startify'
+Plug 'ryanoasis/vim-devicons'
 
 " fundamentals {{{2
 so $PLUGDIR/verbs-n-nouns.vim
@@ -74,6 +76,10 @@ Plug 'mattn/emmet-vim'  " HTML
 "Plug 'fatih/vim-go'
 
 " aeshtetics {{{2
+
+" NOTE: will need 'powerline' font for UNICODE symbols;
+" On Ubuntu: `apt-get install fonts-powerline` ?
+
 "so $PLUGDIR/powerline.vim
 so $PLUGDIR/airline.vim
 so $PLUGDIR/rainbow.vim
