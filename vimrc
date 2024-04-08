@@ -27,6 +27,8 @@ else
 endif
 set runtimepath+=$MYVIMDIR
 
+" NOTE: Vim plugin manager used: `vim-plug`
+"       https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 
 " plugins {{{1
@@ -35,7 +37,9 @@ let $PLUGDIR=$MYVIMDIR.'/plugins'
 
 Plug 'junegunn/vim-plug'
 
-so $PLUGDIR/startify.vim
+"so $PLUGDIR/startify.vim
+Plug 'mhinz/vim-startify'
+Plug 'ryanoasis/vim-devicons'
 
 " fundamentals {{{2
 so $PLUGDIR/verbs-n-nouns.vim
@@ -75,6 +79,10 @@ Plug 'mattn/emmet-vim'  " HTML
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " aeshtetics {{{2
+
+" NOTE: will need 'powerline' font for UNICODE symbols;
+" On Ubuntu: `apt-get install fonts-powerline` ?
+
 "so $PLUGDIR/powerline.vim
 so $PLUGDIR/airline.vim
 so $PLUGDIR/rainbow.vim

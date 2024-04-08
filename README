@@ -1,7 +1,11 @@
+NOTE: now using `vim-plug` plugin manager.
+      https://github.com/junegunn/vim-plug
+
 Steps to install this Vim setup on new computer:
 $ cd ~
 $ git clone https://github.com/maciekk/vimrc.git .vim
 $ ln -s .vim/vimrc .vimrc
-$ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+$ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-Finally, in Vim run :VundleInstall
+Finally, in Vim run :PluginInstall
