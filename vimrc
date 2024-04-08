@@ -71,6 +71,9 @@ Plug 'jlanzarotta/bufexplorer'
 Plug 'mattn/emmet-vim'  " HTML
 "Plug 'fatih/vim-go'
 
+" WARNING: this currently assumes nvim
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 " aeshtetics {{{2
 "so $PLUGDIR/powerline.vim
 so $PLUGDIR/airline.vim
@@ -235,10 +238,10 @@ endif
 "   - candy
 
 set bg=dark
-colorscheme gruvbox
+"colorscheme gruvbox
 "colorscheme strange
 "colorscheme BusyBee
-"colorscheme molokai
+colorscheme molokai
 "colorscheme fine_blue
 "colorscheme pyte
 
@@ -276,6 +279,10 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 
 " Do not reveal Conceals items if in normal mode.
 set cocu=n
+
+" Fix for Vim in kitty
+" See: https://github.com/kovidgoyal/kitty/issues/108
+let &t_ut=''
 
 " }}}1
 " vim:fdm=marker:
